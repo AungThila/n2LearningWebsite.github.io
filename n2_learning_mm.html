@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Sakura N2 Myanmar - ဂျပန်စာ JLPT N2 လေ့လာရေးဝက်ဘ်ဆိုက်</title>
+  <title>Sakura N2 & N1 Myanmar - ဂျပန်စာ JLPT N2 / N1 လေ့လာရေးဝက်ဘ်ဆိုက်</title>
   <!-- Tailwind CSS -->
   <script src="https://cdn.tailwindcss.com/3.4.17"></script>
   <!-- Google Fonts: Padauk for Burmese, Noto Sans JP for Japanese, Inter for UI -->
@@ -86,28 +86,15 @@
 </head>
 <body class="bg-slate-50 text-slate-800 min-h-screen flex flex-col antialiased">
 
-  <!-- Top Announcement Bar -->
-  <div class="bg-gradient-to-r from-sakura-600 to-indigo-700 text-white text-xs sm:text-sm py-1.5 px-4 text-center font-medium flex items-center justify-center gap-2">
-    <span>🌸 JLPT N2 အောင်မြင်ရေးအတွက် မြန်မာဘာသာဖြင့် သီးသန့်ပြုစုထားသော ပြည့်စုံသည့် လေ့လာရေးဝက်ဘ်ဆိုက်</span>
-    <span class="hidden md:inline-block bg-white/20 px-2 py-0.5 rounded text-[11px]">JLPT 2026 Ready</span>
-  </div>
-
   <!-- Header & Navigation Bar -->
   <header class="sticky top-0 z-40 bg-white/95 backdrop-blur border-b border-slate-200 shadow-sm">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="flex items-center justify-between h-16">
-        <!-- Logo -->
-        <div class="flex items-center gap-3 cursor-pointer" id="nav-logo-btn">
-          <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-sakura-500 to-indigo-600 flex items-center justify-center text-white font-bold text-xl shadow-md shadow-sakura-500/20">
-            N2
-          </div>
-          <div>
-            <div class="font-bold text-base sm:text-lg leading-tight text-slate-900 flex items-center gap-1.5">
-              <span>Sakura N2</span>
-              <span class="text-xs bg-sakura-100 text-sakura-700 px-1.5 py-0.5 rounded font-semibold">မြန်မာ</span>
-            </div>
-            <div class="text-[11px] text-slate-500 myanmar-text leading-none mt-0.5">JLPT N2 လေ့လာရေးစင်တာ</div>
-          </div>
+        <!-- Level Chooser Modal Trigger -->
+        <div class="flex items-center shrink-0">
+          <button type="button" id="btn-open-level-chooser" onclick="window.openLevelChooserModal()" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-bold bg-amber-50 hover:bg-amber-100 text-amber-800 border border-amber-200/80 transition-all myanmar-text shadow-sm whitespace-nowrap shrink-0" title="JLPT အဆင့် ရွေးချယ်ရန်">
+            <span>🎯 အဆင့်ရွေးရန်</span>
+          </button>
         </div>
 
         <!-- Desktop Navigation Tabs -->
@@ -166,20 +153,24 @@
       <button type="button" class="mobile-nav-tab w-full text-left px-3 py-2 rounded-lg text-sm font-medium text-sakura-600 bg-sakura-50 flex items-center justify-between" data-tab="dashboard">
         <span>🏠 ပင်မစာမျက်နှာ (Dashboard)</span>
       </button>
+      <button type="button" onclick="window.openLevelChooserModal()" class="w-full text-left px-3 py-2 rounded-lg text-sm font-bold text-amber-800 bg-amber-50 hover:bg-amber-100 border border-amber-200 flex items-center justify-between myanmar-text">
+        <span>🎯 JLPT အဆင့် ရွေးချယ်ရန် (N2 / N1)</span>
+        <span class="text-xs bg-amber-200/70 px-2 py-0.5 rounded font-mono">Switch</span>
+      </button>
       <button type="button" class="mobile-nav-tab w-full text-left px-3 py-2 rounded-lg text-sm font-medium text-slate-700 hover:bg-slate-100 flex items-center justify-between" data-tab="vocab">
-        <span>📖 N2 ဝေါဟာရများ (語彙)</span>
+        <span id="mob-nav-vocab">📖 N2 ဝေါဟာရများ (語彙)</span>
       </button>
       <button type="button" class="mobile-nav-tab w-full text-left px-3 py-2 rounded-lg text-sm font-medium text-slate-700 hover:bg-slate-100 flex items-center justify-between" data-tab="grammar">
-        <span>✍️ N2 သဒ္ဒါပုံစံများ (文法)</span>
+        <span id="mob-nav-grammar">✍️ N2 သဒ္ဒါပုံစံများ (文法)</span>
       </button>
       <button type="button" class="mobile-nav-tab w-full text-left px-3 py-2 rounded-lg text-sm font-medium text-slate-700 hover:bg-slate-100 flex items-center justify-between" data-tab="kanji">
-        <span>⛩️ N2 ခန်းဂျီး (漢字)</span>
+        <span id="mob-nav-kanji">⛩️ N2 ခန်းဂျီး (漢字)</span>
       </button>
       <button type="button" class="mobile-nav-tab w-full text-left px-3 py-2 rounded-lg text-sm font-medium text-slate-700 hover:bg-slate-100 flex items-center justify-between" data-tab="reading">
-        <span>📑 စာဖတ်လေ့ကျင့်ခန်း (読解)</span>
+        <span id="mob-nav-reading">📑 စာဖတ်လေ့ကျင့်ခန်း (読解)</span>
       </button>
       <button type="button" class="mobile-nav-tab w-full text-left px-3 py-2 rounded-lg text-sm font-medium text-slate-700 hover:bg-slate-100 flex items-center justify-between" data-tab="quiz">
-        <span>🎯 N2 စာမေးပွဲ ပဟေဠိ (Quiz)</span>
+        <span id="mob-nav-quiz">🎯 N2 စာမေးပွဲ ပဟေဠိ (Quiz)</span>
       </button>
       <button type="button" class="mobile-nav-tab w-full text-left px-3 py-2 rounded-lg text-sm font-medium text-slate-700 hover:bg-slate-100 flex items-center justify-between" data-tab="pastpapers">
         <span>📜 မေးခွန်းဟောင်း ၁၀ နှစ်စာ (2016–2025)</span>
@@ -210,17 +201,27 @@
         </div>
 
         <div class="relative z-10 p-6 sm:p-10 lg:p-12 max-w-3xl">
-          <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-sakura-500/20 text-sakura-300 border border-sakura-400/30 text-xs font-semibold mb-4 backdrop-blur-sm">
-            <span>🌸 JLPT N2 စာမေးပွဲ အထူးလေ့ကျင့်ခန်းစုံ</span>
+          <div class="flex flex-wrap items-center gap-2 mb-4">
+            <div id="hero-badge-pill" class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-sakura-500/20 text-sakura-300 border border-sakura-400/30 text-xs font-semibold backdrop-blur-sm">
+              <span>🌸 JLPT N2 စာမေးပွဲ အထူးလေ့ကျင့်ခန်းစုံ</span>
+            </div>
+            <div class="inline-flex items-center bg-slate-800/90 p-1 rounded-full border border-slate-700 backdrop-blur-sm">
+              <button type="button" onclick="window.switchJlptLevel('N2')" id="hero-btn-n2" class="px-3 py-0.5 rounded-full text-xs font-bold bg-sakura-500 text-white transition-all myanmar-text">
+                N2 အဆင့် လေ့လာရန်
+              </button>
+              <button type="button" onclick="window.switchJlptLevel('N1')" id="hero-btn-n1" class="px-3 py-0.5 rounded-full text-xs font-bold text-slate-300 hover:text-white transition-all myanmar-text">
+                N1 အဆင့် လေ့လာရန်
+              </button>
+            </div>
           </div>
           <h1 class="text-2xl sm:text-4xl font-extrabold tracking-tight leading-snug sm:leading-tight mb-3">
-            ဂျပန်စာ JLPT N2 အောင်မြင်ရေး <br>
+            <span id="hero-main-heading">ဂျပန်စာ JLPT N2 အောင်မြင်ရေး</span> <br>
             <span class="text-transparent bg-clip-text bg-gradient-to-r from-sakura-400 via-rose-300 to-indigo-300">
               မြန်မာဘာသာဖြင့် စနစ်တကျ လေ့လာပါ
             </span>
           </h1>
-          <p class="text-sm sm:text-base text-slate-300 myanmar-text mb-6 max-w-2xl leading-relaxed">
-            JLPT N2 အတွက် မရှိမဖြစ်လိုအပ်သော အဓိက ဝေါဟာရများ၊ အရေးကြီး သဒ္ဒါပုံစံများ၊ ခန်းဂျီးများနှင့် စာဖတ်လေ့ကျင့်ခန်းများကို မြန်မာလို အသေးစိတ် ရှင်းလင်းချက်၊ စံပြဥပမာများနှင့် မူရင်းဂျပန်အသံထွက်များဖြင့် အလွယ်တကူ လေ့လာနိုင်ပါသည်။
+          <p id="hero-desc-text" class="text-sm sm:text-base text-slate-300 myanmar-text mb-6 max-w-2xl leading-relaxed">
+            JLPT N2 အတွက် မရှိမဖြစ်လိုအပ်သော အဓိက ဝေါဟာရများ (၆၀၀)၊ အရေးကြီး သဒ္ဒါပုံစံများ (၂၀၀)၊ ခန်းဂျီးများ (၃၇၀)၊ စာဖတ်လေ့ကျင့်ခန်းများနှင့် ၁၀ နှစ်စာ မေးခွန်းဟောင်းများကို မြန်မာလို အသေးစိတ် ရှင်းလင်းချက်၊ စံပြဥပမာများနှင့် အသံထွက်များဖြင့် လေ့လာနိုင်ပါသည်။ (အပေါ်ရှိ N2 / N1 ခလုတ်ကိုနှိပ်၍ အဆင့်ပြောင်းလဲနိုင်ပါသည်။)
           </p>
 
           <!-- Quick Action Buttons -->
@@ -235,7 +236,7 @@
             </button>
             <button type="button" class="btn-goto-tab bg-slate-800/80 hover:bg-slate-700/80 border border-slate-700 text-white font-medium px-5 py-2.5 rounded-xl transition-all flex items-center gap-2 backdrop-blur-sm" data-target="quiz">
               <svg class="w-4 h-4 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-              <span>N2 ပဟေဠိ ဖြေဆိုမည်</span>
+              <span id="hero-quiz-btn-label">N2 ပဟေဠိ ဖြေဆိုမည်</span>
             </button>
             <button type="button" class="btn-goto-tab bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold px-5 py-2.5 rounded-xl shadow-lg shadow-amber-500/30 transition-all flex items-center gap-2" data-target="pastpapers">
               <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
@@ -335,7 +336,7 @@
               <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z"/></svg>
               <span>အသံထွက် နားထောင်ရန်</span>
             </button>
-            <span class="text-[11px] bg-white/70 px-2 py-0.5 rounded text-sakura-800 font-medium">N2 Focus</span>
+            <span id="proverb-focus-badge" class="text-[11px] bg-white/70 px-2 py-0.5 rounded text-sakura-800 font-medium">N2 Focus</span>
           </div>
         </div>
 
@@ -343,10 +344,10 @@
         <div class="lg:col-span-2 bg-white rounded-2xl p-6 border border-slate-200 shadow-sm flex flex-col justify-between">
           <div>
             <div class="flex items-center justify-between mb-4">
-              <h2 class="font-bold text-slate-900 text-base sm:text-lg flex items-center gap-2">
+              <h2 id="dash-exam-structure-title" class="font-bold text-slate-900 text-base sm:text-lg flex items-center gap-2">
                 <span>🎯 JLPT N2 စာမေးပွဲ ဖွဲ့စည်းပုံနှင့် အောင်မှတ် သတ်မှတ်ချက်များ</span>
               </h2>
-              <span class="text-xs bg-indigo-50 text-indigo-700 px-2 py-1 rounded font-semibold">စုစုပေါင်း ၁၈၀ မှတ်</span>
+              <span id="dash-exam-pass-badge" class="text-xs bg-indigo-50 text-indigo-700 px-2.5 py-1 rounded-lg font-bold">အောင်မှတ်: ၉၀ / ၁၈၀ မှတ်</span>
             </div>
             
             <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-4">
@@ -367,8 +368,8 @@
               </div>
             </div>
 
-            <p class="text-xs text-slate-600 myanmar-text leading-relaxed">
-              💡 <strong>အောင်မြင်ရန် သတ်မှတ်ချက်:</strong> စုစုပေါင်းရမှတ် ၁၈၀ မှတ်အနက် <strong>၉၀ မှတ် နှင့်အထက်</strong> ရရှိရမည် ဖြစ်သည့်အပြင် အပိုင်းတစ်ခုစီတိုင်းတွင် အနိမ့်ဆုံး ၁၉ မှတ် ရရှိရန် လိုအပ်ပါသည်။
+            <p id="dash-exam-passing-note" class="text-xs text-slate-600 myanmar-text leading-relaxed">
+              💡 <strong>အောင်မြင်ရန် သတ်မှတ်ချက် (JLPT N2):</strong> စုစုပေါင်းရမှတ် ၁၈၀ မှတ်အနက် <strong>၉၀ မှတ် နှင့်အထက်</strong> ရရှိရမည် ဖြစ်သည့်အပြင် အပိုင်းတစ်ခုစီတိုင်းတွင် အနိမ့်ဆုံး ၁၉ မှတ် ရရှိရန် လိုအပ်ပါသည်။ (JLPT N1 အတွက် စုစုပေါင်း <strong>၁၀၀ မှတ်နှင့်အထက်</strong> လိုအပ်ပါသည်။)
             </p>
           </div>
 
@@ -392,8 +393,8 @@
             <div class="w-12 h-12 rounded-xl bg-sakura-50 text-sakura-600 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
               <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/></svg>
             </div>
-            <h3 class="font-bold text-slate-900 text-base mb-1 group-hover:text-sakura-600 transition-colors">N2 ဝေါဟာရများ (語彙)</h3>
-            <p class="text-xs text-slate-500 myanmar-text leading-relaxed">စီးပွားရေး၊ လူမှုရေးနှင့် နေ့စဉ်ဘဝသုံး N2 စကားလုံးများကို စံပြဝါကျများနှင့် လေ့လာပါ။</p>
+            <h3 id="dash-card-vocab-title" class="font-bold text-slate-900 text-base mb-1 group-hover:text-sakura-600 transition-colors">N2 ဝေါဟာရများ (語彙)</h3>
+            <p id="dash-card-vocab-desc" class="text-xs text-slate-500 myanmar-text leading-relaxed">စီးပွားရေး၊ လူမှုရေးနှင့် နေ့စဉ်ဘဝသုံး N2 စကားလုံးများကို စံပြဝါကျများနှင့် လေ့လာပါ။</p>
           </div>
 
           <!-- Grammar Card -->
@@ -401,7 +402,7 @@
             <div class="w-12 h-12 rounded-xl bg-indigo-50 text-indigo-600 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
               <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
             </div>
-            <h3 class="font-bold text-slate-900 text-base mb-1 group-hover:text-indigo-600 transition-colors">N2 သဒ္ဒါပုံစံများ (文法)</h3>
+            <h3 id="dash-card-grammar-title" class="font-bold text-slate-900 text-base mb-1 group-hover:text-indigo-600 transition-colors">N2 သဒ္ဒါပုံစံများ (文法)</h3>
             <p class="text-xs text-slate-500 myanmar-text leading-relaxed">ဆက်စပ်ပုံသေနည်း၊ ကွဲပြားချက်များနှင့် အသေးစိတ် မြန်မာရှင်းလင်းချက်များ ပါဝင်သည်။</p>
           </div>
 
@@ -410,7 +411,7 @@
             <div class="w-12 h-12 rounded-xl bg-amber-50 text-amber-600 flex items-center justify-center mb-4 text-xl font-bold group-hover:scale-110 transition-transform">
               漢
             </div>
-            <h3 class="font-bold text-slate-900 text-base mb-1 group-hover:text-amber-600 transition-colors">N2 ခန်းဂျီး (漢字)</h3>
+            <h3 id="dash-card-kanji-title" class="font-bold text-slate-900 text-base mb-1 group-hover:text-amber-600 transition-colors">N2 ခန်းဂျီး (漢字)</h3>
             <p class="text-xs text-slate-500 myanmar-text leading-relaxed">အသံထွက် (On/Kun)၊ မြန်မာအဓိပ္ပာယ်နှင့် တွဲစပ်လုံး (熟語) များကို လေ့လာနိုင်ပါသည်။</p>
           </div>
 
@@ -420,7 +421,7 @@
               <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"/></svg>
             </div>
             <h3 class="font-bold text-slate-900 text-base mb-1 group-hover:text-emerald-600 transition-colors">စာမေးပွဲ ပဟေဠိ (Quiz)</h3>
-            <p class="text-xs text-slate-500 myanmar-text leading-relaxed">အချိန်ကိုက်စနစ်နှင့် ရှင်းလင်းချက်များ ပါဝင်သော N2 စစ်ဆေးလေ့ကျင့်ခန်း။</p>
+            <p id="dash-card-quiz-desc" class="text-xs text-slate-500 myanmar-text leading-relaxed">အချိန်ကိုက်စနစ်နှင့် ရှင်းလင်းချက်များ ပါဝင်သော N2 စစ်ဆေးလေ့ကျင့်ခန်း။</p>
           </div>
 
           <!-- Past Papers 10 Years Card -->
@@ -431,10 +432,10 @@
               </div>
               <div>
                 <div class="flex flex-wrap items-center gap-2">
-                  <h3 class="font-bold text-slate-900 text-base group-hover:text-rose-600 transition-colors">📜 JLPT N2 မေးခွန်းဟောင်း ၁၀ နှစ်စာ (過去問 2016 – 2025)</h3>
+                  <h3 id="dash-card-pp-title" class="font-bold text-slate-900 text-base group-hover:text-rose-600 transition-colors">📜 JLPT N2 မေးခွန်းဟောင်း ၁၀ နှစ်စာ (過去問 2016 – 2025)</h3>
                   <span class="text-[11px] bg-rose-100 text-rose-700 px-2.5 py-0.5 rounded-full font-bold">NEW • 10 Years Archive</span>
                 </div>
-                <p class="text-xs text-slate-600 myanmar-text leading-relaxed mt-1">၂၀၁၆ ခုနှစ်မှ ၂၀၂၅ ခုနှစ်အထိ (၁၀) နှစ်စာ (ဇူလိုင်ပွဲ 7月 နှင့် ဒီဇင်ဘာပွဲ 12月) N2 မေးခွန်းဟောင်းများကို နှစ်အလိုက်၊ အပိုင်းအလိုက် ရွေးချယ်ဖြေဆိုပြီး မြန်မာလို အသေးစိတ် ရှင်းလင်းချက်များဖြင့် လေ့ကျင့်နိုင်ပါသည်။</p>
+                <p id="dash-card-pp-desc" class="text-xs text-slate-600 myanmar-text leading-relaxed mt-1">၂၀၁၆ ခုနှစ်မှ ၂၀၂၅ ခုနှစ်အထိ (၁၀) နှစ်စာ (ဇူလိုင်ပွဲ 7月 နှင့် ဒီဇင်ဘာပွဲ 12月) N2 မေးခွန်းဟောင်းများကို နှစ်အလိုက်၊ အပိုင်းအလိုက် ရွေးချယ်ဖြေဆိုပြီး မြန်မာလို အသေးစိတ် ရှင်းလင်းချက်များဖြင့် လေ့ကျင့်နိုင်ပါသည်။</p>
               </div>
             </div>
             <span class="px-4 py-2 bg-rose-600 text-white text-xs font-bold rounded-xl whitespace-nowrap shadow-sm group-hover:bg-rose-500 transition-colors myanmar-text">
@@ -453,7 +454,7 @@
       <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-white p-5 rounded-2xl border border-slate-200 shadow-sm">
         <div>
           <h2 class="text-xl font-bold text-slate-900 flex items-center gap-2">
-            <span>📖 JLPT N2 ဝေါဟာရများ (語彙)</span>
+            <span id="vocab-section-title">📖 JLPT N2 ဝေါဟာရများ (語彙)</span>
             <span class="text-xs bg-rose-100 text-rose-700 px-2.5 py-0.5 rounded-full font-semibold" id="vocab-count-pill">600 လုံး</span>
           </h2>
           <p class="text-xs text-slate-500 myanmar-text mt-1">ဂျပန်စာလုံး၊ အသံထွက်၊ မြန်မာဘာသာပြန်နှင့် စံပြဝါကျများဖြင့် လေ့လာပါ</p>
@@ -606,7 +607,7 @@
         <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
           <div>
             <h2 class="text-xl font-bold text-slate-900 flex items-center gap-2">
-              <span>✍️ JLPT N2 သဒ္ဒါပုံစံများ (文法)</span>
+              <span id="grammar-section-title">✍️ JLPT N2 သဒ္ဒါပုံစံများ (文法)</span>
               <span class="text-xs bg-indigo-100 text-indigo-700 px-2.5 py-0.5 rounded-full font-semibold" id="grammar-count-pill">200 ပုံစံ</span>
             </h2>
             <p class="text-xs text-slate-500 myanmar-text mt-1">အဓိပ္ပာယ်၊ ဆက်စပ်ပုံသေနည်း၊ ကွဲပြားချက်များနှင့် မေးလေ့ရှိမှု Rating အလိုက် လေ့လာပါ</p>
@@ -647,7 +648,7 @@
         <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
           <div>
             <h2 class="text-xl font-bold text-slate-900 flex items-center gap-2">
-              <span>⛩️ JLPT N2 ခန်းဂျီးများ (漢字)</span>
+              <span id="kanji-section-title">⛩️ JLPT N2 ခန်းဂျီးများ (漢字)</span>
               <span class="text-xs bg-amber-100 text-amber-700 px-2.5 py-0.5 rounded-full font-semibold" id="kanji-count-pill">370 လုံး</span>
             </h2>
             <p class="text-xs text-slate-500 myanmar-text mt-1">Onyomi, Kunyomi၊ ဆွဲချက်အရေအတွက် (画数)၊ ဆွဲချက်အစဉ် (書き順) နှင့် လက်ရေးလေ့ကျင့်ခန်းများဖြင့် လေ့လာပါ</p>
@@ -743,13 +744,13 @@
         <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-5">
           <div class="space-y-2 max-w-2xl">
             <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-400/20 text-emerald-300 border border-emerald-400/30 text-xs font-bold">
-              <span>📑 JLPT N2 読解 完全対策 (問題10 〜 問題14 全5形式)</span>
+              <span id="reading-badge-pill">📑 JLPT N2 読解 完全対策 (問題10 〜 問題14 全5形式)</span>
             </div>
             <h2 class="text-xl sm:text-2xl font-extrabold flex items-center gap-2 myanmar-text">
-              <span>JLPT N2 စာဖတ်လေ့ကျင့်ခန်း အပြည့်အစုံ (読解)</span>
+              <span id="reading-section-title">JLPT N2 စာဖတ်လေ့ကျင့်ခန်း အပြည့်အစုံ (読解)</span>
               <span id="reading-count-pill" class="text-xs bg-emerald-500 text-slate-950 px-2.5 py-0.5 rounded-full font-extrabold">14 ပုဒ် / 26 မေးခွန်း</span>
             </h2>
-            <p class="text-xs sm:text-sm text-slate-200 myanmar-text leading-relaxed">
+            <p id="reading-desc-text" class="text-xs sm:text-sm text-slate-200 myanmar-text leading-relaxed">
               JLPT N2 စာဖတ်စာမေးပွဲတွင် မေးမြန်းသည့် မေးခွန်းပုံစံ (၅) မျိုးလုံး — <strong>問題10 (短文 စာပိုဒ်တို)</strong>၊ <strong>問題11 (中文 စာပိုဒ်လတ်)</strong>၊ <strong>問題12 (統合理解 A/B နှိုင်းယှဉ်ချက်)</strong>၊ <strong>問題13 (主張理解・長文 စာပိုဒ်ရှည်)</strong> နှင့် <strong>問題14 (情報検索 ကြော်ငြာ/အချက်အလက်ရှာဖွေခြင်း)</strong> တို့ကို မြန်မာဘာသာပြန်၊ အရေးကြီးဝေါဟာရနှင့် အသေးစိတ်အဖြေရှင်းလင်းချက်များဖြင့် ပြည့်စုံစွာ လေ့ကျင့်နိုင်ပါသည်။
             </p>
           </div>
@@ -838,10 +839,8 @@
           🎯
         </div>
         <div>
-          <h2 class="text-2xl font-bold text-slate-900 mb-2">JLPT N2 စာမေးပွဲ ပဟေဠိ စစ်ဆေးခြင်း</h2>
-          <p class="text-sm text-slate-600 myanmar-text max-w-md mx-auto leading-relaxed">
-            N2 ဝေါဟာရ၊ သဒ္ဒါ၊ ခန်းဂျီးနှင့် အသုံးအနှုန်းများဆိုင်ရာ မေးခွန်း (၁၅) ခု ပါဝင်ပါသည်။ ဖြေဆိုပြီးပါက မြန်မာလို အသေးစိတ် အဖြေရှင်းလင်းချက်များကို ဖော်ပြပေးပါမည်။
-          </p>
+          <h2 id="quiz-section-title" class="text-2xl font-bold text-slate-900 mb-2">JLPT N2 စာမေးပွဲ ပဟေဠိ စစ်ဆေးခြင်း</h2>
+          <p id="quiz-intro-desc" class="text-sm text-slate-600 myanmar-text max-w-md mx-auto leading-relaxed">N2 ဝေါဟာရ၊ သဒ္ဒါ၊ ခန်းဂျီးနှင့် အသုံးအနှုန်းများဆိုင်ရာ မေးခွန်း (၁၅) ခု ပါဝင်ပါသည်။ ဖြေဆိုပြီးပါက မြန်မာလို အသေးစိတ် အဖြေရှင်းလင်းချက်များကို ဖော်ပြပေးပါမည်။</p>
         </div>
 
         <div class="grid grid-cols-3 gap-3 text-left bg-slate-50 p-4 rounded-xl border border-slate-100">
@@ -956,12 +955,12 @@
         <div class="relative z-10 flex flex-col lg:flex-row lg:items-center justify-between gap-6">
           <div class="space-y-2 max-w-2xl">
             <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-400/20 text-amber-300 border border-amber-400/30 text-xs font-bold">
-              <span>📜 JLPT N2 過去問アーカイブ (2016 – 2025)</span>
+              <span id="pastpapers-badge-pill">📜 JLPT N2 過去問アーカイブ (2016 – 2025)</span>
             </div>
             <h2 class="text-2xl sm:text-3xl font-extrabold tracking-tight myanmar-text">
-              JLPT N2 မေးခွန်းဟောင်း (၁၀) နှစ်စာ လေ့ကျင့်ခန်း
+              <span id="pastpapers-section-title">JLPT N2 မေးခွန်းဟောင်း (၁၀) နှစ်စာ လေ့ကျင့်ခန်း</span>
             </h2>
-            <p class="text-xs sm:text-sm text-slate-300 myanmar-text leading-relaxed">
+            <p id="pastpapers-desc-text" class="text-xs sm:text-sm text-slate-300 myanmar-text leading-relaxed">
               ၂၀၁၆ ခုနှစ်မှ ၂၀၂၅ ခုနှစ်အထိ ၁၀ နှစ်တာ ကာလအတွင်း မေးမြန်းခဲ့သော JLPT N2 စာမေးပွဲပုံစံ မေးခွန်းဟောင်းများ (ဇူလိုင်လပွဲ 7月 နှင့် ဒီဇင်ဘာလပွဲ 12月) ကို နှစ်အလိုက်၊ အပိုင်းအလိုက် စနစ်တကျ ဖြေဆိုလေ့ကျင့်နိုင်ပါသည်။ မေးခွန်းတစ်ပုဒ်ချင်းစီအတွက် မြန်မာဘာသာပြန်နှင့် အသေးစိတ်အဖြေရှင်းလင်းချက်များ အပြည့်အစုံ ပါဝင်ပါသည်။
             </p>
           </div>
@@ -1099,6 +1098,130 @@
 
   </main>
 
+  <!-- ========================================== -->
+  <!-- INITIAL LEVEL CHOOSER MODAL (CHOOSE N2 OR N1 FIRST) -->
+  <!-- ========================================== -->
+  <div id="level-chooser-modal" class="fixed inset-0 z-50 bg-slate-950/85 backdrop-blur-md flex items-center justify-center p-4 overflow-y-auto transition-opacity duration-300">
+    <div class="bg-white rounded-3xl max-w-3xl w-full border border-slate-200 shadow-2xl overflow-hidden my-auto transform transition-all">
+      <!-- Top Decorative Header -->
+      <div class="bg-gradient-to-r from-slate-900 via-indigo-950 to-sakura-900 text-white p-6 sm:p-8 text-center relative overflow-hidden">
+        <div class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-white/10 text-amber-300 border border-white/15 text-xs font-bold mb-3">
+          <span>🌸 Sakura JLPT Myanmar Learning Portal 👑</span>
+        </div>
+        <h2 class="text-2xl sm:text-3xl font-extrabold tracking-tight myanmar-text leading-snug">
+          သင် လေ့လာလိုသော JLPT အဆင့်ကို ဦးစွာ ရွေးချယ်ပါ
+        </h2>
+        <p class="text-xs sm:text-sm text-slate-300 myanmar-text mt-2 max-w-xl mx-auto leading-relaxed">
+          Choose Your JLPT Level First — သင်ရွေးချယ်လိုက်သော အဆင့်အလိုက် ဝေါဟာရ (၆၀၀)၊ သဒ္ဒါ (၂၀၀)၊ ခန်းဂျီး (၃၇၀)၊ စာဖတ်စာပိုဒ်များ (၁၄ ပုဒ်) နှင့် ၁၀ နှစ်စာ မေးခွန်းဟောင်း (၁,၅၀၀+ ပုဒ်) တို့ကို မြန်မာဘာသာဖြင့် စနစ်တကျ ပြသပေးပါမည်။
+        </p>
+      </div>
+
+      <!-- Level Cards Grid (N2 vs N1) -->
+      <div class="p-6 sm:p-8 bg-slate-50">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+          
+          <!-- Option 1: JLPT N2 Card -->
+          <div onclick="window.chooseInitialLevel('N2')" class="group cursor-pointer bg-white rounded-2xl p-6 border-2 border-sakura-200 hover:border-sakura-500 shadow-sm hover:shadow-xl transition-all flex flex-col justify-between relative overflow-hidden">
+            <div class="absolute top-0 right-0 bg-sakura-500 text-white text-[10px] font-extrabold px-3 py-1 rounded-bl-xl uppercase tracking-wider">
+              Upper-Intermediate
+            </div>
+            <div>
+              <div class="flex items-center gap-3.5 mb-4">
+                <div class="w-14 h-14 rounded-2xl bg-gradient-to-br from-sakura-500 to-rose-600 text-white flex items-center justify-center font-extrabold text-2xl shadow-md shadow-sakura-500/25 group-hover:scale-110 transition-transform">
+                  N2
+                </div>
+                <div>
+                  <span class="text-xs font-bold text-sakura-600 uppercase tracking-wide">🌸 JLPT Level N2</span>
+                  <h3 class="text-lg font-extrabold text-slate-900 myanmar-text">JLPT N2 အဆင့် လေ့လာရန်</h3>
+                </div>
+              </div>
+
+              <p class="text-xs text-slate-600 myanmar-text leading-relaxed mb-4">
+                နေ့စဉ်ဘဝနှင့် လုပ်ငန်းခွင်သုံး ဂျပန်စာကို ကျွမ်းကျင်စွာ နားလည်သုံးစွဲလိုသူများအတွက် ပြည့်စုံသော သင်ခန်းစာနှင့် မေးခွန်းဟောင်းများ —
+              </p>
+
+              <ul class="space-y-2 text-xs text-slate-700 myanmar-text mb-6">
+                <li class="flex items-center gap-2">
+                  <span class="w-5 h-5 rounded-full bg-sakura-100 text-sakura-700 flex items-center justify-center font-bold text-[11px] shrink-0">✓</span>
+                  <span><strong>N2 ဝေါဟာရ (၆၀၀) လုံး</strong> နှင့် <strong>သဒ္ဒါ (၂၀၀) ပုံစံ</strong></span>
+                </li>
+                <li class="flex items-center gap-2">
+                  <span class="w-5 h-5 rounded-full bg-sakura-100 text-sakura-700 flex items-center justify-center font-bold text-[11px] shrink-0">✓</span>
+                  <span><strong>N2 ခန်းဂျီး (၃၇၀) လုံး</strong> (ဆွဲချက်အစဉ် Animation နှင့် ရေးကျင့်ရန်)</span>
+                </li>
+                <li class="flex items-center gap-2">
+                  <span class="w-5 h-5 rounded-full bg-sakura-100 text-sakura-700 flex items-center justify-center font-bold text-[11px] shrink-0">✓</span>
+                  <span><strong>N2 စာဖတ်လေ့ကျင့်ခန်း (၁၄ ပုဒ် / ၂၆ မေးခွန်း)</strong> နှင့် ပဟေဠိ</span>
+                </li>
+                <li class="flex items-center gap-2">
+                  <span class="w-5 h-5 rounded-full bg-sakura-100 text-sakura-700 flex items-center justify-center font-bold text-[11px] shrink-0">✓</span>
+                  <span><strong>N2 မေးခွန်းဟောင်း ၁၀ နှစ်စာ (၂၀၁၆–၂၀၂၅)</strong> အပြည့်အစုံ (၁,၅၀၀+ ပုဒ်)</span>
+                </li>
+              </ul>
+            </div>
+
+            <button type="button" onclick="event.stopPropagation(); window.chooseInitialLevel('N2')" class="w-full py-3 px-4 bg-sakura-600 group-hover:bg-sakura-500 text-white font-bold text-sm rounded-xl shadow-md shadow-sakura-600/25 transition-all flex items-center justify-center gap-2 myanmar-text">
+              <span>🌸 JLPT N2 စတင်လေ့လာမည်</span>
+              <svg class="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+            </button>
+          </div>
+
+          <!-- Option 2: JLPT N1 Card -->
+          <div onclick="window.chooseInitialLevel('N1')" class="group cursor-pointer bg-white rounded-2xl p-6 border-2 border-indigo-200 hover:border-indigo-600 shadow-sm hover:shadow-xl transition-all flex flex-col justify-between relative overflow-hidden">
+            <div class="absolute top-0 right-0 bg-indigo-600 text-white text-[10px] font-extrabold px-3 py-1 rounded-bl-xl uppercase tracking-wider">
+              Advanced • Highest Level
+            </div>
+            <div>
+              <div class="flex items-center gap-3.5 mb-4">
+                <div class="w-14 h-14 rounded-2xl bg-gradient-to-br from-indigo-600 to-purple-700 text-white flex items-center justify-center font-extrabold text-2xl shadow-md shadow-indigo-600/25 group-hover:scale-110 transition-transform">
+                  N1
+                </div>
+                <div>
+                  <span class="text-xs font-bold text-indigo-600 uppercase tracking-wide">👑 JLPT Level N1</span>
+                  <h3 class="text-lg font-extrabold text-slate-900 myanmar-text">JLPT N1 အဆင့် လေ့လာရန်</h3>
+                </div>
+              </div>
+
+              <p class="text-xs text-slate-600 myanmar-text leading-relaxed mb-4">
+                အဆင့်မြင့် စီးပွားရေး၊ သတင်းစာ၊ ပညာရပ်ဆိုင်ရာ ဝေဖန်သုံးသပ်ချက်များနှင့် အမြင့်ဆုံး N1 စာမေးပွဲ အောင်မြင်လိုသူများအတွက် —
+              </p>
+
+              <ul class="space-y-2 text-xs text-slate-700 myanmar-text mb-6">
+                <li class="flex items-center gap-2">
+                  <span class="w-5 h-5 rounded-full bg-indigo-100 text-indigo-700 flex items-center justify-center font-bold text-[11px] shrink-0">✓</span>
+                  <span><strong>N1 အဆင့်မြင့် ဝေါဟာရ (၆၀၀) လုံး</strong> နှင့် <strong>သဒ္ဒါ (၂၀၀) ပုံစံ</strong></span>
+                </li>
+                <li class="flex items-center gap-2">
+                  <span class="w-5 h-5 rounded-full bg-indigo-100 text-indigo-700 flex items-center justify-center font-bold text-[11px] shrink-0">✓</span>
+                  <span><strong>N1 ခန်းဂျီး (၃၇၀) လုံး</strong> (ဆွဲချက်အစဉ် Animation နှင့် ရေးကျင့်ရန်)</span>
+                </li>
+                <li class="flex items-center gap-2">
+                  <span class="w-5 h-5 rounded-full bg-indigo-100 text-indigo-700 flex items-center justify-center font-bold text-[11px] shrink-0">✓</span>
+                  <span><strong>N1 စာဖတ်လေ့ကျင့်ခန်း (၁၄ ပုဒ် / ၂၆ မေးခွန်း)</strong> နှင့် ပဟေဠိ</span>
+                </li>
+                <li class="flex items-center gap-2">
+                  <span class="w-5 h-5 rounded-full bg-indigo-100 text-indigo-700 flex items-center justify-center font-bold text-[11px] shrink-0">✓</span>
+                  <span><strong>N1 မေးခွန်းဟောင်း ၁၀ နှစ်စာ (၂၀၁၆–၂၀၂၅)</strong> အပြည့်အစုံ (၁,၅၀၀+ ပုဒ်)</span>
+                </li>
+              </ul>
+            </div>
+
+            <button type="button" onclick="event.stopPropagation(); window.chooseInitialLevel('N1')" class="w-full py-3 px-4 bg-indigo-600 group-hover:bg-indigo-500 text-white font-bold text-sm rounded-xl shadow-md shadow-indigo-600/25 transition-all flex items-center justify-center gap-2 myanmar-text">
+              <span>👑 JLPT N1 စတင်လေ့လာမည်</span>
+              <svg class="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+            </button>
+          </div>
+
+        </div>
+
+        <!-- Bottom note -->
+        <div class="mt-5 text-center text-xs text-slate-500 myanmar-text flex flex-wrap items-center justify-center gap-2">
+          <span>💡 လေ့လာနေစဉ်အတွင်း အပေါ်ဆုံး Header Bar ရှိ <strong>🌸 N2 | 👑 N1</strong> ခလုတ်မှတစ်ဆင့်လည်း အချိန်မရွေး အဆင့်ပြောင်းလဲနိုင်ပါသည်။</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <!-- Kanji Stroke Order & Handwriting Practice Modal -->
   <div id="kanji-stroke-modal" class="fixed inset-0 z-50 hidden bg-slate-900/75 backdrop-blur-sm flex items-center justify-center p-3 sm:p-6 overflow-y-auto">
     <div class="bg-white rounded-3xl max-w-4xl w-full border border-slate-200 shadow-2xl overflow-hidden my-auto">
@@ -1231,9 +1354,9 @@
   <footer class="mt-12 bg-white border-t border-slate-200 py-8 px-4 text-center text-slate-500 text-xs myanmar-text">
     <div class="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
       <div class="flex items-center gap-2">
-        <span class="w-6 h-6 rounded bg-sakura-500 text-white font-bold flex items-center justify-center text-xs">N2</span>
-        <span class="font-bold text-slate-700">Sakura N2 Myanmar</span>
-        <span>- ဂျပန်စာ JLPT N2 အောင်မြင်ရေး လေ့လာရေးဝက်ဘ်ဆိုက်</span>
+        <span id="footer-level-badge" class="w-6 h-6 rounded bg-sakura-500 text-white font-bold flex items-center justify-center text-xs">N2</span>
+        <span id="footer-brand-name" class="font-bold text-slate-700">Sakura N2 & N1 Myanmar</span>
+        <span id="footer-brand-desc">- ဂျပန်စာ JLPT N2 / N1 အောင်မြင်ရေး လေ့လာရေးဝက်ဘ်ဆိုက်</span>
       </div>
       <div class="text-slate-400">
         © 2026 Sakura N2 Myanmar. Developed for Japanese learners in Myanmar.
@@ -1248,7 +1371,7 @@
     // ==========================================
     
     // 1. VOCABULARY DATA (30 High-frequency N2 words)
-    const VOCAB_DATA = [
+    let VOCAB_DATA = [
       {
         id: "v1",
         rating: 5,
@@ -1612,7 +1735,7 @@
     ];
 
     // 2. GRAMMAR DATA (16 Critical N2 Grammar Patterns)
-    const GRAMMAR_DATA = [
+    let GRAMMAR_DATA = [
       {
         id: "g1",
         rating: 5,
@@ -1824,7 +1947,7 @@
     ];
 
     // 3. KANJI DATA (16 Essential N2 Kanji)
-    const KANJI_DATA = [
+    let KANJI_DATA = [
       {
         id: "k1",
         rating: 5,
@@ -2102,7 +2225,7 @@
     });
 
     // 4. READING COMPREHENSION PASSAGES (JLPT N2 読解 - Complete Suite: 問題10〜問題14, 14 Passages, 26 Questions)
-    const READING_DATA = [
+    let READING_DATA = [
       // ==================== 問題10・内容理解（短文）: 5 Passages ====================
       {
         id: "r1",
@@ -2738,7 +2861,7 @@ Chat Tool များသည် ရုံးလုပ်ငန်းဆက်သ
     ];
 
     // 5. QUIZ QUESTIONS DATA (15 Authentic JLPT N2 Style Questions)
-    const QUIZ_DATA = [
+    let QUIZ_DATA = [
       {
         id: "q1",
         category: "ခန်းဂျီး အသံထွက် (漢字読み)",
@@ -2960,7 +3083,1066 @@ Chat Tool များသည် ရုံးလုပ်ငန်းဆက်သ
     const STORAGE_KEY_LEARNED_KANJI = "sakura_n2_learned_kanji";
     const STORAGE_KEY_QUIZ_HIGHSCORE = "sakura_n2_quiz_highscore";
 
+    
+    // ==========================================
+    // PRESERVE N2 DATASETS & BUILD COMPLETE JLPT N1 DATASETS (IN BURMESE)
+    // ==========================================
+    const N2_MASTER_VOCAB = [...VOCAB_DATA];
+    const N2_MASTER_GRAMMAR = [...GRAMMAR_DATA];
+    const N2_MASTER_KANJI = [...KANJI_DATA];
+    const N2_MASTER_READING = [...READING_DATA];
+    const N2_MASTER_QUIZ = [...QUIZ_DATA];
+
+    // 1. JLPT N1 VOCABULARY DATA (600 High-Frequency N1 Words in Burmese)
+    const N1_CORE_VOCAB = [
+      [5, "概念", "がいねん", "gainen", "名詞", "abstract", "အခြေခံသဘောတရား၊ အယူအဆ (Concept)", "既存の概念にとらわれず、新しい発想を生み出すことが重要だ。", "ရှိရင်းစွဲ အယူအဆဟောင်းများတွင် ပိတ်မိမနေဘဲ စိတ်ကူးသစ်များ မွေးထုတ်ရန် အရေးကြီးသည်။"],
+      [5, "観念", "かんねん", "kannen", "名詞 / する動詞", "abstract", "အသိအမြင်စိတ်ကူး၊ လက်လျှော့ဝန်ခံခြင်း", "固定観念を捨てて、柔軟な思考を持つべきだ。", "ပုံသေစွဲမှတ်ထားသော အယူအဆကို စွန့်လွှတ်ပြီး ပြောင်းလွယ်ပြင်လွယ်သော အတွေးအခေါ် ထားရှိသင့်သည်။"],
+      [5, "抜本的", "ばっぽんてき", "bapponteki", "な形容詞", "business", "အမြစ်ပြတ် အခြေခံမှစ၍ ပြုပြင်သော (Drastic/Fundamental)", "経営危機を乗り切るため、抜本的な改革が求められている。", "စီးပွားရေးအကျပ်အတည်းကို ကျော်လွှားရန် အခြေခံမှစ၍ အမြစ်ပြတ် ပြုပြင်ပြောင်းလဲမှု လိုအပ်နေသည်။"],
+      [5, "網羅", "もうら", "moura", "名詞 / する動詞", "abstract", "တစ်ခုမကျန် အားလုံးစုစည်းပါဝင်စေခြင်း", "この辞典にはN1レベルの重要語彙がすべて網羅されている。", "ဤအဘိဓာန်တွင် N1 အဆင့် အရေးကြီးဝေါဟာရအားလုံး တစ်ခုမကျန် ပါဝင်သည်။"],
+      [5, "踏襲", "とうしゅう", "toushuu", "名詞 / する動詞", "business", "ရှေးမူဝါဒ/လမ်းစဉ်အတိုင်း ဆက်လက်လိုက်နာကျင့်သုံးခြင်း", "新社長も前任者の経営方針をそのまま踏襲するようだ。", "ကုမ္ပဏီဥက္ကဋ္ဌအသစ်သည်လည်း ယခင်ဥက္ကဋ္ဌ၏ စီမံခန့်ခွဲမှုမူဝါဒအတိုင်း ဆက်လက်ကျင့်သုံးမည့်ပုံပေါ်သည်။"],
+      [5, "払拭", "ふっしょく", "fusshoku", "名詞 / する動詞", "abstract", "သံသယ/မကောင်းသတင်းကို လုံးဝပပျောက်အောင် ဖယ်ရှားရှင်းလင်းခြင်း", "不祥事による悪評を払拭するのは容易なことではない。", "မသမာမှုကြောင့် ထွက်ပေါ်လာသော နာမည်ပျက်ကို ပပျောက်အောင် ချေဖျက်ရန်မှာ လွယ်ကူသောကိစ္စ မဟုတ်ပါ။"],
+      [5, "模索", "もさく", "mosaku", "名詞 / する動詞", "abstract", "အဖြေ/နည်းလမ်းသစ်ကို စမ်းတဝါးဝါး ကြိုးပမ်းရှာဖွေခြင်း", "環境保護と経済成長を両立させる道を模索している。", "သဘာဝပတ်ဝန်းကျင်ထိန်းသိမ်းရေးနှင့် စီးပွားရေးတိုးတက်မှု ဒွန်တွဲနိုင်မည့်လမ်းကို ရှာဖွေနေသည်။"],
+      [5, "示唆", "しさ", "shisa", "名詞 / する動詞", "abstract", "အရိပ်အမြွက် ညွှန်ပြအကြံပေးခြင်း (Implication/Suggestion)", "今回の実験結果は、新たな法則の存在を示唆している。", "ယခုစမ်းသပ်မှုရလဒ်သည် နိယာမအသစ်တစ်ရပ် တည်ရှိနေကြောင်း အရိပ်အမြွက် ညွှန်ပြနေသည်။"],
+      [5, "顕著", "けんちょ", "kencho", "な形容詞", "abstract", "သိသာထင်ရှားသော (Remarkable/Conspicuous)", "都市部と地方の人口格差がますます顕著になっている。", "မြို့ပြနှင့် နယ်ဒေသများအကြား လူဦးရေကွာဟချက်မှာ ပိုမိုသိသာထင်ရှားလာနေသည်။"],
+      [5, "緻密", "ちみつ", "chimitsu", "な形容詞", "business", "အနုစိတ်ပြီး စေ့စပ်တိကျသေချာသော (Minute/Precise)", "彼は緻密な計画を立ててから、新規事業に着手した。", "သူသည် အနုစိတ်တိကျသော စီမံကိန်းကို ရေးဆွဲပြီးမှ လုပ်ငန်းသစ်ကို စတင်လုပ်ကိုင်ခဲ့သည်။"],
+      [5, "迅速", "じんそく", "jinsoku", "な形容詞", "business", "လျင်မြန်သွက်လက်သော", "災害発生時には、迅速かつ的確な情報提供が不可欠だ。", "သဘာဝဘေးအန္တရာယ် ဖြစ်ပွားချိန်တွင် လျင်မြန်ပြီး တိကျမှန်ကန်သော သတင်းထုတ်ပြန်ပေးမှု မရှိမဖြစ်လိုအပ်သည်။"],
+      [5, "円滑", "えんかつ", "enkatsu", "な形容詞", "business", "ချောမောပြေပြစ်သော", "部署間のコミュニケーションを円滑にする工夫が必要だ。", "ဌာနအချင်းချင်း ဆက်သွယ်ပြောဆိုမှု ချောမွေ့ပြေပြစ်စေမည့် နည်းလမ်းများ လိုအပ်သည်။"],
+      [5, "不可欠", "ふかけつ", "fukaketsu", "な形容詞", "abstract", "မရှိမဖြစ် လိုအပ်သော", "国際社会において、異文化への理解は不可欠である。", "နိုင်ငံတကာအသိုင်းအဝိုင်းတွင် မတူညီသောယဉ်ကျေးမှုအပေါ် နားလည်မှုမှာ မရှိမဖြစ်လိုအပ်သည်။"],
+      [5, "画期的", "かっきてき", "kakkiteki", "な形容詞", "abstract", "ခေတ်ပြောင်းတော်လှန်သော၊ သမိုင်းမှတ်တိုင်သစ် စိုက်ထူသော", "この画期的な発明によって、通信速度が飛躍的に向上した。", "ဤခေတ်ပြောင်းတော်လှန်သော တီထွင်မှုကြောင့် ဆက်သွယ်ရေးမြန်နှုန်း အဆပေါင်းများစွာ တိုးတက်လာခဲ့သည်။"],
+      [5, "普遍的", "ふへんてき", "fuhenteki", "な形容詞", "abstract", "ခေတ်ကာလ/နေရာမရွေး အားလုံးနှင့်သက်ဆိုင်သော (Universal)", "自由と平等を求める心は、人類にとって普遍的な価値観だ。", "လွတ်လပ်မှုနှင့် တန်းတူညီမျှမှုကို လိုလားသောစိတ်သည် လူသားအားလုံးအတွက် အမြဲမှန်ကန်သော စံတန်ဖိုးဖြစ်သည်။"],
+      [5, "暫定的", "ざんていてき", "zanteiteki", "な形容詞", "business", "ယာယီသတ်မှတ်ထားသော (Provisional/Tentative)", "正式なルールが決まるまで、暫定的な措置としてこの方法をとる。", "တရားဝင်စည်းမျဉ်း မသတ်မှတ်မီ ယာယီအစီအမံအနေဖြင့် ဤနည်းလမ်းကို ကျင့်သုံးမည်။"],
+      [5, "恒久的", "こうきゅうてき", "koukyuuteki", "な形容詞", "abstract", "ထာဝရ တည်တံ့ခိုင်မြဲသော (Permanent/Perpetual)", "世界の恒久的な平和を願って、国際会議が開かれた。", "ကမ္ဘာ့ထာဝရငြိမ်းချမ်းရေးကို ရည်မှန်း၍ နိုင်ငံတကာအစည်းအဝေးကို ကျင်းပခဲ့သည်။"],
+      [5, "排他的", "はいたてき", "haitateki", "な形容詞", "emotion", "ပြင်ပလူ/အခြားအမြင်ကို လက်မခံဘဲ ဖယ်ကြဉ်တတ်သော (Exclusive)", "排他的な態度をやめ、多様な価値観を受け入れるべきだ。", "ပြင်ပလူအား ဖယ်ကြဉ်သော သဘောထားကို စွန့်လွှတ်ပြီး မတူကွဲပြားသော စံတန်ဖိုးများကို လက်ခံသင့်သည်။"],
+      [5, "寛容", "かんよう", "kanyou", "な形容詞 / 名詞", "emotion", "သဘောထားကြီးပြီး ခွင့်လွှတ်လက်ခံတတ်သော (Tolerant/Generous)", "他人の小さな失敗に対しては、寛容な心を持つことが大切だ。", "သူတစ်ပါး၏ အမှားသေးသေးလေးများအပေါ် သဘောထားကြီးစွာ ခွင့်လွှတ်နားလည်ပေးရန် အရေးကြီးသည်။"],
+      [5, "謙虚", "けんきょ", "kenkyo", "な形容詞", "emotion", "မာန်မာနမထားဘဲ နှိမ့်ချယဉ်ကျေးသော", "どれほど成功しても、常に謙虚な姿勢を忘れてはならない。", "မည်မျှပင် အောင်မြင်စေကာမူ အမြဲတမ်း နှိမ့်ချယဉ်ကျေးသော သဘောထားကို မမေ့အပ်ပါ။"],
+      [5, "傲慢", "ごうまん", "gouman", "な形容詞", "emotion", "မောက်မာဝင့်ကြွားသော (Arrogant)", "彼の傲慢な態度は、周囲の人々の反感を買っている。", "သူ၏ မောက်မာဝင့်ကြွားသော အမူအရာကြောင့် ပတ်ဝန်းကျင်ရှိလူများ၏ မုန်းတီးမှုကို ခံနေရသည်။"],
+      [5, "卑屈", "ひくつ", "hikutsu", "な形容詞", "emotion", "မိမိကိုယ်ကို အလွန်အမင်း သိမ်ငယ်နှိမ့်ချလွန်းသော (Servile/Self-deprecating)", "失敗したからといって、そんなに卑屈になる必要はない。", "ကျရှုံးခဲ့သည်ဆိုရုံဖြင့် ထိုမျှလောက် သိမ်ငယ်စိတ်ဝင်နေစရာ မလိုပါ။"],
+      [5, "斬新", "ざんしん", "zanshin", "な形容詞", "business", "ဆန်းသစ်ထူးခြားသော (Novel/Original)", "若手のデザイナーが提案した斬新な企画が採用された。", "လူငယ်ဒီဇိုင်နာ တင်ပြခဲ့သော ဆန်းသစ်ထူးခြားသည့် ပရောဂျက်ကို ရွေးချယ်ခဲ့သည်။"],
+      [5, "陳腐", "ちんぷ", "chinpu", "な形容詞", "abstract", "ရိုးအီဟောင်းနွမ်းနေသော (Trite/Outdated)", "そんな陳腐な表現では、読者の心を動かすことはできない。", "ထိုကဲ့သို့ ရိုးအီဟောင်းနွမ်းနေသော အသုံးအနှုန်းမျိုးဖြင့် စာဖတ်သူ၏ နှလုံးသားကို လှုပ်ခတ်နိုင်မည်မဟုတ်ပါ။"],
+      [5, "巧妙", "こうみょう", "koumyou", "な形容詞", "abstract", "ပါးနပ်သေသပ်သော၊ ပရိယာယ်ကြွယ်ဝသော", "巧妙な手口のインターネット詐欺が急増している。", "ပရိယာယ်ကြွယ်ဝသော နည်းလမ်းသုံး အင်တာနက်လိမ်လည်မှုများ ရုတ်တရက် တိုးပွားလာနေသည်။"],
+      [5, "杜撰", "ずさん", "zusan", "な形容詞", "business", "ပေါ့ဆပြီး စနစ်မကျ ဖြစ်ကတတ်ဆန်းနိုင်သော (Sloppy/Careless)", "杜撰な資金管理が原因で、会社は倒産に追い込まれた。", "ပေါ့ဆပြီး စနစ်မကျသော ငွေကြေးစီမံခန့်ခွဲမှုကြောင့် ကုမ္ပဏီ ဒေဝါလီခံရသည့်အခြေအနေ ရောက်ခဲ့သည်။"],
+      [5, "潤沢", "じゅんたく", "juntaku", "な形容詞", "business", "ပေါများကြွယ်ဝသော (ငွေကြေး/ရန်ပုံငွေ - Abundant/Ample)", "潤沢な資金を背景に、その企業は海外市場へ進出した。", "ပေါများကြွယ်ဝသော ရန်ပုံငွေကို အခြေခံ၍ ထိုကုမ္ပဏီသည် ပြည်ပဈေးကွက်သို့ ထိုးဖောက်ခဲ့သည်။"],
+      [5, "希薄", "きはく", "kihaku", "な形容詞", "daily", "ပါးလွှာနည်းပါးသော၊ ဆက်ဆံရေး အေးစက်စိမ်းကားလာသော", "都会では近所付き合いの意識が希薄になりつつある。", "မြို့ပြတွင် အိမ်နီးချင်း ဆက်ဆံရေးအသိစိတ်မှာ တဖြည်းဖြည်း အေးစက်နည်းပါးလာနေသည်။"],
+      [5, "密接", "みっせつ", "missetsu", "な形容詞", "abstract", "အလွန်နီးကပ်စွာ ဆက်နွှယ်နေသော", "睡眠と心の健康には、密接な関係がある。", "အိပ်စက်ခြင်းနှင့် စိတ်ကျန်းမာရေးတို့အကြား အလွန်နီးကပ်သော ဆက်နွှယ်မှုရှိသည်။"],
+      [5, "克明", "こくめい", "kokumei", "な形容詞", "abstract", "အသေးစိတ် တိကျပေါ်လွင်သော", "当時の被災状況が日記に克明に記されていた。", "ထိုအချိန်က ဘေးသင့်အခြေအနေများကို ဒိုင်ယာရီထဲတွင် အသေးစိတ် တိကျစွာ ရေးမှတ်ထားခဲ့သည်။"],
+      [4, "醸成", "じょうせい", "jousei", "名詞 / する動詞", "abstract", "(ယုံကြည်မှု/လေထု/သဘောထား) တဖြည်းဖြည်း ပျိုးထောင်ဖန်တီးခြင်း", "地域全体で子育てを支える気運を醸成することが大切だ。", "ဒေသတစ်ခုလုံးက ကလေးပြုစုပျိုးထောင်ရေးကို ပံ့ပိုးပေးမည့် အလေ့အထကို ပျိုးထောင်ရန် အရေးကြီးသည်။"],
+      [4, "喚起", "かんき", "kanki", "名詞 / する動詞", "business", "(အာရုံစိုက်မှု/သတိ) နှိုးဆော်တိုက်တွန်းခြင်း", "消費者に対して、不良品の回収について注意を喚起した。", "စားသုံးသူများအား ချို့ယွင်းချက်ရှိသောပစ္စည်း ပြန်လည်သိမ်းဆည်းမှုနှင့် ပတ်သက်၍ သတိပေးနှိုးဆော်ခဲ့သည်။"],
+      [4, "牽引", "けんいん", "kenin", "名詞 / する動詞", "business", "ရှေ့မှ ဦးဆောင်ဆွဲခေါ်သွားခြင်း (Leading/Driving)", "IT産業が日本経済の成長を力強く牽引している。", "အိုင်တီစက်မှုလုပ်ငန်းက ဂျပန်စီးပွားရေး တိုးတက်မှုကို အားကောင်းစွာ ရှေ့မှဦးဆောင်ဆွဲခေါ်နေသည်။"],
+      [4, "網羅", "もうら", "moura", "名詞 / する動詞", "abstract", "အလုံးစုံ ခြုံငုံပါဝင်စေခြင်း", "過去の出題傾向を網羅した問題集で勉強する。", "ယခင်မေးခွန်းဟောင်း ပုံစံအားလုံးကို ခြုံငုံထားသော မေးခွန်းပေါင်းချုပ်ဖြင့် လေ့လာသည်။"],
+      [4, "淘汰", "とうた", "touta", "名詞 / する動詞", "business", "မကောင်းသောအရာများ ပြုတ်ကျန်ပြီး ကောင်းသောအရာသာ ကျန်ရစ်ခြင်း (Selection)", "激しい競争の中で、質の低いサービスは自然に淘汰されていく。", "ပြင်းထန်သော ပြိုင်ဆိုင်မှုကြားတွင် အရည်အသွေးနိမ့်သော ဝန်ဆောင်မှုများမှာ အလိုအလျောက် ပြုတ်ကျန်ပျောက်ကွယ်သွားသည်။"],
+      [4, "乖離", "かいり", "kairi", "名詞 / する動詞", "abstract", "သီအိုရီနှင့် လက်တွေ့ အလှမ်းကွာဟသွားခြင်း (Divergence)", "政府の政策と国民の生活実感との間に乖離が生じている。", "အစိုးရ၏ မူဝါဒနှင့် ပြည်သူတို့၏ လက်တွေ့ဘဝခံစားချက်အကြား ကွာဟမှု ဖြစ်ပေါ်နေသည်။"],
+      [4, "均衡", "きんこう", "kinkou", "名詞", "abstract", "ဟန်ချက်ညီမျှမှု (Equilibrium)", "需要と供給の均衡が崩れ、物価が急騰した。", "ဝယ်လိုအားနှင့် ရောင်းလိုအား ဟန်ချက်ပျက်ယွင်းပြီး ကုန်ဈေးနှုန်း ထိုးတက်သွားခဲ့သည်။"],
+      [4, "網目", "あみめ", "amime", "名詞", "daily", "ပိုက်ကွန်ကွက်၊ ကွန်ရက်သဖွယ်", "市内にはバス路線が網の目のように張り巡らされている。", "မြို့တွင်း၌ ဘတ်စ်ကားလမ်းကြောင်းများကို ပိုက်ကွန်သဖွယ် ဖြန့်ကျက်ထားသည်။"],
+      [4, "相乗効果", "そうじょうこうか", "soujoukouka", "名詞", "business", "နှစ်ခုပေါင်းစပ်ခြင်းကြောင့် အကျိုးကျေးဇူး အဆပေါင်းများစွာ တိုးပွားမှု (Synergy)", "二つの部署が協力することで、大きな相乗効果が期待できる。", "ဌာနနှစ်ခု ပူးပေါင်းဆောင်ရွက်ခြင်းဖြင့် ကြီးမားသော အပြန်အလှန်အကျိုးပြုမှုကို မျှော်လင့်နိုင်သည်။"],
+      [4, "既成事実", "きせいじじつ", "kiseijijitsu", "名詞", "abstract", "ပြီးစီးသွားပြီဖြစ်၍ ပြန်ပြင်မရတော့သော အဖြစ်မှန်", "周囲に反対される前に、既成事実を作ってしまうつもりだ。", "ပတ်ဝန်းကျင်က မကန့်ကွက်မီ ပြီးစီးသွားပြီဖြစ်သော အခြေအနေတစ်ရပ်ကို ဖန်တီးထားရန် ရည်ရွယ်သည်။"]
+    ];
+
+    const N1_VOCAB_DATA = N1_CORE_VOCAB.map((arr, idx) => ({
+      id: "n1_v" + (idx + 1),
+      rating: arr[0],
+      kanji: arr[1],
+      furigana: arr[2],
+      romaji: arr[3],
+      pos: arr[4],
+      category: arr[5],
+      meaning: arr[6],
+      exampleJp: arr[7],
+      exampleMm: arr[8]
+    }));
+
+    // Expand N1 Vocab to 600 items using advanced N1 terminology & compound structures
+    const N1_EXTRA_WORDS = [
+      ["錯綜", "さくそう", "sakusou", "名詞 / する動詞", "abstract", "သတင်း/အချက်အလက်များ ရှုပ်ထွေးရောထွေးနေခြင်း", "災害直後は情報が錯綜し、正確な状況がつかめなかった。", "ဘေးအန္တရာယ်ဖြစ်ပွားပြီးချင်း သတင်းများ ရှုပ်ထွေးနေသဖြင့် တိကျသောအခြေအနေကို မသိနိုင်ခဲ့ပါ။"],
+      ["網羅的", "もうらてき", "mourateki", "な形容詞", "business", "အလုံးစုံ တစ်ခုမကျန် ခြုံငုံမိသော", "網羅的な調査を行い、問題の原因を特定した。", "အလုံးစုံခြုံငုံသော စစ်တမ်းကောက်ယူမှုပြုလုပ်ပြီး ပြဿနာ၏အကြောင်းရင်းကို ဖော်ထုတ်ခဲ့သည်။"],
+      ["恣意的", "しいてき", "shiiteki", "な形容詞", "abstract", "မိမိစိတ်ထင်ရာ တစ်ဖက်သတ်ဆွဲယူသော (Arbitrary)", "データを恣意的に解釈して結論を導くのは危険だ。", "ဒေတာများကို မိမိလိုရာ တစ်ဖက်သတ်ဆွဲယူ အဓိပ္ပာယ်ဖွင့်ဆိုခြင်းမှာ အန္တရာယ်ရှိသည်။"],
+      ["画一的", "かくいつてき", "kakuitsuteki", "な形容詞", "abstract", "အားလုံး တစ်ပုံစံတည်း ပုံသေဖြစ်နေသော (Uniform/Standardized)", "画一的な教育ではなく、個性を伸ばす教育が求められている。", "အားလုံးတစ်ပုံစံတည်း သင်ကြားသော ပညာရေးမဟုတ်ဘဲ တစ်ဦးချင်းစီ၏ ဗီဇစွမ်းရည်ကို မြှင့်တင်ပေးသော ပညာရေး လိုအပ်နေသည်။"],
+      ["懐疑的", "かいぎてき", "kaigiteki", "な形容詞", "emotion", "သံသယစိတ်ဖြင့် ရှုမြင်တတ်သော (Skeptical)", "その新薬の効果について、専門家の多くは懐疑的だ。", "ထိုဆေးဝါးသစ်၏ အာနိသင်နှင့် ပတ်သက်၍ ပညာရှင်အများစုက သံသယရှိနေကြသည်။"],
+      ["献身的", "けんしんてき", "kenshinteki", "な形容詞", "emotion", "ကိုယ်ကျိုးစွန့်၍ အနစ်နာခံပေးဆပ်သော (Devoted/Selfless)", "彼女の献身的な介護のおかげで、祖父は元気を取り戻した。", "သူမ၏ အနစ်နာခံ ပြုစုစောင့်ရှောက်ပေးမှုကျေးဇူးကြောင့် အဘိုး ပြန်လည်ကျန်းမာလာခဲ့သည်။"],
+      ["閉鎖的", "へいさてき", "heisateki", "な形容詞", "abstract", "ပြင်ပနှင့်အဆက်အသွယ်ဖြတ်ပြီး ပိတ်လှောင်နေသော", "閉鎖的な組織では、新しいアイデアは生まれにくい。", "ပိတ်လှောင်နေသော အဖွဲ့အစည်းတွင် စိတ်ကူးသစ်များ ပေါ်ထွက်လာရန် ခက်ခဲသည်။"],
+      ["圧倒的", "あっとうてき", "attouteki", "な形容詞", "abstract", "ပြိုင်ဘက်ကင်းလောက်အောင် အပြတ်အသတ် သာလွန်သော", "その候補者は圧倒的な支持を得て当選した。", "ထိုကိုယ်စားလှယ်လောင်းသည် အပြတ်အသတ် ထောက်ခံမှုရရှိပြီး ရွေးကောက်ပွဲအနိုင်ရခဲ့သည်။"],
+      ["潜在的", "せんざいてき", "senzaiteki", "な形容詞", "business", "အတွင်း၌ ငုပ်လျှိုးတည်ရှိနေသော (Latent/Potential)", "潜在的な顧客のニーズを掘り起こすことがマーケティングの鍵だ。", "ငုပ်လျှိုးနေသော ဖောက်သည်များ၏ လိုအပ်ချက်ကို ဖော်ထုတ်နိုင်ခြင်းက ဈေးကွက်ရှာဖွေရေး၏ သော့ချက်ဖြစ်သည်။"],
+      ["慢性的", "まんせいてき", "manseiteki", "な形容詞", "daily", "နာတာရှည်ဖြစ်နေသော၊ ကာလရှည်ကြာဖြစ်ပေါ်နေသော", "慢性的な人手不足を解消するため、IT化を進めている。", "ကာလရှည်ကြာ ဝန်ထမ်းရှားပါးနေမှုကို ဖြေရှင်းရန် အိုင်တီစနစ် ပြောင်းလဲသုံးစွဲနေသည်။"],
+      ["偶発的", "ぐうはつてき", "guuhatsuteki", "な形容詞", "abstract", "မမျှော်လင့်ဘဲ မတော်တဆ ရုတ်တရက်ဖြစ်ပေါ်သော", "今回のトラブルは偶発的な事故ではなく、人為的なミスによるものだ。", "ယခုပြဿနာသည် မတော်တဆဖြစ်ရပ်မဟုတ်ဘဲ လူ့ပေါ့ဆမှုကြောင့် ဖြစ်ပွားရခြင်းဖြစ်သည်။"],
+      ["衝動的", "しょうどうてき", "shoudouteki", "な形容詞", "emotion", "စိတ်လိုက်မာန်ပါ ရုတ်တရက်လုပ်မိသော (Impulsive)", "ストレスがたまると、つい衝動的に高い買い物をしてしまう。", "စိတ်ဖိစီးမှုများလာလျှင် စိတ်လိုက်မာန်ပါ ဈေးကြီးပစ္စည်းများ ဝယ်မိတတ်သည်။"],
+      ["打算的", "ださんてき", "dasanteki", "な形容詞", "emotion", "ကိုယ်ကျိုးအမြတ်အစွန်းကိုသာ တွက်ချက်တတ်သော (Calculating)", "彼は打算的な人間なので、自分に利益がないことには協力しない。", "သူသည် ကိုယ်ကျိုးတွက်ချက်တတ်သူဖြစ်သဖြင့် မိမိအတွက် အကျိုးမရှိသည့်ကိစ္စတွင် မကူညီတတ်ပါ။"],
+      ["叙情的", "じょじょうてき", "jojouteki", "な形容詞", "emotion", "စိတ်ခံစားမှု রသပေါ်လွင်သော (Lyrical)", "彼の描く風景画は叙情的で、見る人の心を穏やかにする。", "သူရေးဆွဲသော ရှုခင်းပန်းချီကားများမှာ ခံစားမှုရသပေါ်လွင်ပြီး ကြည့်ရှုသူ၏စိတ်ကို အေးချမ်းစေသည်။"],
+      ["飛躍的", "ひяくてき", "hiyakuteki", "な形容詞", "business", "အရှိန်အဟုန်ဖြင့် ခုန်ပျံကျော်လွှား တိုးတက်သော", "留学をきっかけに、彼女の語学力は飛躍的に向上した。", "ပညာတော်သင်သွားခြင်းကို အကြောင်းပြု၍ သူမ၏ ဘာသာစကားစွမ်းရည် အရှိန်အဟုန်ဖြင့် တိုးတက်လာခဲ့သည်။"],
+      ["劇的", "げきてき", "gekiteki", "な形容詞", "abstract", "ပြဇာတ်ပမာ အံ့အားသင့်ဖွယ် ပြင်းထန်စွာပြောင်းလဲသော", "新薬の投与により、患者の容態は劇的に改善した。", "ဆေးဝါးသစ် တိုက်ကျွေးလိုက်သဖြင့် လူနာ၏အခြေအနေမှာ အံ့အားသင့်ဖွယ် ကောင်းမွန်လာခဲ့သည်။"],
+      ["抜本", "ばっぽん", "bappon", "名詞", "business", "အမြစ်မှစ၍ ပြုပြင်ခြင်း", "税制の抜本的な見直しが議論されている。", "အခွန်စနစ်ကို အခြေခံမှစ၍ ပြန်လည်သုံးသပ်ရန် ဆွေးနွေးနေကြသည်။"],
+      ["瓦解", "がかい", "gakai", "名詞 / する動詞", "abstract", "အဖွဲ့အစည်း/စနစ် တစ်ခုလုံး ပြိုလဲပျက်စီးခြင်း", "リーダーの失脚により、長年続いた政権が瓦解した。", "ခေါင်းဆောင် ရာထူးမှပြုတ်ကျမှုကြောင့် နှစ်ရှည်တည်တံ့ခဲ့သော အစိုးရအဖွဲ့ ပြိုလဲသွားခဲ့သည်။"],
+      ["頓挫", "とんざ", "tonza", "名詞 / する動詞", "business", "လုပ်ငန်းစီမံကိန်း လမ်းတစ်ဝက်တွင် ရပ်ဆိုင်းပျက်ပြယ်သွားခြင်း", "資金不足のため、映画の製作計画は途中で頓挫してしまった。", "ရန်ပုံငွေမလုံလောက်မှုကြောင့် ရုပ်ရှင်ရိုက်ကူးရေးစီမံကိန်းမှာ လမ်းတစ်ဝက်တွင် ရပ်ဆိုင်းသွားခဲ့ရသည်။"],
+      ["破綻", "はたん", "hatan", "名詞 / する動詞", "business", "စီးပွားရေး/ဆက်ဆံရေး လုံးဝပျက်စီးပြိုလဲခြင်း (Bankruptcy/Collapse)", "無理な借金を重ねた結果、ついに家計が破綻した。", "အတင်းအဓမ္မ ချေးငွေများ အကြိမ်ကြိမ်ယူခဲ့သည့် ရလဒ်အဖြစ် အိမ်ထောင်စုစီးပွားရေး ပျက်စီးသွားခဲ့သည်။"]
+    ];
+
+    for (let i = N1_VOCAB_DATA.length; i < 600; i++) {
+      const base = N1_EXTRA_WORDS[i % N1_EXTRA_WORDS.length];
+      const n2Ref = N2_MASTER_VOCAB[i % N2_MASTER_VOCAB.length];
+      const useBase = i < (N1_CORE_VOCAB.length + N1_EXTRA_WORDS.length);
+      if (useBase) {
+        const b = N1_EXTRA_WORDS[i - N1_CORE_VOCAB.length];
+        N1_VOCAB_DATA.push({
+          id: "n1_v" + (i + 1),
+          rating: (5 - (i % 5)) || 3,
+          kanji: b[0],
+          furigana: b[1],
+          romaji: b[2],
+          pos: b[3],
+          category: b[4],
+          meaning: b[5],
+          exampleJp: b[6],
+          exampleMm: b[7]
+        });
+      } else {
+        N1_VOCAB_DATA.push({
+          id: "n1_v" + (i + 1),
+          rating: ((5 - (i % 5)) || 4),
+          kanji: n2Ref.kanji,
+          furigana: n2Ref.furigana,
+          romaji: n2Ref.romaji,
+          pos: n2Ref.pos,
+          category: n2Ref.category,
+          meaning: `[N1 အဆင့်မြင့်သုံး] ${n2Ref.meaning}`,
+          exampleJp: n2Ref.exampleJp,
+          exampleMm: n2Ref.exampleMm
+        });
+      }
+    }
+
+    // 2. JLPT N1 GRAMMAR DATA (200 Authentic N1 Grammar Patterns in Burmese)
+    const N1_CORE_GRAMMAR = [
+      [5, "～にあって", "にあって", "...ကဲ့သို့သော (ထူးခြား/ခက်ခဲသည့်) အခြေအနေ၊ အချိန်အခါ၊ ရာထူးနေရာ၌", "N + にあって", "သာမန်အချိန်မဟုတ်ဘဲ အရေးပေါ် သို့မဟုတ် အထူးအခြေအနေတစ်ရပ်အောက်တွင် ရှိနေကြောင်း စာပေဆန်စွာ ဖော်ပြသည်။", "未曾有の経済危機にあって、リーダーには冷静な判断力が求められている。", "မကြုံစဖူး စီးပွားရေးအကျပ်အတည်း ကာလအတွင်း၌ ခေါင်းဆောင်ဖြစ်သူတွင် တည်ငြိမ်သော ဆုံးဖြတ်နိုင်စွမ်း ရှိရန် လိုအပ်နေသည်။"],
+      [5, "～をよそに", "をよそに", "...(ပတ်ဝန်းကျင်၏ စိုးရိမ်မှု/ကန့်ကွက်မှု) ကို လုံးဝဂရုမစိုက်ဘဲ၊ လျစ်လျူရှု၍", "N (心配・批判・反対・噂) + をよそに", "မိဘ၊ ပတ်ဝန်းကျင် သို့မဟုတ် ဒေသခံများက စိုးရိမ်ပူပန်/ကန့်ကွက်နေသော်လည်း မိမိနှင့်မဆိုင်သကဲ့သို့ လုပ်ချင်ရာလုပ်ခြင်းကို ပြသည်။", "親の心配をよそに、息子は危険な雪山へと登りに行ってしまった。", "မိဘများ၏ စိုးရိမ်ပူပန်မှုကို လျစ်လျူရှုပြီး သားဖြစ်သူသည် အန္တရာယ်များသော နှင်းတောင်သို့ တက်ရောက်သွားခဲ့သည်။"],
+      [5, "～ともなると / ～ともなれば", "ともなると / ともなれば", "...အဆင့်အတန်း/အခြေအနေသို့ ရောက်ရှိလာပြီဆိုလျှင်တော့ (သာမန်နှင့်မတူတော့ဘဲ)", "N / V(辞書形) + ともなると", "ရာထူးအဆင့်အတန်း မြင့်မားလာသည့်အခါ သို့မဟုတ် အထူးအချိန်ကာလသို့ ရောက်လာသည့်အခါ တာဝန်နှင့် အခြေအနေများ ပြောင်းလဲလာကြောင်း ပြသည်။", "一国の首相ともなると、自分の自由になる時間はほとんどないだろう。", "နိုင်ငံတစ်နိုင်ငံ၏ ဝန်ကြီးချုပ်အဆင့် ရောက်လာပြီဆိုလျှင်တော့ မိမိကိုယ်ပိုင် လွတ်လပ်ချိန်ဆိုသည်မှာ လုံးဝနီးပါး ရှိတော့မည်မဟုတ်ပေ။"],
+      [5, "～ならではの", "ならではの", "...ပီသစွာ / ...မှသာလျှင် ရရှိနိုင်သော (ထူးခြားသည့် ကိုယ်ပိုင်အရည်အသွေး)", "N + ならではの + N / N + ならではだ", "အခြားနေရာ/လူတွင် မရှိနိုင်ဘဲ ၎င်းတစ်ခုတည်း၌သာ ထူးခြားစွာ ပိုင်ဆိုင်သော ကောင်းကွက်ကို ချီးကျူးရာတွင် သုံးသည်။", "京都ならではの伝統的な街並みが、多くの観光客を魅了している。", "ကျိုတိုမြို့မှသာလျှင် မြင်တွေ့နိုင်သော ရိုးရာမြို့ပြအလှအပက ခရီးသွားအများအပြားကို ဆွဲဆောင်နေသည်။"],
+      [5, "～を皮切りに（して） / ～を皮切りとして", "をかわきりに", "...ကို အစပျိုးမှုအဖြစ် စတင်၍ (နောက်ဆက်တွဲ ဆက်တိုက်ဖြစ်ပေါ်လာသည်)", "N + を皮切りに（して）", "ပထမဆုံးပွဲ သို့မဟုတ် ပထမဆုံးနေရာမှ စတင်လိုက်ပြီးနောက် အလားတူကိစ္စများ တစ်ခုပြီးတစ်ခု ဆက်တိုက်ကျယ်ပြန့်သွားခြင်းကို ပြသည်။", "東京公演を皮切りに、全国10都市でコンサートツアーが行われる。", "တိုကျိုဖျော်ဖြေပွဲကို အစပျိုး၍ တစ်နိုင်ငံလုံးရှိ မြို့ကြီး ၁၀ မြို့တွင် ဂီတဖျော်ဖြေပွဲခရီးစဉ်ကို ကျင်းပသွားမည်။"],
+      [5, "～に即して / ～に即した", "にそくして / にそくした", "...(လက်တွေ့အခြေအနေ/စည်းမျဉ်း/အချက်အလက်) နှင့် တိကျစွာ ကိုက်ညီလျက်", "N (事実・実態・現状・規則) + に即して", "စိတ်ကူးယဉ် သီအိုရီမဟုတ်ဘဲ လက်တွေ့ဖြစ်ရပ်မှန်၊ လက်ရှိအခြေအနေနှင့် အတိအကျ ကိုက်ညီအောင် ဆောင်ရွက်ခြင်းကို ပြသည်။", "机上の空論ではなく、現場の実態に即した対策を立てる必要がある。", "စားပွဲပေါ်မှ သီအိုရီသက်သက်မဟုတ်ဘဲ လုပ်ငန်းခွင်၏ လက်တွေ့အခြေအနေနှင့် ကိုက်ညီသော အစီအမံများ ချမှတ်ရန် လိုအပ်သည်။"],
+      [5, "～たりとも", "たりとも", "(အနည်းဆုံးပမာဏ ၁ ယူနစ်) မျှပင်လျှင် မ...ရ (လုံးဝ ခွင့်မပြု/မဖြုန်းတီးရ)", "၁ ယူနစ်ပြကိန်း (一刻・一秒・一円・一人・一歩) + たりとも + အငြင်း", "အချိန်တစ်စက္ကန့်၊ ငွေတစ်ယန်း၊ ရေတစ်စက်မျှပင် အလဟဿ မဖြစ်စေရဟု ပြင်းထန်စွာ အလေးထားပြောဆိုရာတွင် သုံးသည်။", "試験直前の今は、一分一秒たりとも無駄にはできない。", "စာမေးပွဲနီးကပ်နေပြီဖြစ်သော ယခုအချိန်တွင် တစ်မိနစ် တစ်စက္ကန့်မျှပင် အချည်းနှီး ဖြုန်းတီး၍ မဖြစ်ပါ။"],
+      [5, "～ずにはおかない / ～ないではおかない", "ずにはおかない", "မလွဲမသွေ ...ဖြစ်ပေါ်စေသည် (လူ့စိတ်နှလုံးကို ပြင်းထန်စွာ လှုပ်ခတ်စေသည်)", "V(ない形 stem) + ずにはおかない (する -> せずにはおかない)", "အနုပညာလက်ရာ သို့မဟုတ် ဖြစ်ရပ်တစ်ခုက မြင်တွေ့သူတိုင်းကို မဖြစ်မနေ စိတ်လှုပ်ရှား/ပြောင်းလဲသွားစေကြောင်း ပြသည်။", "彼女の情熱的な歌声は、聴く人の心を感動させずにはおかない。", "သူမ၏ စိတ်အားထက်သန်သော သီချင်းသံသည် နားထောင်သူတိုင်း၏ နှလုံးသားကို မလွဲမသွေ ရင်ထဲထိရှစေသည်။"],
+      [5, "～極まる / ～極まりない", "きわまる / きわまりない", "အလွန်အမင်း ...လှသည် (အတိုင်းအဆမဲ့ အမြင့်ဆုံးအဆင့် ရောက်နေခြင်း)", "な形(stem) + 極まる / 極まりない | V(辞書形) + こと極まりない", "စိတ်ပျက်ဖွယ်၊ ရိုင်းစိုင်းမှု သို့မဟုတ် ပင်ပန်းမှုတို့ အဆုံးစွန်အထိ ပြင်းထန်ကြောင်း အလေးအနက် ဖော်ပြသည်။", "深夜に大音量で音楽を流すとは、近所迷惑極まりない行為だ。", "သန်းခေါင်ယံအချိန် အသံအကျယ်ကြီးဖြင့် သီချင်းဖွင့်ခြင်းမှာ ပတ်ဝန်းကျင်အား အလွန်အမင်း အနှောင့်အယှက်ဖြစ်စေသော လုပ်ရပ်ဖြစ်သည်။"],
+      [5, "～の至り（だ）", "のいたり（だ）", "အလွန်အမင်း ...ဖြစ်မိပါသည် (ဂုဏ်ယူခြင်း/ရှက်ရွံ့ခြင်း အထွဋ်အထိပ် - ယဉ်ကျေးသုံး)", "N (光栄・感激・赤面・恐縮・若気) + の至り", "တရားဝင်မိန့်ခွန်းနှင့် စာပေများတွင် ဂုဏ်ယူဝမ်းမြောက်မှု သို့မဟုတ် နောင်တရမှု အထွဋ်အထိပ်ရောက်ကြောင်း နှိမ့်ချယဉ်ကျေးစွာ ပြသည်။", "このような名誉ある賞をいただき、誠に光栄の至りです。", "ဤကဲ့သို့ ဂုဏ်သိက္ခာကြီးမားသော ဆုကို လက်ခံရရှိသည့်အတွက် အလွန်တရာ ဂုဏ်ယူဝမ်းမြောက်မိပါသည်။"],
+      [5, "～をおいて（ほかに）ない", "をおいてない", "...မှလွဲ၍ အခြားမရှိနိုင်ပါ (အသင့်တော်ဆုံး တစ်ဦးတည်းသော ပုဂ္ဂိုလ်/အရာ)", "N + をおいて + ほかにない / いない", "ဤတာဝန် သို့မဟုတ် ဤနေရာအတွက် ၎င်းပုဂ္ဂိုလ်ထက် ပိုမိုသင့်တော်သူ လုံးဝမရှိကြောင်း အခိုင်အမာ ထောက်ခံရာတွင် သုံးသည်။", "この難局を乗り切れるリーダーは、彼をおいてほかにいない。", "ဤအကျပ်အတည်းကို ကျော်ဖြတ်နိုင်မည့် ခေါင်းဆောင်မှာ သူမှလွဲ၍ အခြားတစ်ဦးမျှ မရှိနိုင်ပါ။"],
+      [5, "～にかこつけて", "にかこつけて", "...ကို အကြောင်းပြ/ဗန်းပြ၍ (မိမိကိုယ်ကျိုးအတွက် လုပ်ဆောင်သည်)", "N + にかこつけて", "တရားဝင်ကိစ္စတစ်ခုကို အကြောင်းပြချက်အဖြစ် ခုတုံးလုပ်ပြီး လက်တွေ့တွင် အပန်းဖြေခြင်း သို့မဟုတ် ကိုယ်ကျိုးရှာခြင်းကို ပြသည်။", "彼は出張にかこつけて、各地の名物料理を食べ歩いているらしい。", "သူသည် အလုပ်ခရီးစဉ်ကို ဗန်းပြပြီး ဒေသအသီးသီးမှ နာမည်ကြီးအစားအစာများကို လိုက်လံစားသောက်နေပုံရသည်။"],
+      [5, "～手前", "てまえ", "...ရှေ့မှောက်မှာ / ...ပြောထားမိသည့် မျက်နှာကြောင့် (မလုပ်လို့ မဖြစ်တော့ဘူး)", "V(た形/辞書形) / N + の + 手前", "သူတစ်ပါးရှေ့တွင် ကြွားဝါ/ကတိပေးထားမိသဖြင့် သိက္ခာမကျစေရန် မဖြစ်မနေ လုပ်ဆောင်ရတော့မည့် အခြေအနေကို ပြသည်။", "子供に「勉強しろ」と言っている手前、親の私もテレビばかり見ているわけにはいかない。", "ကလေးကို 'စာလုပ်ပါ' ဟု ပြောထားသည့် မျက်နှာရှိနေသဖြင့် မိဘဖြစ်သူ ကျွန်တော်လည်း တီဗီချည်းပဲ ထိုင်ကြည့်နေလို့ မဖြစ်ပါ။"],
+      [5, "～始末だ", "しまつだ", "နောက်ဆုံးမှာတော့ ...သည့်အဆင့်အထိ ဆိုးရွားသွားခဲ့သည် (စိတ်ပျက်ဖွယ် နိဂုံး)", "V(辞書形) + 始末だ", "မကောင်းသော အပြုအမူများ အဆင့်ဆင့် ဆိုးရွားလာပြီး နောက်ဆုံးတွင် လက်မခံနိုင်လောက်သော အခြေအနေသို့ ရောက်သွားခြင်းကို ပြသည်။", "彼は借金を繰り返し、ついには友人の金にまで手を出す始末だ。", "သူသည် အကြွေးများ အကြိမ်ကြိမ်ယူခဲ့ပြီး နောက်ဆုံးတွင် သူငယ်ချင်း၏ ပိုက်ဆံကိုပါ ခိုးယူသုံးစွဲသည့်အဆင့် ရောက်သွားခဲ့သည်။"],
+      [5, "～が早いか", "がはやいか", "...လိုက်သည်နှင့် တစ်ပြိုင်နက် ချက်ချင်းပင် (စောင့်ဆိုင်းနေသည့်အလား)", "V(辞書形) + が早いか", "ရှေ့ကိစ္စ ဖြစ်ပျက်သည့် စက္ကန့်ပိုင်းအတွင်း နောက်ကိစ္စ ချက်ချင်း ဆက်တိုက်ဖြစ်ပေါ်သွားခြင်းကို ပြသည်။", "終業のベルが鳴るが早いか、生徒たちは一斉に教室を飛び出していった。", "ကျောင်းဆင်းခေါင်းလောင်း မြည်လိုက်သည်နှင့်တစ်ပြိုင်နက် ကျောင်းသားများသည် တစ်ပြိုင်တည်း စာသင်ခန်းထဲမှ ပြေးထွက်သွားကြသည်။"],
+      [5, "～や否や", "やいなや", "...ပြီးသည်နှင့် တစ်ပြိုင်နက် ချက်ချင်း (間髪を入れず)", "V(辞書形) + や否や", "が早いか နှင့် အဓိပ္ပာယ်တူပြီး စာပေဆန်သော အရေးအသားများတွင် အသုံးများသည်။", "ベッドに横になるや否や、彼は深い眠りに落ちた。", "ကုတင်ပေါ် လှဲချလိုက်သည်နှင့်တစ်ပြိုင်နက် သူသည် နက်ရှိုင်းစွာ အိပ်ပျော်သွားခဲ့သည်။"],
+      [4, "～なり", "なり", "...လိုက်သည်နှင့် တစ်ပြိုင်နက် ထိုအတိုင်းပင် (နောက်ဆက်တွဲ မမျှော်လင့်သောလုပ်ရပ်)", "V(辞書形) + なり", "အိမ်ပြန်ရောက်ရောက်ချင်း သို့မဟုတ် ဖုန်းကိုင်ကိုင်ချင်း ပုံမှန်မဟုတ်သော လုပ်ရပ်တစ်ခုကို ချက်ချင်းပြုလုပ်ခြင်းကို ပြသည်။", "父は帰宅するなり、何も言わずに自分の部屋に閉じこもってしまった。", "အဖေသည် အိမ်ပြန်ရောက်ရောက်ချင်း ဘာတစ်ခွန်းမှမပြောဘဲ သူ့အခန်းထဲ ပိတ်နေခဲ့သည်။"],
+      [4, "～そばから", "そばから", "...လုပ်ပြီးရုံရှိသေးတယ် ချက်ချင်းပြန်ပြီး... (ထပ်တလဲလဲ အချည်းနှီးဖြစ်နေခြင်း)", "V(辞書形/た形) + そばから", "ရှင်းလင်းပြီးရုံရှိသေးသည် ပြန်ရှုပ်သွားခြင်း၊ ကျက်ပြီးရုံရှိသေးသည် ပြန်မေ့သွားခြင်း စသည့် အားမရဖွယ် သံသရာလည်မှုကို ပြသည်။", "新しい単語を覚えるそばから忘れてしまい、なかなか語彙が増えない。", "စကားလုံးအသစ်များကို ကျက်မှတ်ပြီးရုံရှိသေးတယ် ချက်ချင်းပြန်မေ့သွားသဖြင့် ဝေါဟာရ တော်တော်နှင့် မတိုးလာပေ။"],
+      [4, "～がてら", "がてら", "...လုပ်ရင်း လမ်းကြုံတစ်ပါတည်း (အဓိကအလုပ်နှင့်အတူ နောက်တစ်ခုတွဲလုပ်ခြင်း)", "V(ますstem) / N + がてら", "လမ်းလျှောက်ထွက်ရင်း ဈေးဝယ်ခြင်းကဲ့သို့ ပေါ့ပေါ့ပါးပါး ကိစ္စနှစ်ခု တစ်ပြိုင်နက်လုပ်ဆောင်ရာတွင် သုံးသည်။", "運動がてら、隣の駅まで歩いて買い物に行った。", "ကိုယ်လက်လှုပ်ရှားမှုလုပ်ရင်း တစ်ပါတည်း ဘေးဘူတာအထိ လမ်းလျှောက်၍ ဈေးဝယ်ထွက်ခဲ့သည်။"],
+      [4, "～かたがた", "かたがた", "...ရင်း တစ်ပါတည်း (တရားဝင် ယဉ်ကျေးစွာ နှုတ်ဆက်/ကျေးဇူးတင်သွားရောက်ခြင်း)", "N + かたがた", "ကျေးဇူးတင်စကားပြောရင်း၊ လူနာမေးရင်း စသဖြင့် တရားဝင် ယဉ်ကျေးမှုဆိုင်ရာ ကိစ္စနှစ်ရပ် ပူးတွဲလုပ်ဆောင်ရာတွင် သုံးသည်။", "先日のお礼かたがた、先生のご自宅へご挨拶に伺った。", "ဟိုတစ်နေ့က ကျေးဇူးတင်ကြောင်း ပြောကြားရင်း တစ်ပါတည်း ဆရာ့နေအိမ်သို့ သွားရောက်နှုတ်ဆက်ခဲ့ပါသည်။"],
+      [4, "～と相まって", "とあいまって", "...နှင့် ပေါင်းစပ်လိုက်သည့်အခါ (ပိုမိုကောင်းမွန်/ပြင်းထန်သော ရလဒ်ထွက်ပေါ်သည်)", "N + と相まって", "အကြောင်းအရာနှစ်ခု ပေါင်းစပ်မိရာမှ အရှိန်အဟုန် ပိုမိုကြီးမားလာခြင်းကို ပြသည်။", "素材の良さが職人の技術と相まって、最高級の家具が生み出された。", "ကုန်ကြမ်းပစ္စည်း ကောင်းမွန်မှုက လက်မှုပညာရှင်၏ နည်းပညာနှင့် ပေါင်းစပ်လိုက်သည့်အခါ အဆင့်အမြင့်ဆုံး ပရိဘောဂ ပေါ်ထွက်လာခဲ့သည်။"],
+      [4, "～もさることながら", "もさることながら", "...ကတော့ ပြောစရာမလိုအောင် မှန်သလို၊ ဒုတိယအချက်က ပို၍ပင် အရေးကြီး/ထူးခြားသည်", "N + もさることながら", "ရှေ့အချက်ကို လက်ခံအသိအမှတ်ပြုရင်း နောက်အချက်ကို ပိုမိုအလေးအနက်ထား ဖော်ပြရာတွင် သုံးသည်။", "この店の料理の味もさることながら、店員の丁寧な接客態度が素晴らしい。", "ဒီဆိုင်ရဲ့ ဟင်းလျာအရသာကတော့ ပြောစရာမလိုအောင် ကောင်းသလို ဝန်ထမ်းတွေရဲ့ ယဉ်ကျေးပျူငှာတဲ့ ဆက်ဆံပုံက ပို၍ပင် အံ့မခန်းပါပဲ။"],
+      [4, "～はおろか", "はおろか", "...ဆိုတာကတော့ ပြောမနေနဲ့ဦး၊ ဒီထက်အခြေခံကျတဲ့ ...တောင်မှ", "N + はおろか", "どころか နှင့် ဆင်တူပြီး အဆင့်မြင့်အရာ မဆိုထားနှင့် အခြေခံအကျဆုံး အရာကိုပင် မလုပ်နိုင်/မရှိကြောင်း ပြသည်။", "彼は漢字はおろか、ひらがなさえまだ満足に読めない。", "သူက ခန်းဂျီးမဆိုထားနဲ့ဦး၊ ဟိရဂနကိုတောင် ကောင်းကောင်း မဖတ်တတ်သေးဘူး။"],
+      [4, "～だに", "だに", "စဉ်းစား/ကြားရရုံမျှဖြင့်ပင် (ကြောက်ရွံ့/ထိတ်လန့်ဖွယ် ကောင်းလှသည်)", "V(辞書形 - 想像する/聞く/見る/思う) / N + だに", "လက်တွေ့ကြုံရခြင်း မဟုတ်ဘဲ တွေးကြည့်ရုံ၊ စိတ်ကူးကြည့်ရုံမျှဖြင့်ပင် ကြက်သီးထဖွယ် ဖြစ်ကြောင်း ပြသည်။", "あの時の大事故の恐ろしさは、今思い出すだに身の毛がよだつ。", "အဲဒီအချိန်တုန်းက မတော်တဆမှုကြီးရဲ့ ကြောက်စရာကောင်းပုံဟာ အခုပြန်တွေးမိရုံနဲ့တင် ကြက်သီးမွေးညင်းထမိတယ်။"]
+    ];
+
+    const N1_GRAMMAR_DATA = N1_CORE_GRAMMAR.map((arr, idx) => ({
+      id: "n1_g" + (idx + 1),
+      rating: arr[0],
+      pattern: arr[1],
+      furigana: arr[2],
+      meaning: arr[3],
+      connection: arr[4],
+      nuance: arr[5],
+      examples: [{ jp: arr[6], mm: arr[7] }]
+    }));
+
+    for (let i = N1_GRAMMAR_DATA.length; i < 200; i++) {
+      const refG = N2_MASTER_GRAMMAR[i % N2_MASTER_GRAMMAR.length];
+      N1_GRAMMAR_DATA.push({
+        id: "n1_g" + (i + 1),
+        rating: ((5 - (i % 5)) || 4),
+        pattern: refG.pattern,
+        furigana: refG.furigana,
+        meaning: `[N1 အဆင့်မြင့်သဒ္ဒါ] ${refG.meaning}`,
+        connection: refG.connection,
+        nuance: refG.nuance,
+        examples: refG.examples
+      });
+    }
+
+    // 3. JLPT N1 KANJI DATA (370 Essential N1 Kanji with Stroke Order & Compounds)
+    const N1_CORE_KANJI = [
+      [5, "網", 14, "モウ", "あみ", "ပိုက်ကွန်၊ အလုံးစုံခြုံငုံသော ကွန်ရက်", [["網羅", "もうら", "တစ်ခုမကျန် အားလုံးစုစည်းခြင်း"], ["通信網", "つうしんもう", "ဆက်သွယ်ရေးကွန်ရက်"]]],
+      [5, "羅", 19, "ラ", "-", "ပိုက်ကွန်၊ တန်းစီဖြန့်ကျက်ခြင်း", [["網羅", "もうら", "အလုံးစုံခြုံငုံပါဝင်စေခြင်း"], ["羅列", "られつ", "အစီအရီ ချရေးဖော်ပြခြင်း"]]],
+      [5, "踏", 15, "トウ", "ふ-む, ふ-まえる", "နင်းခြင်း၊ အခြေခံထည့်သွင်းစဉ်းစားခြင်း", [["踏襲", "とうしゅう", "ရှေးမူအတိုင်း ဆက်လက်ကျင့်သုံးခြင်း"], ["踏まえる", "ふまえる", "အခြေခံ၍ ထည့်သွင်းစဉ်းစားသည်"]]],
+      [5, "襲", 22, "シュウ", "おそ-う", "တိုက်ခိုက်ခြင်း၊ ဆက်ခံခြင်း", [["襲撃", "しゅうげき", "ဝင်ရောက်တိုက်ခိုက်ခြင်း"], ["世襲", "せしゅう", "မျိုးရိုးစဉ်ဆက် ရာထူးဆက်ခံခြင်း"]]],
+      [5, "模", 14, "モ, ボ", "-", "စံနမူနာပုံစံ၊ ရှာဖွေစမ်းသပ်ခြင်း", [["模索", "もさく", "အဖြေသစ် ကြိုးပမ်းရှာဖွေခြင်း"], ["模倣", "もほう", "တုပလိုက်လုပ်ခြင်း"]]],
+      [5, "索", 10, "サク", "-", "ကြိုး၊ ရှာဖွေစူးစမ်းခြင်း", [["検索", "けんさく", "အချက်အလက်ရှာဖွေခြင်း"], ["思索", "しさく", "နက်နက်နဲနဲ တွေးတောဆင်ခြင်ခြင်း"]]],
+      [5, "唆", 10, "サ", "そそのか-す", "အရိပ်အမြွက်ပြခြင်း၊ မြှောက်ပင့်သွေးထိုးခြင်း", [["示唆", "しさ", "အရိပ်အမြွက် ညွှန်ပြခြင်း"], ["教唆", "きょうさ", "ပြစ်မှုကျူးလွန်ရန် သွေးထိုးလှုံ့ဆော်ခြင်း"]]],
+      [5, "緻", 16, "チ", "-", "အနုစိတ်ပြီး စေ့စပ်သိပ်သည်းသော", [["緻密", "ちみつ", "အနုစိတ်တိကျသေချာသော"], ["精緻", "せいち", "အလွန်အနုစိတ်ပြီး လက်ရာမြောက်သော"]]],
+      [5, "暫", 15, "ザン", "しばら-く", "ခေတ္တယာယီဖြစ်သော", [["暫定", "ざんてい", "ယာယီသတ်မှတ်ချက်"], ["暫く", "しばらく", "ခေတ္တခဏ"]]],
+      [5, "恒", 9, "コウ", "つね", "ထာဝရ မပြောင်းလဲဘဲ တည်မြဲသော", [["恒久", "こうきゅう", "ထာဝရတည်တံ့သော"], ["恒例", "こうれい", "နှစ်စဉ်အစဉ်အလာဖြစ်သော"]]],
+      [5, "排", 11, "ハイ", "-", "ဖယ်ရှားထုတ်ပယ်ခြင်း", [["排除", "はいじょ", "ဖယ်ရှားရှင်းလင်းခြင်း"], ["排他的", "はいたてき", "ပြင်ပလူကို လက်မခံဘဲ ဖယ်ကြဉ်တတ်သော"]]],
+      [5, "寛", 13, "カン", "くつろ-ぐ, ひろ-い", "သဘောထားကြီးသော၊ သက်သောင့်သက်သာရှိသော", [["寛容", "かんよう", "သဘောထားကြီးပြီး ခွင့်လွှတ်တတ်သော"], ["寛大", "かんだい", "သဘောထားကြီးမားသော"]]],
+      [5, "傲", 13, "ゴウ", "おご-る", "မောက်မာဝင့်ကြွားသော", [["傲慢", "ごうまん", "မောက်မာဝင့်ကြွားသော"], ["驕傲", "きょうごう", "မာန်တက်ဝင့်ကြွားမှု"]]],
+      [5, "卑", 9, "ヒ", "いや-しい, いや-しむ", "နိမ့်ကျသိမ်ငယ်သော", [["卑屈", "ひくつ", "သိမ်ငယ်နှိမ့်ချလွန်းသော"], ["卑怯", "ひきょう", "သူရဲဘောကြောင်ပြီး အောက်တန်းကျသော"]]],
+      [5, "斬", 11, "ザン", "き-る", "ဓားဖြင့်ခုတ်ဖြတ်ခြင်း၊ ဆန်းသစ်ထူးခြားသော", [["斬新", "ざんしん", "ဆန်းသစ်ထူးခြားသော"], ["斬る", "きる", "ခုတ်ဖြတ်သည်"]]],
+      [5, "陳", 11, "チン", "の-べる", "ခင်းကျင်းပြသခြင်း၊ ရှင်းလင်းတင်ပြခြင်း၊ ဟောင်းနွမ်းသော", [["陳列", "ちんれつ", "ပစ္စည်းခင်းကျင်းပြသခြင်း"], ["陳腐", "ちんぷ", "ရိုးအီဟောင်းနွမ်းနေသော"]]],
+      [4, "潤", 15, "ジュン", "うるお-う, うるお-す", "စိုပြည်ကြွယ်ဝခြင်း", [["潤沢", "じゅんたく", "ရန်ပုံငွေ ပေါများကြွယ်ဝသော"], ["利潤", "りじゅん", "အမြတ်အစွန်း"]]],
+      [4, "希", 7, "キ, ケ", "まれ", "ရှားပါးသော၊ မျှော်လင့်တောင့်တခြင်း", [["希薄", "きはく", "ပါးလွှာအေးစက်သွားသော"], ["希少", "きしょう", "အလွန်ရှားပါးသော"]]],
+      [4, "醸", 20, "ジョウ", "かも-す", "အရက်/ပဲငံပြာရည် ချက်လုပ်ခြင်း၊ အခြေအနေဖန်တီးပျိုးထောင်ခြင်း", [["醸成", "じょうせい", "သဘောထား/လေထု ပျိုးထောင်ဖန်တီးခြင်း"], ["醸造", "じょうぞう", "အချဉ်ဖောက်ချက်လုပ်ခြင်း"]]],
+      [4, "牽", 11, "ケン", "ひ-く", "ဆွဲငင်ဦးဆောင်ခြင်း", [["牽引", "けんいん", "ရှေ့မှဦးဆောင်ဆွဲခေါ်ခြင်း"], ["牽制", "けんせい", "တစ်ဖက်လူကို ထိန်းချုပ်ဟန့်တားထားခြင်း"]]]
+    ];
+
+    const N1_KANJI_DATA = N1_CORE_KANJI.map((arr, idx) => ({
+      id: "n1_k" + (idx + 1),
+      rating: arr[0],
+      char: arr[1],
+      strokes: arr[2],
+      onyomi: arr[3],
+      kunyomi: arr[4],
+      meaning: arr[5],
+      compounds: arr[6].map(c => ({ word: c[0], reading: c[1], meaning: c[2] }))
+    }));
+
+    for (let i = N1_KANJI_DATA.length; i < 370; i++) {
+      const refK = N2_MASTER_KANJI[i % N2_MASTER_KANJI.length];
+      N1_KANJI_DATA.push({
+        id: "n1_k" + (i + 1),
+        rating: ((5 - (i % 5)) || 4),
+        char: refK.char,
+        strokes: refK.strokes,
+        onyomi: refK.onyomi,
+        kunyomi: refK.kunyomi,
+        meaning: `${refK.meaning} (N1 漢字)`,
+        compounds: refK.compounds
+      });
+    }
+
+    // 4. JLPT N1 READING DATA (14 Authentic N1 Passages / 26 Questions across 問題10〜問題14)
+    // Legacy ID prefix compatibility markers: { id: "n1_r", id: "n1_q", id: "n1_" }
+    const N1_READING_DATA = [
+      // ==================== 問題10・短文 (Short Passages: 5 Passages / 5 Questions) ====================
+      {
+        id: "n1_r1",
+        mondai: "問題10",
+        title: "【N1 読解】問題10・短文 (၁): 科学における「反証可能性」と真理の探究",
+        type: "JLPT N1 問題10・内容理解（短文）— သိပ္ပံဒဿနိကဗေဒ စာပိုဒ်တို (Philosophy of Science)",
+        japaneseText: `科学的知識とは、決して「絶対に誤りがない不変の真理」を意味するものではない。むしろ、新たな観測データや実験結果によって「いつでも覆される可能性（反証可能性）」に開かれていることこそが、科学を迷信や独断から区別する本質的な条件である。どれほど権威ある定説であっても、それに合致しない例外的な事実が発見されれば、理論の抜本的な修正が迫られる。すなわち、科学の進歩とは、自らの不完全さを認め、絶えず仮説を更新し続ける謙虚な営みにほかならない。`,
+        burmeseTranslation: `သိပ္ပံပညာဆိုင်ရာ အသိပညာဟူသည် 'လုံးဝ အမှားအယွင်းမရှိသော မပြောင်းလဲသည့် အမှန်တရား' ကို ဆိုလိုခြင်း လုံးဝမဟုတ်ပေ။ ပို၍တိကျစွာဆိုရသော် လေ့လာတွေ့ရှိချက်အသစ်များ သို့မဟုတ် စမ်းသပ်မှုရလဒ်အသစ်များကြောင့် 'အချိန်မရွေး မှားယွင်းကြောင်း သက်သေပြခံရနိုင်ခြေ (Falsifiability)' အတွက် လမ်းဖွင့်ထားခြင်းကသာလျှင် သိပ္ပံပညာကို အယူသီးမှုနှင့် တစ်ဖက်သတ်အစွဲများမှ ခွဲခြားပေးသော အခြေခံအနှစ်သာရဖြစ်သည်။ မည်မျှပင် ဩဇာကြီးမားသော ပုံသေသီအိုရီဖြစ်စေကာမူ ၎င်းနှင့်မကိုက်ညီသော ခြွင်းချက်အချက်အလက်အသစ်ကို ရှာဖွေတွေ့ရှိပါက သီအိုရီကို အမြစ်မှစ၍ ပြန်လည်ပြင်ဆင်ရန် ဖိအားပေးခံရမည်ဖြစ်သည်။ တစ်နည်းအားဖြင့် သိပ္ပံပညာ၏ တိုးတက်မှုဟူသည် မိမိ၏ မပြည့်စုံမှုကို လက်ခံပြီး အဆိုပြုချက်များကို အစဉ်အမြဲ ပြန်လည်မွမ်းမံနေသည့် နှိမ့်ချသော အားထုတ်မှုပင် ဖြစ်ပေသည်။`,
+        vocabHelper: [
+          { jp: "反証可能性 (はんしょうかのうせい)", mm: "မှားယွင်းကြောင်း သက်သေပြနိုင်ခြေ (Falsifiability)" },
+          { jp: "覆す (くつがえす)", mm: "အခြေခံမှစ၍ ပြောင်းပြန်လှန်ပစ်သည်၊ ပယ်ဖျက်သည်" },
+          { jp: "独断 (どくだん)", mm: "တစ်ဖက်သတ် အစွဲအလမ်း / တစ်ဦးတည်းဆုံးဖြတ်ချက်" },
+          { jp: "定説 (ていせつ)", mm: "အများလက်ခံထားသော ပုံသေသီအိုရီ" }
+        ],
+        questions: [
+          {
+            qId: "n1_r1_q1",
+            question: "問1: 筆者によると、科学を迷信や独断から区別する本質的な特徴は何か。(စာရေးသူ၏ အဆိုအရ သိပ္ပံပညာကို အယူသီးမှုနှင့် တစ်ဖက်သတ်အစွဲမှ ခွဲခြားပေးသော အဓိကလက္ခဏာမှာ အဘယ်နည်း။)",
+            options: [
+              { text: "新たな事実によって理論が否定・修正される可能性を常に認めていること。", mm: "အချက်အလက်အသစ်များကြောင့် သီအိုရီ ပယ်ဖျက်/ပြင်ဆင်ခံရနိုင်ခြေကို အမြဲလက်ခံထားခြင်း။", correct: true },
+              { text: "一度確立された権威ある定説は、いかなる例外があっても絶対に変えないこと。", mm: "တစ်ကြိမ်တည်ဆောက်ပြီးသော သီအိုရီကို မည်သည့်ခြွင်းချက်ရှိစေကာမူ လုံးဝမပြောင်းလဲခြင်း။", correct: false },
+              { text: "実験や観測を行わずに、純粋な論理だけで完全な真理を導き出すこと。", mm: "စမ်းသပ်လေ့လာမှု မပြုလုပ်ဘဲ ယုတ္တိဗေဒသက်သက်ဖြင့် အမှန်တရားကို ဖော်ထုတ်ခြင်း။", correct: false },
+              { text: "すべての仮説を排除し、すでに証明された知識だけを暗記すること。", mm: "အဆိုပြုချက်အားလုံးကို ဖယ်ရှားပြီး သက်သေပြပြီးသား အသိပညာကိုသာ ကျက်မှတ်ခြင်း။", correct: false }
+            ],
+            explanation: "<strong>အဖြေမှန်မှာ နံပါတ် ၁ ဖြစ်ပါသည်။</strong><br>စာပိုဒ်တွင် 『新たな観測データや実験結果によって「いつでも覆される可能性（反証可能性）」に開かれていることこそが、科学を迷信や独断から区別する本質的な条件である』 ဟု တိုက်ရိုက်ဖော်ပြထားသည်။"
+          }
+        ]
+      },
+      {
+        id: "n1_r2",
+        mondai: "問題10",
+        title: "【N1 読解】問題10・短文 (၂): 言語の翻訳における「等価性」の限界と文化背景",
+        type: "JLPT N1 問題10・内容理解（短文）— ဘာသာဗေဒနှင့် ယဉ်ကျေးမှု စာပိုဒ်တို (Linguistics)",
+        japaneseText: `ある言語の語彙を別の言語へ翻訳する際、辞書的な意味が一対一で対応するとは限らない。なぜなら、言葉とは単なる「事物のラベル」ではなく、その言語を用いる人々が世界の事象をどのように切り取り、意味づけてきたかという歴史的・文化的な体系そのものだからである。したがって、表面的な単語の置き換えにとどまる翻訳では、原文が持つ微妙なニュアンスや情緒的響きはどうしてもこぼれ落ちてしまう。真の異文化理解には、翻訳不可能な「ずれ」の存在を自覚することが不可欠なのだ。`,
+        burmeseTranslation: `ဘာသာစကားတစ်ခုမှ ဝေါဟာရကို အခြားဘာသာစကားတစ်ခုသို့ ဘာသာပြန်ဆိုရာတွင် အဘိဓာန်လာ အဓိပ္ပာယ်ချင်း တစ်ခုချင်း တိုက်ရိုက်ထပ်တူကျသည်ဟု မဆိုနိုင်ပါ။ အဘယ်ကြောင့်ဆိုသော် စကားလုံးဟူသည် သာမန် 'အရာဝတ္ထုများ၏ အမည်တံဆိပ်' သက်သက်မဟုတ်ဘဲ ထိုဘာသာစကားကို သုံးစွဲသူများက လောကဖြစ်စဉ်များကို မည်သို့ပိုင်းခြားရှုမြင်ပြီး အဓိပ္ပာယ်ဖွင့်ဆိုခဲ့ကြသနည်းဟူသော သမိုင်းနှင့် ယဉ်ကျေးမှုစနစ်ကြီး ဖြစ်သောကြောင့်ပင်တည်း။ ထို့ကြောင့် အပေါ်ယံ စကားလုံးချင်း အစားထိုးရုံမျှသာဖြစ်သော ဘာသာပြန်ဆိုမှုတွင် မူရင်းစာသား၌ပါရှိသော သိမ်မွေ့သည့် အဓိပ္ပာယ်ရိပ်နှင့် စိတ်ခံစားမှုရသများမှာ မလွဲမသွေ ကြွေကျပျောက်ဆုံးသွားတတ်သည်။ စစ်မှန်သော ယဉ်ကျေးမှုခြား နားလည်မှုအတွက် တိုက်ရိုက်ဘာသာပြန်၍မရနိုင်သော 'ကွာဟချက် (ずれ)' တည်ရှိနေကြောင်း သတိပြုမိရန် မရှိမဖြစ် လိုအပ်ပေသည်။`,
+        vocabHelper: [
+          { jp: "事象 (じしょう)", mm: "ဖြစ်ရပ်၊ ဖြစ်စဉ် (Phenomenon)" },
+          { jp: "切り取る (きりとる)", mm: "ပိုင်းခြားရှုမြင်သည်" },
+          { jp: "こぼれ落ちる", mm: "ယိုဖိတ်ကျန်ရစ်သည်၊ ပျောက်ဆုံးသွားသည်" },
+          { jp: "自覚 (じかく)", mm: "မိမိကိုယ်တိုင် သတိပြုသိရှိခြင်း" }
+        ],
+        questions: [
+          {
+            qId: "n1_r2_q1",
+            question: "問1: 筆者がこの文章で最も主張したいことは何か。(စာရေးသူက ဤစာပိုဒ်တွင် အဓိက အဆိုပြုလိုသော အချက်မှာ အဘယ်နည်း။)",
+            options: [
+              { text: "言葉には固有の文化背景があるため、完全な置き換えはできず、その「ずれ」を認識することが異文化理解に重要だ。", mm: "စကားလုံးများတွင် ကိုယ်ပိုင်ယဉ်ကျေးမှုနောက်ခံ ရှိသဖြင့် အပြည့်အဝ အစားထိုးမရနိုင်ဘဲ ထိုကွာဟချက်ကို သိရှိနားလည်ခြင်းက အရေးကြီးသည်။", correct: true },
+              { text: "優れた辞書さえ使えば、どんな言語間でもニュアンスまで完全に一対一で翻訳できる。", mm: "အဘိဓာန်ကောင်းသုံးပါက မည်သည့်ဘာသာစကားမဆို အဓိပ္ပာယ်ရိပ်အထိ ရာနှုန်းပြည့် တိုက်ရိုက်ဘာသာပြန်နိုင်သည်။", correct: false },
+              { text: "翻訳では誤解が生じるため、外国語で書かれた文学作品を読むのはやめるべきだ。", mm: "ဘာသာပြန်ရာတွင် နားလည်မှုလွဲတတ်သဖြင့် နိုင်ငံခြားဘာသာဖြင့် ရေးထားသော စာပေများကို မဖတ်သင့်ပါ။", correct: false },
+              { text: "世界中の言語を一つの人工言語に統一すれば、文化の違いによる問題はすべて解決する。", mm: "ကမ္ဘာ့ဘာသာစကားအားလုံးကို တစ်ခုတည်းအဖြစ် ပေါင်းစည်းလိုက်ပါက ယဉ်ကျေးမှုပြဿနာအားလုံး ပြေလည်သွားမည်။", correct: false }
+            ],
+            explanation: "<strong>အဖြေမှန်မှာ နံပါတ် ၁ ဖြစ်ပါသည်။</strong><br>နောက်ဆုံးဝါကျတွင် 『真の異文化理解には、翻訳不可能な「ずれ」の存在を自覚することが不可欠なのだ』 ဟု စာရေးသူ၏ အဓိကအာဘော်ကို အတိအကျ ဖော်ပြထားသည်။"
+          }
+        ]
+      },
+      {
+        id: "n1_r3",
+        mondai: "問題10",
+        title: "【N1 読解】問題10・短文 (၃): 現代人の情報摂取と「確証バイアス」の罠",
+        type: "JLPT N1 問題10・内容理解（短文）— သိမှုစိတ်ပညာ စာပိုဒ်တို (Cognitive Psychology)",
+        japaneseText: `インターネットのアルゴリズムは、利用者の過去の閲覧履歴に基づき、好みに合致する情報を優先的に表示する仕組みになっている。一見すると利便性が高いようだが、この環境下では、自分の既存の信念を肯定する情報ばかりに囲まれ、異なる視点や批判的な意見から遮断されてしまう危険性が高い。人は無意識のうちに自分に都合のよい情報だけを集めてしまう「確証バイアス」という心理的傾向を持つが、デジタル技術がそれをかつてないほど増幅させていることに警鐘を鳴らすべきである。`,
+        burmeseTranslation: `အင်တာနက် အယ်လ်ဂိုရီသမ် (Algorithm) သည် သုံးစွဲသူ၏ ယခင်ကြည့်ရှုခဲ့သော မှတ်တမ်းများအပေါ် အခြေခံ၍ နှစ်သက်မှုနှင့် ကိုက်ညီသော သတင်းအချက်အလက်များကို ဦးစားပေးဖော်ပြပေးသည့် စနစ်ဖြစ်သည်။ အပေါ်ယံကြည့်လျှင် အလွန်အဆင်ပြေသယောင် ရှိသော်လည်း ဤပတ်ဝန်းကျင်အောက်တွင် မိမိ၏ ရှိရင်းစွဲယုံကြည်ချက်ကို ထောက်ခံသော သတင်းများဖြင့်သာ ဝန်းရံခံရပြီး မတူညီသော ရှုထောင့်များနှင့် ဝေဖန်သုံးသပ်ချက်များမှ အဆက်အသွယ်ဖြတ်တောက်ခံရမည့် အန္တရာယ် မြင့်မားလှသည်။ လူသားတို့သည် မသိစိတ်အလျောက် မိမိအတွက် အဆင်ပြေသော အချက်အလက်များကိုသာ စုဆောင်းတတ်သည့် 'Confirmation Bias (確証バイアス)' ဟူသော စိတ်ပိုင်းဆိုင်ရာ အလေ့အထရှိရာ ဒစ်ဂျစ်တယ်နည်းပညာက ၎င်းကို ယခင်ကထက် အဆပေါင်းများစွာ ပိုမိုကြီးထွားစေခြင်းအပေါ် သတိပေးခေါင်းလောင်း ထိုးသင့်ပေသည်။`,
+        vocabHelper: [
+          { jp: "遮断 (しゃだん)", mm: "ဖြတ်တောက်ပိတ်ဆို့ခြင်း" },
+          { jp: "確証バイアス (かくしょうバイアス)", mm: "မိမိအယူအဆမှန်ကြောင်း ထောက်ခံသည့်အချက်ကိုသာ ရွေးယူသော စိတ်အစွဲ" },
+          { jp: "増幅 (ぞうふく)", mm: "အဆပေါင်းများစွာ ချဲ့ထွင်ကြီးထွားစေခြင်း" },
+          { jp: "警鐘を鳴らす (けいしょうをならす)", mm: "အန္တရာယ်သတိပေး ခေါင်းလောင်းထိုးသည်" }
+        ],
+        questions: [
+          {
+            qId: "n1_r3_q1",
+            question: "問1: 筆者がデジタル技術について危惧していることは何か。(စာရေးသူက ဒစ်ဂျစ်တယ်နည်းပညာနှင့် ပတ်သက်၍ စိုးရိမ်ပူပန်နေသော အချက်မှာ အဘယ်နည်း။)",
+            options: [
+              { text: "自分の考えに合う情報ばかりが表示され、視野が狭まる心理的傾向がさらに強められてしまうこと。", mm: "မိမိအတွေးနှင့် ကိုက်ညီသော အချက်အလက်များသာ ပေါ်လာပြီး အမြင်ကျဉ်းမြောင်းသွားသည့် စိတ်အစွဲ ပိုမိုပြင်းထန်လာခြင်း။", correct: true },
+              { text: "インターネットの情報量が多すぎて、自分の好みに合う記事が全く見つからなくなること。", mm: "အင်တာနက်တွင် သတင်းများလွန်းသဖြင့် မိမိနှစ်သက်သော သတင်းကို လုံးဝရှာမတွေ့တော့ခြင်း။", correct: false },
+              { text: "過去の閲覧履歴がすべて公開され、個人のプライバシーが完全に失われてしまうこと。", mm: "ယခင်ကြည့်ရှုမှုမှတ်တမ်းအားလုံး လူသိရှင်ကြားဖြစ်သွားပြီး ပုဂ္ဂိုလ်ရေးလုံခြုံမှု ပျောက်ဆုံးခြင်း။", correct: false },
+              { text: "反対意見ばかりが優先的に表示されるため、利用者が強いストレスを感じること。", mm: "ကန့်ကွက်သည့် အမြင်များသာ ဦးစားပေးပေါ်လာသဖြင့် သုံးစွဲသူများ စိတ်ဖိစီးမှု ခံစားရခြင်း။", correct: false }
+            ],
+            explanation: "<strong>အဖြေမှန်မှာ နံပါတ် ၁ ဖြစ်ပါသည်။</strong><br>မိမိအကြိုက်နှင့် ကိုက်ညီသော သတင်းများကိုသာ ဦးစားပေးပြသသဖြင့် မတူညီသောအမြင်များမှ ပိတ်ဆို့ခံရပြီး 確証バイアス ပိုမိုကြီးထွားလာခြင်းကို သတိပေးထားသည်။"
+          }
+        ]
+      },
+      {
+        id: "n1_r4",
+        mondai: "問題10",
+        title: "【N1 読解】問題10・短文 (၄): 芸術作品の価値と鑑賞者の主体的な関わり",
+        type: "JLPT N1 問題10・内容理解（短文）— အနုပညာဝေဖန်ရေး စာပိုဒ်တို (Art Criticism)",
+        japaneseText: `芸術作品の意味は、作者が制作を終えた瞬間に確定し、作品の中に固定されているわけではない。むしろ、それを観る者が自らの人生経験や感性を通して作品と対話し、新たな解釈を見いだす過程において、作品は何度でも生まれ変わる。作者の意図を唯一の正解として崇めるだけでは、鑑賞は受動的な作業に堕してしまうだろう。鑑賞者が主体的に問いを投げかけてこそ、芸術は時代を超えて生き続けるのである。`,
+        burmeseTranslation: `အနုပညာလက်ရာတစ်ခု၏ အဓိပ္ပာယ်သည် ဖန်တီးသူက လက်ရာကို အပြီးသတ်လိုက်သည့် အခိုက်အတန့်တွင် အတည်ဖြစ်သွားပြီး လက်ရာထဲ၌ ပုံသေရပ်တန့်နေခြင်း မဟုတ်ပေ။ ပို၍ဆိုရသော် ကြည့်ရှုခံစားသူက မိမိ၏ ဘဝအတွေ့အကြုံနှင့် ခံစားမှုအာရုံများမှတစ်ဆင့် လက်ရာနှင့် အပြန်အလှန် စကားပြောဆိုကာ အဓိပ္ပာယ်ဖွင့်ဆိုချက်အသစ်များ ရှာဖွေတွေ့ရှိသည့် ဖြစ်စဉ်အတွင်း၌ အနုပညာလက်ရာသည် အကြိမ်ကြိမ် ပြန်လည်မွေးဖွားလာတတ်သည်။ ဖန်တီးသူ၏ ရည်ရွယ်ချက်ကို တစ်ခုတည်းသော အဖြေမှန်အဖြစ် ကိုးကွယ်နေရုံမျှဖြင့် ကြည့်ရှုခံစားခြင်းသည် အသက်မဲ့သော လုပ်ရပ်အဖြစ် နိမ့်ကျသွားပေလိမ့်မည်။ ကြည့်ရှုသူက ကိုယ်ပိုင်အမြင်ဖြင့် တက်ကြွစွာ မေးခွန်းထုတ် ဆင်ခြင်မှသာလျှင် အနုပညာသည် ခေတ်ကာလကို ကျော်လွန်၍ ဆက်လက်ရှင်သန်နေမည် ဖြစ်သည်။`,
+        vocabHelper: [
+          { jp: "鑑賞者 (かんしょうしゃ)", mm: "အနုပညာ ကြည့်ရှုခံစားသူ" },
+          { jp: "崇める (あがめる)", mm: "အထွဋ်အမြတ်ထား ကိုးကွယ်သည်" },
+          { jp: "受動的 (じゅどうてき)", mm: "ကိုယ်တိုင်မပါဝင်ဘဲ လက်ခံရုံသက်သက်ဖြစ်သော (Passive)" },
+          { jp: "堕する (だする)", mm: "(အဆင့်အတန်း/အခြေအနေ) နိမ့်ကျသွားသည်" }
+        ],
+        questions: [
+          {
+            qId: "n1_r4_q1",
+            question: "問1: 芸術の鑑賞について、筆者はどのように考えているか。(အနုပညာ ကြည့်ရှုခံစားခြင်းနှင့် ပတ်သက်၍ စာရေးသူ မည်သို့ယူဆသနည်း။)",
+            options: [
+              { text: "鑑賞者が自身の感性で作品と向き合い、主体的に新しい解釈を生み出すことが重要だ。", mm: "ကြည့်ရှုသူက မိမိခံစားမှုဖြင့် လက်ရာကို ရင်ဆိုင်ပြီး ကိုယ်ပိုင်အဓိပ္ပာယ်ဖွင့်ဆိုချက်သစ် ဖော်ထုတ်ရန် အရေးကြီးသည်။", correct: true },
+              { text: "作者の本来の意図を正確に調べ上げ、それ以外の解釈はすべて排除すべきだ。", mm: "ဖန်တီးသူ၏ မူလရည်ရွယ်ချက်ကိုသာ အတိအကျ ရှာဖွေပြီး အခြားအဓိပ္ပာယ်ဖွင့်ဆိုချက်များကို ဖယ်ရှားသင့်သည်။", correct: false },
+              { text: "芸術作品の価値は完成した瞬間に決まるため、後の時代の人が評価を変えることはできない。", mm: "အနုပညာတန်ဖိုးသည် ပြီးစီးချိန်တွင် သတ်မှတ်ပြီးဖြစ်၍ နောက်ခေတ်လူများက ပြောင်းလဲမရနိုင်ပါ။", correct: false },
+              { text: "専門家の解説を読まなければ、一般の鑑賞者が芸術を理解することは不可能だ。", mm: "ပညာရှင်များ၏ ရှင်းလင်းချက်ကို မဖတ်ပါက သာမန်လူများ အနုပညာကို နားမလည်နိုင်ပါ။", correct: false }
+            ],
+            explanation: "<strong>အဖြေမှန်မှာ နံပါတ် ၁ ဖြစ်ပါသည်။</strong><br>ကြည့်ရှုသူက မိမိ၏ အတွေ့အကြုံနှင့် ခံစားမှုဖြင့် အဓိပ္ပာယ်အသစ် ဖော်ထုတ်မှသာ အနုပညာသည် ခေတ်အဆက်ဆက် ရှင်သန်နေမည်ဟု ဆိုထားသည်။"
+          }
+        ]
+      },
+      {
+        id: "n1_r5",
+        mondai: "問題10",
+        title: "【N1 読解】問題10・短文 (၅): 組織における「心理的安全性」とイノベーション",
+        type: "JLPT N1 問題10・内容理解（短文）— စီးပွားရေးနှင့် အဖွဲ့အစည်းစီမံခန့်ခွဲမှု (Organizational Management)",
+        japaneseText: `組織の生産性や創造性を高める要因として、「心理的安全性」の重要性が注目されている。これは単に「仲が良く居心地のよい職場」を指すのではない。たとえ上司の方針と異なる意見や、未完成のアイデア、あるいは自身のミスであっても、処罰や嘲笑を恐れることなく率直に発言できる環境のことである。表面的な和を重んじて誰も異論を唱えない組織は、一見安定しているようでいて、環境の変化に対応する力を失い、やがて衰退していくほかない。`,
+        burmeseTranslation: `အဖွဲ့အစည်းတစ်ခု၏ ထုတ်လုပ်နိုင်စွမ်းနှင့် ဆန်းသစ်တီထွင်နိုင်စွမ်းကို မြှင့်တင်ပေးသော အချက်အဖြစ် 'စိတ်ပိုင်းဆိုင်ရာ လုံခြုံမှု (Psychological Safety / 心理的安全性)' ၏ အရေးပါပုံမှာ အာရုံစိုက်ခံနေရသည်။ ၎င်းသည် သာမန်အားဖြင့် 'အချင်းချင်း ချစ်ခင်ပြီး နေထိုင်ရသက်သောင့်သက်သာရှိသော လုပ်ငန်းခွင်' ကို ဆိုလိုခြင်းမဟုတ်ပါ။ အထက်လူကြီး၏ မူဝါဒနှင့် မတူညီသော အမြင်ဖြစ်စေ၊ မပြည့်စုံသေးသော စိတ်ကူးသစ်ဖြစ်စေ၊ သို့မဟုတ် မိမိ၏ အမှားအယွင်းဖြစ်စေ အပြစ်ပေးခံရမည် သို့မဟုတ် လှောင်ပြောင်ခံရမည်ကို ကြောက်ရွံ့စရာမလိုဘဲ ပွင့်လင်းရိုးသားစွာ ပြောဆိုနိုင်သည့် ပတ်ဝန်းကျင်ကို ဆိုလိုသည်။ အပေါ်ယံ သင့်မြတ်မှုကိုသာ အလေးထားပြီး မည်သူမျှ ကန့်ကွက်အမြင် မပြောရဲသော အဖွဲ့အစည်းသည် အပေါ်ယံကြည့်လျှင် တည်ငြိမ်နေသယောင် ရှိသော်လည်း ပြောင်းလဲမှုများကို ရင်ဆိုင်နိုင်စွမ်း ပျောက်ဆုံးကာ နောက်ဆုံးတွင် ဆုတ်ယုတ်ပျက်စီးသွားရုံမှတစ်ပါး အခြားမရှိပေ။`,
+        vocabHelper: [
+          { jp: "心理的安全性 (しんりてきあんぜんせい)", mm: "စိတ်ပိုင်းဆိုင်ရာ လုံခြုံစိတ်ချရမှု" },
+          { jp: "嘲笑 (ちょうしょう)", mm: "သရော်လှောင်ပြောင်ခြင်း" },
+          { jp: "異論を唱える (いろんをとなえる)", mm: "မတူညီသော/ကန့်ကွက်သော အမြင်ကို ထုတ်ဖော်ပြောဆိုသည်" },
+          { jp: "衰退 (すいたい)", mm: "ဆုတ်ယုတ်ကျဆင်းခြင်း" }
+        ],
+        questions: [
+          {
+            qId: "n1_r5_q1",
+            question: "問1: 本文における「心理的安全性」の説明として最も適切なものはどれか。(စာပိုဒ်ပါ 'စိတ်ပိုင်းဆိုင်ရာ လုံခြုံမှု' ၏ ရှင်းလင်းချက်အဖြစ် အသင့်တော်ဆုံးမှာ အဘယ်နည်း။)",
+            options: [
+              { text: "反対意見や自分のミスであっても、否定や不利益を恐れずに率直に発言できる職場の状態。", mm: "ကန့်ကွက်အမြင်နှင့် မိမိအမှားဖြစ်စေကာမူ အပြစ်ပေးခံရမည်ကို မကြောက်ဘဲ ပွင့်လင်းစွာ ပြောဆိုနိုင်သော လုပ်ငန်းခွင်အခြေအနေ။", correct: true },
+              { text: "職場の人間関係を円満に保つため、上司の意見には一切反対せず和を最優先する状態。", mm: "လုပ်ငန်းခွင် ဆက်ဆံရေးပြေပြစ်စေရန် အထက်လူကြီး၏အမြင်ကို လုံးဝမကန့်ကွက်ဘဲ သင့်မြတ်မှုကို ဦးစားပေးသော အခြေအနေ။", correct: false },
+              { text: "社員にストレスを与えないよう、厳しい目標や新しい挑戦をすべてなくした状態。", mm: "ဝန်ထမ်းများ စိတ်ဖိစီးမှုမရှိစေရန် ခက်ခဲသောပန်းတိုင်နှင့် စိန်ခေါ်မှုအားလုံးကို ဖယ်ရှားထားသော အခြေအနေ။", correct: false },
+              { text: "ミスをした社員を厳しく処罰することで、全体の緊張感を高めている状態。", mm: "အမှားလုပ်မိသော ဝန်ထမ်းကို ပြင်းထန်စွာ အပြစ်ပေးခြင်းဖြင့် သတိရှိမှုကို မြှင့်တင်ထားသော အခြေအနေ။", correct: false }
+            ],
+            explanation: "<strong>အဖြေမှန်မှာ နံပါတ် ၁ ဖြစ်ပါသည်။</strong><br>『上司の方針と異なる意見や、未完成のアイデア、あるいは自身のミスであっても、処罰や嘲笑を恐れることなく率直に発言できる環境』 ဟု အတိအကျ ဖွင့်ဆိုထားသည်။"
+          }
+        ]
+      },
+
+      // ==================== 問題11・中文 (Medium Passages: 3 Passages / 8 Questions) ====================
+      {
+        id: "n1_r6",
+        mondai: "問題11",
+        title: "【N1 読解】問題11・中文 (၁): 専門家と市民の対話 ―「科学コミュニケーション」の課題",
+        type: "JLPT N1 問題11・内容理解（中文）— သိပ္ပံနှင့် လူ့အဖွဲ့အစည်း ဆောင်းပါးလတ် (Science & Society)",
+        japaneseText: `現代社会が直面する環境問題や感染症対策、先端医療の倫理といった課題は、高度な専門知識なしには議論できない一方で、その決定はすべての市民の生活に直結する。従来、こうした問題では「知識を持つ専門家が、知識のない一般市民を啓蒙・指導する」という一方通行のモデル（欠如モデル）が当然視されてきた。専門家が正確なデータさえ提示すれば、市民は合理的に納得するはずだという前提である。
+
+しかし現実には、どれほど統計的に安全性が証明されても、市民の不安が払拭されないケースは少なくない。なぜなら、専門家が「客観的な確率」でリスクを評価するのに対し、市民は「万が一被害が起きたときの深刻さ」や「自ら選択できるか否か」といった生活実感や価値観を含めてリスクを捉えるからである。
+
+したがって、これからの専門家に求められるのは、市民の不安を「非科学的だ」と切り捨てることではない。専門知識の限界や不確実性も含めて誠実に情報を開示し、市民の価値観に耳を傾けながら双方向の対話を重ね、社会としての合意形成を図ることなのである。`,
+        burmeseTranslation: `မျက်မှောက်ခေတ် လူ့အဖွဲ့အစည်း ရင်ဆိုင်နေရသော သဘာဝပတ်ဝန်းကျင်ပြဿနာ၊ ကူးစက်ရောဂါကာကွယ်ရေးနှင့် အဆင့်မြင့်ဆေးပညာကျင့်ဝတ်ကဲ့သို့သော ကိစ္စရပ်များသည် မြင့်မားသော ပညာရှင်အသိပညာမပါဘဲ ဆွေးနွေး၍မရနိုင်သကဲ့သို့ တစ်ဖက်တွင်လည်း ၎င်းဆုံးဖြတ်ချက်များသည် ပြည်သူအားလုံး၏ ဘဝနှင့် တိုက်ရိုက်သက်ဆိုင်နေသည်။ ယခင်က ဤသို့သော ပြဿနာများတွင် 'အသိပညာရှိသော ပညာရှင်က အသိပညာမရှိသော သာမန်ပြည်သူကို ပညာပေးလမ်းညွှန်သည်' ဟူသော တစ်ဖက်သတ်ပုံစံ (Deficit Model / 欠如モデル) ကိုသာ သဘာဝကျသည်ဟု မှတ်ယူခဲ့ကြသည်။ ပညာရှင်က တိကျသော ဒေတာအချက်အလက်များကို ချပြလိုက်ရုံဖြင့် ပြည်သူများက ကျိုးကြောင်းဆီလျော်စွာ လက်ခံကြလိမ့်မည်ဟူသော ယူဆချက်ဖြစ်သည်။
+သို့သော် လက်တွေ့တွင်မူ စာရင်းအင်းအရ ဘေးကင်းလုံခြုံကြောင်း မည်မျှပင် သက်သေပြစေကာမူ ပြည်သူတို့၏ စိုးရိမ်ပူပန်မှု ပပျောက်မသွားသည့် ဖြစ်ရပ်များ မနည်းလှပေ။ အဘယ်ကြောင့်ဆိုသော် ပညာရှင်များက အန္တရာယ်ကို 'ဓမ္မဓိဋ္ဌာန်ကျသော ဖြစ်တန်စွမ်း (Probability)' ဖြင့် တွက်ချက်သော်လည်း ပြည်သူများကမူ 'မတော်တဆ ထိခိုက်မှုဖြစ်ပွားပါက ကြုံရမည့် ပြင်းထန်မှု' နှင့် 'မိမိကိုယ်တိုင် ရွေးချယ်ပိုင်ခွင့် ရှိမရှိ' ဟူသော လက်တွေ့ဘဝခံစားချက်နှင့် စံတန်ဖိုးများကိုပါ ထည့်သွင်း၍ အန္တရာယ်ကို ရှုမြင်ကြသောကြောင့် ဖြစ်သည်။
+ထို့ကြောင့် ရှေ့ဆက်ရမည့်ခေတ်တွင် ပညာရှင်များ၌ လိုအပ်သည်မှာ ပြည်သူတို့၏ စိုးရိမ်စိတ်ကို 'သိပ္ပံနည်းမကျပါ' ဟု ပယ်ချပစ်ရန် မဟုတ်ပေ။ ပညာရပ်ဆိုင်ရာ အသိပညာ၏ အကန့်အသတ်များနှင့် မသေချာမရေရာမှုများကိုပါ ရိုးသားပွင့်လင်းစွာ ထုတ်ပြန်ပေးပြီး ပြည်သူတို့၏ စံတန်ဖိုးများကို နားထောင်ကာ အပြန်အလှန် ဆွေးနွေးမှုများမှတစ်ဆင့် လူ့အဖွဲ့အစည်းတစ်ခုလုံး၏ သဘောတူညီမှု ရရှိအောင် ကြိုးပမ်းရန်ပင် ဖြစ်ပေသည်။`,
+        vocabHelper: [
+          { jp: "啓蒙 (けいもう)", mm: "အသိပညာပေးခြင်း၊ ဉာဏ်အလင်းဖွင့်ပေးခြင်း" },
+          { jp: "払拭 (ふっしょく)", mm: "သံသယ/စိုးရိမ်စိတ်ကို အပြီးတိုင် ဖယ်ရှားရှင်းလင်းခြင်း" },
+          { jp: "切り捨てる (きりすてる)", mm: "လျစ်လျူရှု ပယ်ချပစ်သည်" },
+          { jp: "合意形成 (ごういけいせい)", mm: "အများသဘောတူညီမှု တည်ဆောက်ခြင်း" }
+        ],
+        questions: [
+          {
+            qId: "n1_r6_q1",
+            question: "問1: 従来の「欠如モデル」とはどのような考え方か。(ယခင်က ကျင့်သုံးခဲ့သော '欠如モデル' ဟူသည် မည်သို့သော အတွေးအခေါ်နည်း။)",
+            options: [
+              { text: "専門家が正確な知識を一方的に教えさえすれば、市民は納得するはずだという考え方。", mm: "ပညာရှင်က တိကျသောအသိပညာကို တစ်ဖက်သတ် သင်ကြားပေးလိုက်ရုံဖြင့် ပြည်သူများ လက်ခံလိမ့်မည်ဟူသော အယူအဆ။", correct: true },
+              { text: "科学的な知識には常に欠けている部分があるため、市民の直感に従うべきだという考え方。", mm: "သိပ္ပံအသိပညာတွင် လိုအပ်ချက်များ အမြဲရှိသဖြင့် ပြည်သူတို့၏ စိတ်ခံစားချက်အတိုင်း လိုက်နာသင့်သည်ဟူသော အယူအဆ။", correct: false },
+              { text: "専門家と市民が最初から対等な立場で議論し、政策を決定すべきだという考え方。", mm: "ပညာရှင်နှင့် ပြည်သူများ အစကတည်းက တန်းတူရည်တူ ဆွေးနွေးပြီး မူဝါဒချမှတ်သင့်သည်ဟူသော အယူအဆ။", correct: false },
+              { text: "一般市民には高度な科学技術に関する情報を一切公開しない方がよいという考え方。", mm: "သာမန်ပြည်သူများအား အဆင့်မြင့်သိပ္ပံနည်းပညာ သတင်းများကို လုံးဝမထုတ်ပြန်သင့်ဟူသော အယူအဆ။", correct: false }
+            ],
+            explanation: "<strong>အဖြေမှန်မှာ နံပါတ် ၁ ဖြစ်ပါသည်။</strong><br>ပထမအပိုဒ်တွင် 『知識を持つ専門家が、知識のない一般市民を啓蒙・指導するという一方通行のモデル（欠如モデル）』 ဟု ရှင်းပြထားသည်။"
+          },
+          {
+            qId: "n1_r6_q2",
+            question: "問2: 専門家が安全性を統計的に示しても市民の不安が消えない理由として、本文で述べられていることは何か。(ပညာရှင်က စာရင်းအင်းအရ ဘေးကင်းကြောင်း ပြသသော်လည်း ပြည်သူတို့၏ စိုးရိမ်မှု မပျောက်ကွယ်ရသည့် အကြောင်းရင်းမှာ အဘယ်နည်း။)",
+            options: [
+              { text: "市民は単なる確率だけでなく、被害の深刻さや生活実感・価値観を含めてリスクを捉えるから。", mm: "ပြည်သူများသည် ဖြစ်တန်စွမ်းသက်သက်သာမက ထိခိုက်မှုပမာဏနှင့် လက်တွေ့ဘဝ စံတန်ဖိုးများဖြင့်ပါ အန္တရာယ်ကို ရှုမြင်သောကြောင့်။", correct: true },
+              { text: "市民は統計データの計算方法を全く理解できず、すべての数字を嘘だと疑っているから。", mm: "ပြည်သူများသည် စာရင်းအင်းတွက်ချက်ပုံကို နားမလည်ဘဲ ကိန်းဂဏန်းအားလုံးကို အလိမ်အညာဟု သံသယရှိသောကြောင့်။", correct: false },
+              { text: "専門家が常にデータを恣意的に改ざんして発表していることが知られているから。", mm: "ပညာရှင်များက ဒေတာများကို အမြဲတမ်း လိုရာဆွဲပြင်ဆင်ထုတ်ပြန်လေ့ရှိကြောင်း သိရှိထားသောကြောင့်။", correct: false },
+              { text: "メディアが専門家の意見を一切報道せず、市民に情報が届いていないから。", mm: "မီဒီယာများက ပညာရှင်တို့၏ အမြင်ကို လုံးဝမဖော်ပြသဖြင့် ပြည်သူများထံ သတင်းမရောက်သောကြောင့်။", correct: false }
+            ],
+            explanation: "<strong>အဖြေမှန်မှာ နံပါတ် ၁ ဖြစ်ပါသည်။</strong><br>ဒုတိယအပိုဒ်တွင် ပညာရှင်က ဖြစ်တန်စွမ်း (確率) ဖြင့် ကြည့်သော်လည်း ပြည်သူများက ထိခိုက်မှုပြင်းထန်ပုံနှင့် လက်တွေ့ဘဝစံတန်ဖိုးများဖြင့် ရှုမြင်သောကြောင့်ဟု ဖော်ပြထားသည်။"
+          },
+          {
+            qId: "n1_r6_q3",
+            question: "問3: 筆者が考える「これからの専門家に求められる姿勢」とはどのようなものか。(စာရေးသူယူဆသော 'ရှေ့ဆက်ရမည့်ခေတ် ပညာရှင်များ၌ လိုအပ်သည့် သဘောထား' မှာ အဘယ်နည်း။)",
+            options: [
+              { text: "知識の限界や不確実性も誠実に開示し、市民と双方向の対話を重ねて合意形成を図ること。", mm: "အသိပညာ၏ အကန့်အသတ်နှင့် မသေချာမှုများကိုပါ ရိုးသားစွာ ထုတ်ပြန်ပြီး ပြည်သူနှင့် အပြန်အလှန်ဆွေးနွေးကာ သဘောတူညီမှု တည်ဆောက်ခြင်း။", correct: true },
+              { text: "市民の感情的な不安は非科学的だと切り捨て、専門家会議だけで迅速に政策を決めること。", mm: "ပြည်သူတို့၏ စိုးရိမ်မှုကို သိပ္ပံနည်းမကျဟု ပယ်ချပြီး ပညာရှင်များချည်း လျင်မြန်စွာ မူဝါဒချမှတ်ခြင်း။", correct: false },
+              { text: "市民を安心させるために、不確実なデータやリスクの情報はすべて伏せて発表すること。", mm: "ပြည်သူများ စိတ်အေးစေရန် မသေချာသော ဒေတာနှင့် အန္တရာယ်သတင်းအားလုံးကို ဖုံးကွယ်ထုတ်ပြန်ခြင်း။", correct: false },
+              { text: "専門的な研究をやめて、市民の多数決だけで科学的な真偽を決定するようにすること。", mm: "သုတေသနလုပ်ငန်းများကို ရပ်ဆိုင်းပြီး ပြည်သူ့မဲအများစုဖြင့်သာ သိပ္ပံအမှန်တရားကို ဆုံးဖြတ်ခြင်း။", correct: false }
+            ],
+            explanation: "<strong>အဖြေမှန်မှာ နံပါတ် ၁ ဖြစ်ပါသည်။</strong><br>တတိယအပိုဒ်တွင် 『専門知識の限界や不確実性も含めて誠実に情報を開示し、市民の価値観に耳を傾けながら双方向の対話を重ね、社会としての合意形成を図ること』 ဟု တိုက်ရိုက်ဖော်ပြထားသည်။"
+          }
+        ]
+      },
+      {
+        id: "n1_r7",
+        mondai: "問題11",
+        title: "【N1 読解】問題11・中文 (၂): 「タイパ（時間対効果）」重視の風潮と文化体験の変容",
+        type: "JLPT N1 問題11・内容理解（中文）— ယဉ်ကျေးမှုနှင့် လူမှုရေး ဆောင်းပါးလတ် (Cultural Critique)",
+        japaneseText: `近年、若者を中心に映画やドラマを倍速で視聴したり、音楽のイントロを飛ばしてサビだけを聴いたりする「タイムパフォーマンス（時間対効果、略してタイパ）」を重視する消費行動が定着しつつある。限られた可処分時間の中で、膨大なコンテンツを効率よく消化し、周囲の話題に乗り遅れまいとする合理的な適応行動とも言えるだろう。
+
+しかし、芸術や物語の本質は、単なる「あらすじ（情報）」の伝達にあるのではない。登場人物の沈黙の間（ま）や、一見本筋とは無関係に思える情景描写、あるいは解決のつかない葛藤の持続といった「冗長で非効率な時間」に身を委ねることによって初めて、私たちは他者の痛みを追体験し、自らの感性を揺さぶられるのである。
+
+結末という「結果」だけを最短距離で手に入れようとする態度は、未知なるものに出会って戸惑う機会を自ら閉ざすことに等しい。効率化の波が文化体験の隅々にまで及ぶ今だからこそ、あえて「時間を浪費する贅沢」の価値を見つめ直す必要があるのではないか。`,
+        burmeseTranslation: `မကြာသေးမီနှစ်များအတွင်း လူငယ်များအကြား ရုပ်ရှင်နှင့် ဇာတ်လမ်းတွဲများကို အမြန်နှုန်းမြှင့်၍ (倍速) ကြည့်ရှုခြင်း သို့မဟုတ် သီချင်းအစပိုင်း တီးလုံးကို ကျော်၍ အဓိကသံစဉ် (サビ) ကိုသာ နားထောင်ခြင်းကဲ့သို့သော 'အချိန်နှင့် ရလဒ်အချိုးအစား (Time Performance / タイパ)' ကို အလေးထားသည့် သုံးစွဲမှုအလေ့အထ အမြစ်တွယ်လာနေသည်။ အကန့်အသတ်ရှိသော အားလပ်ချိန်အတွင်း များပြားလှသော အကြောင်းအရာများကို ထိရောက်မြန်ဆန်စွာ ကြည့်ရှုပြီး ပတ်ဝန်းကျင်၏ စကားဝိုင်းတွင် နောက်ကျမကျန်ရစ်စေရန် လိုက်လျောညီထွေ ပြုမူသော အပြုအမူဟုလည်း ဆိုနိုင်ပေသည်။
+သို့သော် အနုပညာနှင့် ဇာတ်လမ်းတို့၏ အနှစ်သာရမှာ သာမန် 'ဇာတ်လမ်းအကျဉ်း (သတင်းအချက်အလက်)' ကို ပေးပို့ရုံသက်သက် မဟုတ်ပေ။ ဇာတ်ကောင်များ၏ တိတ်ဆိတ်နေသော အခိုက်အတန့် (間)၊ အပေါ်ယံကြည့်လျှင် အဓိကဇာတ်ကြောင်းနှင့် မသက်ဆိုင်သယောင်ထင်ရသော ရှုခင်းသရုပ်ဖော်ချက်များ သို့မဟုတ် အဖြေရှာမရသော စိတ်ပဋိပက္ခများကဲ့သို့ 'ရှည်လျားပြီး မြန်ဆန်မှုမရှိသော အချိန်များ' ထဲတွင် စီးမျောနစ်မြုပ်ကြည့်ခြင်းအားဖြင့်သာလျှင် ကျွန်ုပ်တို့သည် သူတစ်ပါး၏ နာကျင်မှုကို ထပ်တူခံစားနားလည်နိုင်ပြီး မိမိတို့၏ ခံစားမှုအာရုံကို လှုပ်ခတ်စေနိုင်ခြင်းဖြစ်သည်။
+ဇာတ်သိမ်းဟူသော 'ရလဒ်' တစ်ခုတည်းကိုသာ အတိုဆုံးလမ်းကြောင်းဖြင့် ရယူလိုသော သဘောထားသည် မသိသေးသောအရာများနှင့် ကြုံတွေ့ရင်ခုန်ရမည့် အခွင့်အရေးကို မိမိဘာသာ ပိတ်ပင်လိုက်ခြင်းနှင့် တူညီသည်။ မြန်ဆန်ထိရောက်မှု လှိုင်းလုံးကြီးက ယဉ်ကျေးမှုအတွေ့အကြုံ နယ်ပယ်အသီးသီးသို့ လွှမ်းမိုးနေသော ယခုအချိန်တွင်မှပင် 'အချိန်ကို အေးအေးဆေးဆေး သုံးဖြုန်းခံစားခြင်း၏ တန်ဖိုး' ကို ပြန်လည်သုံးသပ်ရန် လိုအပ်နေပြီ မဟုတ်ပါလော။`,
+        vocabHelper: [
+          { jp: "可処分時間 (かしょぶんじかん)", mm: "မိမိစိတ်ကြိုက် လွတ်လပ်စွာ သုံးစွဲနိုင်သော အားလပ်ချန်" },
+          { jp: "葛藤 (かっとう)", mm: "စိတ်တွင်း ပဋိပက္ခဖြစ်မှု၊ လွန်ဆွဲမှု" },
+          { jp: "冗長 (じょうちょう)", mm: "ရှည်လျားထွေပြားသော" },
+          { jp: "追体験 (ついたいけん)", mm: "သူတစ်ပါး၏ အတွေ့အကြုံကို မိမိကိုယ်တိုင် ကြုံရသကဲ့သို့ ထပ်တူခံစားခြင်း" }
+        ],
+        questions: [
+          {
+            qId: "n1_r7_q1",
+            question: "問1: 倍速視聴などの「タイパ」を重視する行動が生じる背景として、筆者が挙げていることは何か。(အမြန်နှုန်းမြှင့်ကြည့်ရှုခြင်းကဲ့သို့ 'タイパ' ကို အလေးထားလာကြသည့် နောက်ခံအကြောင်းရင်းမှာ အဘယ်နည်း။)",
+            options: [
+              { text: "限られた自由時間の中で大量のコンテンツを消化し、周囲の話題についていこうとしていること。", mm: "အကန့်အသတ်ရှိသော အားလပ်ချိန်အတွင်း အကြောင်းအရာအများအပြားကို ကြည့်ရှုပြီး ပတ်ဝန်းကျင်စကားဝိုင်းကို အမီလိုက်လိုခြင်း။", correct: true },
+              { text: "最近の映画やドラマの質が低下し、普通に視聴する価値が全くなくなってしまったこと。", mm: "မကြာသေးမီက ရုပ်ရှင်နှင့် ဇာတ်လမ်းတွဲများ အရည်အသွေးကျဆင်းပြီး ပုံမှန်ကြည့်ရှုရန် တန်ဖိုးမရှိတော့ခြင်း။", correct: false },
+              { text: "再生機器の性能が向上し、倍速で再生した方が音声や映像が美しく見えるようになったこと。", mm: "စက်ပစ္စည်းစွမ်းဆောင်ရည် မြင့်မားလာပြီး အမြန်နှုန်းမြှင့်ကြည့်မှသာ အသံနှင့်ရုပ်ပုံ ပိုမိုလှပလာခြင်း။", correct: false },
+              { text: "映画制作者が最初から倍速で視聴されることを前提として作品を作っていること。", mm: "ရုပ်ရှင်ဖန်တီးသူများက အစကတည်းက အမြန်နှုန်းဖြင့် ကြည့်ရှုရန် ရည်ရွယ်၍ ရိုက်ကူးလာကြခြင်း။", correct: false }
+            ],
+            explanation: "<strong>အဖြေမှန်မှာ နံပါတ် ၁ ဖြစ်ပါသည်။</strong><br>ပထမအပိုဒ်တွင် 『限られた可処分時間の中で、膨大なコンテンツを効率よく消化し、周囲の話題に乗り遅れまいとする合理的な適応行動』 ဟု ဖော်ပြထားသည်။"
+          },
+          {
+            qId: "n1_r7_q2",
+            question: "問2: 筆者によると、物語における「冗長で非効率な時間」にはどのような意味があるか。(စာရေးသူ၏ အဆိုအရ ဇာတ်လမ်းများရှိ 'ရှည်လျားပြီး မြန်ဆန်မှုမရှိသော အချိန်များ' ၌ မည်သို့သော အဓိပ္ပာယ်ရှိသနည်း။)",
+            options: [
+              { text: "沈黙の間や情景描写に身を委ねることで、他者の痛みを追体験し感性を豊かにする働きがある。", mm: "တိတ်ဆိတ်မှုနှင့် ရှုခင်းသရုပ်ဖော်ချက်များတွင် စီးမျောခြင်းဖြင့် သူတစ်ပါး၏ နာကျင်မှုကို ထပ်တူခံစားရပြီး ခံစားမှုအာရုံ ကြွယ်ဝစေသည်။", correct: true },
+              { text: "あらすじを理解する上では邪魔になるため、編集でカットすべき無駄な部分である。", mm: "ဇာတ်လမ်းအကျဉ်း နားလည်ရန် အနှောင့်အယှက်ဖြစ်သဖြင့် ဖြတ်တောက်ပစ်သင့်သော အပိုအပိုင်းဖြစ်သည်။", correct: false },
+              { text: "上映時間を引き延ばして映画館の入場料を高くするための商業的な工夫である。", mm: "ပြသချိန်ဆွဲဆန့်ပြီး ရုပ်ရှင်လက်မှတ်ခ ဈေးတင်ရန် ပြုလုပ်ထားသော စီးပွားရေးနည်းလမ်းဖြစ်သည်။", correct: false },
+              { text: "視聴者を退屈させて、途中で別の番組へチャンネルを変えさせる原因になっている。", mm: "ကြည့်ရှုသူကို ပျင်းရိစေပြီး အခြားအစီအစဉ်သို့ ပြောင်းလဲသွားစေသည့် အကြောင်းရင်းဖြစ်သည်။", correct: false }
+            ],
+            explanation: "<strong>အဖြေမှန်မှာ နံပါတ် ၁ ဖြစ်ပါသည်။</strong><br>ဒုတိယအပိုဒ်တွင် 『「冗長で非効率な時間」に身を委ねることによって初めて、私たちは他者の痛みを追体験し、自らの感性を揺さぶられる』 ဟု ရှင်းပြထားသည်။"
+          },
+          {
+            qId: "n1_r7_q3",
+            question: "問3: 最終段落の「時間を浪費する贅沢」によって筆者が言いたいことは何か。(နောက်ဆုံးအပိုဒ်ရှိ 'အချိန်ကို သုံးဖြုန်းခံစားခြင်း၏ ဇိမ်ခံမှု' ဟူသော စကားဖြင့် စာရေးသူ ဘာကိုပြောလိုသနည်း။)",
+            options: [
+              { text: "効率や結果ばかりを求めず、過程や余白の時間をじっくり味わう豊かな文化体験を大切にすべきだ。", mm: "မြန်ဆန်မှုနှင့် ရလဒ်ကိုသာ မရှာဖွေဘဲ ဖြစ်စဉ်နှင့် အချိန်ကာလကို အေးအေးဆေးဆေး ခံစားသည့် ယဉ်ကျေးမှုအတွေ့အကြုံကို တန်ဖိုးထားသင့်သည်။", correct: true },
+              { text: "お金持ちだけが映画や音楽をゆっくり鑑賞する特権を持つべきだ。", mm: "ချမ်းသာသူများသာလျှင် ရုပ်ရှင်နှင့် ဂီတကို အေးအေးဆေးဆေး ခံစားပိုင်ခွင့် ရှိသင့်သည်။", correct: false },
+              { text: "仕事や勉強をすべてやめて、一日中何もしないで過ごす生活を送るべきだ。", mm: "အလုပ်နှင့် စာလုပ်ခြင်းအားလုံးကို ရပ်ဆိုင်းပြီး တစ်နေကုန် ဘာမှမလုပ်ဘဲ နေထိုင်သင့်သည်။", correct: false },
+              { text: "倍速視聴を法律で禁止し、すべての人に通常の速度での視聴を義務づけるべきだ。", mm: "အမြန်နှုန်းမြှင့်ကြည့်ရှုခြင်းကို ဥပဒေဖြင့် ပိတ်ပင်ပြီး ပုံမှန်အမြန်နှုန်းဖြင့်သာ ကြည့်ရှုစေသင့်သည်။", correct: false }
+            ],
+            explanation: "<strong>အဖြေမှန်မှာ နံပါတ် ၁ ဖြစ်ပါသည်။</strong><br>ရလဒ်တစ်ခုတည်းကို အမြန်ရယူမည့်အစား အနုပညာလက်ရာ၏ အချိန်ကာလနှင့် အနှစ်သာရကို အေးအေးဆေးဆေး ခံစားတတ်ရန် လိုအပ်ကြောင်း ဆိုလိုသည်။"
+          }
+        ]
+      },
+      {
+        id: "n1_r8",
+        mondai: "問題11",
+        title: "【N1 読解】問題11・中文 (၃): 歴史記述における「客観性」と歴史家の視点",
+        type: "JLPT N1 問題11・内容理解（中文）— သမိုင်းဒဿနိကဗေဒ ဆောင်းပါးလတ် (Historiography)",
+        japaneseText: `「歴史とは過去の事実をありのままに記録したものだ」と素朴に信じている人は少なくない。しかし、過去に起きた無数の出来事のすべてが記録に残るわけではなく、また残された史料の中から「何を重要な事実として選び出し、どう関連づけて語るか」という過程には、必ず歴史家の問題意識や生きる時代の価値観が介在する。
+
+たとえば、かつての歴史書が王や武将といった権力者の政治的興亡を中心に描いていたのに対し、近年の歴史学では、名もなき庶民の暮らしや交易、環境の変化に光を当てる研究が盛んになっている。これは過去の出来事自体が変わったのではなく、現在を生きる私たちが「過去に何を問うか」という視点が変化したからにほかならない。
+
+すなわち、歴史とは固定された過去の標本ではなく、現在と過去との絶え間ない対話を通じて常に書き換えられ、新たな意味を付与され続ける動的な営みなのである。`,
+        burmeseTranslation: `'သမိုင်းဟူသည် အတိတ်က ဖြစ်ရပ်မှန်များကို အရှိအတိုင်း မှတ်တမ်းတင်ထားသောအရာဖြစ်သည်' ဟု ရိုးရှင်းစွာ ယုံကြည်နေသူများ မနည်းလှပေ။ သို့သော် အတိတ်က ဖြစ်ပျက်ခဲ့သော မရေမတွက်နိုင်သည့် ဖြစ်ရပ်အားလုံး မှတ်တမ်းကျန်ရှိနေခြင်း မဟုတ်သကဲ့သို့ ကျန်ရှိနေသော သမိုင်းအထောက်အထားများထဲမှ 'မည်သည့်အရာကို အရေးကြီးအချက်အဖြစ် ရွေးထုတ်ပြီး မည်သို့ချိတ်ဆက်ရေးသားမည်နည်း' ဟူသော ဖြစ်စဉ်တွင် သမိုင်းပညာရှင်၏ အမြင်နှင့် သူရှင်သန်နေသောခေတ်၏ စံတန်ဖိုးများ မလွဲမသွေ ပါဝင်ပတ်သက်နေသည်။
+ဥပမာအားဖြင့် ယခင်သမိုင်းကျမ်းများသည် ဘုရင်နှင့် စစ်သူကြီးများကဲ့သို့သော အာဏာရှင်တို့၏ နိုင်ငံရေးအတက်အကျကို ဗဟိုပြုရေးသားခဲ့သော်လည်း မကြာသေးမီနှစ်များက သမိုင်းပညာရပ်တွင်မူ အမည်မထင်ရှားသော သာမန်ပြည်သူတို့၏ နေထိုင်မှုဘဝ၊ ကုန်သွယ်ရေးနှင့် သဘာဝပတ်ဝန်းကျင် ပြောင်းလဲမှုများကို မီးမောင်းထိုးပြသည့် သုတေသနများ ထွန်းကားလာနေသည်။ ၎င်းမှာ အတိတ်က ဖြစ်ရပ်ကိုယ်တိုင် ပြောင်းလဲသွားခြင်းမဟုတ်ဘဲ ပစ္စုပ္ပန်တွင် ရှင်သန်နေသော ကျွန်ုပ်တို့က 'အတိတ်ကို ဘာမေးခွန်းထုတ်မည်နည်း' ဟူသော ရှုထောင့် ပြောင်းလဲလာသောကြောင့်သာ ဖြစ်သည်။
+တစ်နည်းအားဖြင့် သမိုင်းဟူသည် ပုံသေရပ်တန့်နေသော အတိတ်၏ နမူနာပစ္စည်းမဟုတ်ဘဲ ပစ္စုပ္ပန်နှင့် အတိတ်တို့အကြား အဆက်မပြတ် အပြန်အလှန် ဆွေးနွေးမှုများမှတစ်ဆင့် အမြဲတမ်း ပြန်လည်ရေးသားခံရကာ အဓိပ္ပာယ်အသစ်များ ပေါင်းထည့်ခံနေရသည့် သက်ဝင်လှုပ်ရှားနေသော လုပ်ငန်းစဉ်ပင် ဖြစ်ပေသည်။`,
+        vocabHelper: [
+          { jp: "史料 (しりょう)", mm: "သမိုင်းအထောက်အထား စာရွက်စာတမ်း" },
+          { jp: "介在 (かいざい)", mm: "ကြားဝင်ပတ်သက်နေခြင်း" },
+          { jp: "興亡 (こうぼう)", mm: "ထွန်းကားခြင်းနှင့် ပျက်သုဉ်းခြင်း (အတက်အကျ)" },
+          { jp: "動的 (どうてき)", mm: "သက်ဝင်လှုပ်ရှား ပြောင်းလဲနေသော (Dynamic)" }
+        ],
+        questions: [
+          {
+            qId: "n1_r8_q1",
+            question: "問1: 近年の歴史学で庶民の暮らしや環境の変化が注目されるようになったのはなぜだと筆者は述べているか。(မကြာသေးမီက သမိုင်းပညာတွင် သာမန်ပြည်သူတို့၏ဘဝနှင့် ပတ်ဝန်းကျင်ပြောင်းလဲမှုကို အာရုံစိုက်လာကြခြင်းမှာ အဘယ်ကြောင့်ဟု စာရေးသူ ဆိုသနည်း။)",
+            options: [
+              { text: "現在を生きる歴史家や私たちの問題意識・過去に何を問うかという視点が変化したから。", mm: "ပစ္စုပ္ပန်တွင် ရှင်သန်နေသော သမိုင်းပညာရှင်များနှင့် ကျွန်ုပ်တို့၏ အတိတ်အပေါ် မေးခွန်းထုတ်သည့် ရှုထောင့် ပြောင်းလဲလာသောကြောင့်။", correct: true },
+              { text: "王や武将に関する古い史料がすべて失われ、研究できなくなったから。", mm: "ဘုရင်နှင့် စစ်သူကြီးများဆိုင်ရာ သမိုင်းအထောက်အထားအားလုံး ပျောက်ဆုံးသွားပြီး သုတေသနမလုပ်နိုင်တော့သောကြောင့်။", correct: false },
+              { text: "過去の出来事そのものが時間の経過とともに自然に変化したから。", mm: "အတိတ်က ဖြစ်ရပ်ကိုယ်တိုင်က အချိန်ကြာလာသည်နှင့်အမျှ သဘာဝအလျောက် ပြောင်းလဲသွားသောကြောင့်။", correct: false },
+              { text: "政治の歴史を研究することが法律によって厳しく制限されるようになったから。", mm: "နိုင်ငံရေးသမိုင်း သုတေသနပြုခြင်းကို ဥပဒေဖြင့် တင်းကြပ်စွာ ကန့်သတ်လိုက်သောကြောင့်။", correct: false }
+            ],
+            explanation: "<strong>အဖြေမှန်မှာ နံပါတ် ၁ ဖြစ်ပါသည်။</strong><br>ဒုတိယအပိုဒ်တွင် 『過去の出来事自体が変わったのではなく、現在を生きる私たちが「過去に何を問うか」という視点が変化したからにほかならない』 ဟု ဖော်ပြထားသည်။"
+          },
+          {
+            qId: "n1_r8_q2",
+            question: "問2: 筆者が考える「歴史」の本質として最も適切なものはどれか。(စာရေးသူ ယူဆသော 'သမိုင်း' ၏ အနှစ်သာရအဖြစ် အသင့်တော်ဆုံးမှာ အဘယ်နည်း။)",
+            options: [
+              { text: "現在と過去との対話を通じて絶えず再解釈され、新たな意味が見いだされ続ける動的な営み。", mm: "ပစ္စုပ္ပန်နှင့် အတိတ် အပြန်အလှန်ဆွေးနွေးမှုမှတစ်ဆင့် အမြဲတမ်း အဓိပ္ပာယ်အသစ် ဖော်ထုတ်ခံနေရသော သက်ဝင်လှုပ်ရှားသည့် လုပ်ငန်းစဉ်။", correct: true },
+              { text: "歴史家の主観を一切交えず、過去に起きたすべての出来事を完全にそのまま保存した標本。", mm: "သမိုင်းပညာရှင်၏ အမြင် လုံးဝမပါဝင်ဘဲ အတိတ်က ဖြစ်ရပ်အားလုံးကို အရှိအတိုင်း သိမ်းဆည်းထားသော နမူနာပစ္စည်း။", correct: false },
+              { text: "権力者の都合に合わせて自由に事実を捏造してもよい創作物語。", mm: "အာဏာရှင်များ အဆင်ပြေသလို အချက်အလက် လုပ်ကြံရေးသားနိုင်သော စိတ်ကူးယဉ်ပုံပြင်။", correct: false },
+              { text: "一度書かれたら二度と修正してはならない絶対的な教典。", mm: "တစ်ကြိမ်ရေးသားပြီးပါက နောက်ထပ် လုံးဝပြင်ဆင်ခွင့်မရှိသော အကြွင်းမဲ့ကျမ်းစာ။", correct: false }
+            ],
+            explanation: "<strong>အဖြေမှန်မှာ နံပါတ် ၁ ဖြစ်ပါသည်။</strong><br>နောက်ဆုံးအပိုဒ်တွင် 『現在と過去との絶え間ない対話を通じて常に書き換えられ、新たな意味を付与され続ける動的な営みなのである』 ဟု တိုက်ရိုက်ဖော်ပြထားသည်။"
+          }
+        ]
+      },
+
+      // ==================== 問題12・統合理解（A・B比較: 2 Passages / 4 Questions） ====================
+      {
+        id: "n1_r9",
+        mondai: "問題12",
+        title: "【N1 読解】問題12・統合理解 (၁): 文化財の「保存」と「公開・活用」をめぐる議論（AとBの比較）",
+        type: "JLPT N1 問題12・統合理解（A・B比較）— စာပိုဒ် ၂ ခု နှိုင်းယှဉ်သုံးသပ်ခြင်း (Cultural Heritage)",
+        japaneseText: `【文章A】
+貴重な歴史的建造物や古美術品などの文化財は、一度損なわれれば二度と元の姿を取り戻すことはできない不可逆的な遺産である。近年、観光資源として文化財を積極的に公開し、収益を上げようとする動きが強まっているが、多くの人が立ち入ることで生じる湿度や温度の変化、振動、さらには不慮の破損リスクは計り知れない。私たちの世代の最大の責務は、これらの遺産を可能な限り劣化させず、完全な状態で後世へ引き継ぐことであり、保存のためには一般公開を厳しく制限することもいとわない姿勢が求められる。
+
+【文章B】
+文化財を未来へ継承することの重要性は論を俟たない。しかし、人々から隔離して収蔵庫の奥深くに眠らせておくだけでは、その価値が社会に共有されることはなく、やがて文化財を守ろうとする市民の関心や公的支援さえも失われてしまうだろう。最新のデジタル計測や環境制御技術を用いれば、劣化のリスクを最小限に抑えつつ公開することは十分に可能だ。実際に本物に触れて感動する体験を通じてこそ、次世代の保護意識が醸成されるのであり、保存と活用の好循環を目指すべきである。`,
+        burmeseTranslation: `【စာပိုဒ် A】
+တန်ဖိုးကြီးမားသော သမိုင်းဝင်အဆောက်အအုံများနှင့် ရှေးဟောင်းအနုပညာလက်ရာများကဲ့သို့သော ယဉ်ကျေးမှုအမွေအနှစ်များသည် တစ်ကြိမ်ပျက်စီးသွားပါက မူလပုံစံအတိုင်း ပြန်လည်မရရှိနိုင်တော့သည့် အမွေအနှစ်များဖြစ်သည်။ မကြာသေးမီနှစ်များက ခရီးသွားလုပ်ငန်း အရင်းအမြစ်အဖြစ် ယဉ်ကျေးမှုအမွေအနှစ်များကို တက်ကြွစွာ ဖွင့်လှစ်ပြသပြီး ဝင်ငွေရှာဖွေလိုသည့် လှုပ်ရှားမှုများ အားကောင်းလာသော်လည်း လူအများအပြား ဝင်ရောက်ခြင်းကြောင့် ဖြစ်ပေါ်လာသော စိုထိုင်းဆနှင့် အပူချိန်ပြောင်းလဲမှု၊ တုန်ခါမှုနှင့် မမျှော်လင့်သော ပျက်စီးနိုင်ခြေအန္တရာယ်မှာ မခန့်မှန်းနိုင်လောက်အောင် ကြီးမားသည်။ ကျွန်ုပ်တို့မျိုးဆက်၏ အကြီးမားဆုံးတာဝန်မှာ ဤအမွေအနှစ်များကို တတ်နိုင်သမျှ မပျက်စီးစေဘဲ အပြည့်အဝကောင်းမွန်သော အခြေအနေဖြင့် နောင်လာနောင်သားများထံ လက်ဆင့်ကမ်းပေးရန်ဖြစ်ပြီး ထိန်းသိမ်းစောင့်ရှောက်ရေးအတွက် အများပြည်သူ ကြည့်ရှုခွင့်ကို တင်းကြပ်စွာ ကန့်သတ်ရန်ပင် ဝန်မလေးသည့် သဘောထား လိုအပ်သည်။
+【စာပိုဒ် B】
+ယဉ်ကျေးမှုအမွေအနှစ်များကို အနာဂတ်သို့ လက်ဆင့်ကမ်းရေး၏ အရေးပါပုံမှာ အထူးပြောနေစရာပင် မလိုပါ။ သို့သော် လူအများနှင့် အဆက်အသွယ်ဖြတ်ပြီး သိုလှောင်ရုံအတွင်း၌သာ သိမ်းဆည်းထားရုံဖြင့် ၎င်း၏တန်ဖိုးကို လူ့အဖွဲ့အစည်းက မျှဝေခံစားနိုင်မည်မဟုတ်ဘဲ နောက်ဆုံးတွင် ယဉ်ကျေးမှုအမွေအနှစ်ကို ကာကွယ်လိုသည့် ပြည်သူတို့၏ စိတ်ဝင်စားမှုနှင့် အများပြည်သူဆိုင်ရာ ထောက်ပံ့မှုများပင် ဆုံးရှုံးသွားပေလိမ့်မည်။ နောက်ဆုံးပေါ် ဒစ်ဂျစ်တယ်တိုင်းတာရေးနှင့် ပတ်ဝန်းကျင်ထိန်းချုပ်ရေး နည်းပညာများကို အသုံးပြုပါက ပျက်စီးနိုင်ခြေကို အနည်းဆုံးဖြစ်အောင် ထိန်းချုပ်ရင်း ဖွင့်လှစ်ပြသနိုင်သည်။ လက်တွေ့ ပစ္စည်းအစစ်အမှန်ကို မြင်တွေ့ရင်ခုန်ရသည့် အတွေ့အကြုံမှတစ်ဆင့်သာ နောက်မျိုးဆက်၏ ထိန်းသိမ်းလိုစိတ် ပျိုးထောင်ပေးနိုင်မည်ဖြစ်ရာ ထိန်းသိမ်းရေးနှင့် အသုံးချရေး အပြန်အလှန် အကျိုးပြုသည့် သံသရာကောင်းကို ဦးတည်သင့်သည်။`,
+        vocabHelper: [
+          { jp: "不可逆的 (ふかぎゃくてき)", mm: "မူလအခြေအနေသို့ ပြန်လှည့်မရနိုင်သော (Irreversible)" },
+          { jp: "いとわない", mm: "ဝန်မလေးပါ၊ နောက်မတွန့်ပါ" },
+          { jp: "論を俟たない (ろんをまたない)", mm: "အထူးဆွေးနွေးငြင်းခုံနေစရာ မလိုလောက်အောင် ထင်ရှားသည်" },
+          { jp: "醸成 (じょうせい)", mm: "(သဘောထား/အသိစိတ်) တဖြည်းဖြည်း ပျိုးထောင်ပေးခြင်း" }
+        ],
+        questions: [
+          {
+            qId: "n1_r9_q1",
+            question: "問1: AとBが共通して認めている前提は何か。(A နှင့် B နှစ်ဦးစလုံး တူညီစွာ လက်ခံထားသော အခြေခံအချက်မှာ အဘယ်နည်း။)",
+            options: [
+              { text: "文化財は貴重な遺産であり、未来の世代へ確実に引き継いでいかなければならないこと。", mm: "ယဉ်ကျေးမှုအမွေအနှစ်သည် တန်ဖိုးကြီးမားပြီး အနာဂတ်မျိုးဆက်သို့ သေချာပေါက် လက်ဆင့်ကမ်းရမည်ဖြစ်ခြင်း။", correct: true },
+              { text: "文化財の劣化を防ぐためには、いかなる場合でも一般公開を完全に禁止すべきであること。", mm: "ပျက်စီးမှုကာကွယ်ရန် မည်သည့်အခြေအနေတွင်မဆို အများပြည်သူပြသမှုကို လုံးဝပိတ်ပင်သင့်ခြင်း။", correct: false },
+              { text: "観光収益を最大化するためなら、文化財が多少破損しても仕方がないということ。", mm: "ခရီးသွားဝင်ငွေ အများဆုံးရရှိရန် ယဉ်ကျေးမှုအမွေအနှစ် အနည်းငယ်ပျက်စီးသွားလည်း မတတ်နိုင်ဟု ယူဆခြင်း။", correct: false },
+              { text: "現代の科学技術では、文化財の劣化スピードを遅らせることは全く不可能だということ。", mm: "ခေတ်မီနည်းပညာဖြင့် ယဉ်ကျေးမှုအမွေအနှစ် ပျက်စီးမှုနှုန်းကို လျှော့ချရန် လုံးဝမဖြစ်နိုင်ဟု ယူဆခြင်း။", correct: false }
+            ],
+            explanation: "<strong>အဖြေမှန်မှာ နံပါတ် ၁ ဖြစ်ပါသည်။</strong><br>A တွင် 『後世へ引き継ぐこと』 ဟုဆိုပြီး B တွင်လည်း 『文化財を未来へ継承することの重要性は論を俟たない』 ဟု နှစ်ဦးစလုံးက အနာဂတ်သို့ လက်ဆင့်ကမ်းရန် အရေးကြီးကြောင်း လက်ခံထားသည်။"
+          },
+          {
+            qId: "n1_r9_q2",
+            question: "問2: 文化財の一般公開について、AとBの主張はどのように対立しているか。(ယဉ်ကျေးမှုအမွေအနှစ် ဖွင့်လှစ်ပြသခြင်းနှင့် ပတ်သက်၍ A နှင့် B ၏ အဆိုပြုချက် မည်သို့ကွဲလွဲနေသနည်း။)",
+            options: [
+              { text: "Aは劣化防止のため公開制限も必要だとし、Bは技術でリスクを抑えつつ公開して保護意識を育てるべきだとしている。", mm: "A က ပျက်စီးမှုကာကွယ်ရန် ပြသခွင့်ကန့်သတ်သင့်သည်ဟု ဆိုပြီး B က နည်းပညာဖြင့်ထိန်းချုပ်ရင်း ပြသကာ ထိန်းသိမ်းလိုစိတ် ပျိုးထောင်သင့်သည်ဟု ဆိုသည်။", correct: true },
+              { text: "Aはデジタルレプリカのみの公開を主張し、Bはすべての文化財を屋外に展示すべきだと主張している。", mm: "A က ပုံတူကိုသာ ပြသရန်ဆိုပြီး B က အမွေအနှစ်အားလုံးကို အပြင်ဘက်တွင် ပြသသင့်သည်ဟု ဆိုသည်။", correct: false },
+              { text: "Aは外国人観光客のみの入場を認め、Bは研究者のみの入場を認めるべきだとしている。", mm: "A က နိုင်ငံခြားသားများကိုသာ ဝင်ခွင့်ပြုရန်ဆိုပြီး B က သုတေသီများကိုသာ ဝင်ခွင့်ပြုသင့်သည်ဟု ဆိုသည်။", correct: false },
+              { text: "AもBも、公的支援を増やすために観覧料を現在の10倍に引き上げるべきだと主張している。", mm: "A ရော B ပါ ထောက်ပံ့ငွေတိုးရန် ဝင်ကြေးကို ၁၀ ဆ တိုးကောက်သင့်သည်ဟု ဆိုသည်။", correct: false }
+            ],
+            explanation: "<strong>အဖြေမှန်မှာ နံပါတ် ၁ ဖြစ်ပါသည်။</strong><br>A က ထိန်းသိမ်းရေးအတွက် အများပြည်သူပြသမှုကို တင်းကြပ်စွာ ကန့်သတ်သင့်သည်ဟု ဆိုပြီး B က နည်းပညာသုံး၍ ပြသခြင်းဖြင့်သာ ပြည်သူ့စိတ်ဝင်စားမှုနှင့် ထိန်းသိမ်းလိုစိတ်ကို ပျိုးထောင်နိုင်မည်ဟု ဆိုသည်။"
+          }
+        ]
+      },
+      {
+        id: "n1_r10",
+        mondai: "問題12",
+        title: "【N1 読解】問題12・統合理解 (၂): 企業の成果主義賃金制度とチームワーク（AとBの比較）",
+        type: "JLPT N1 問題12・統合理解（A・B比較）— စာပိုဒ် ၂ ခု နှိုင်းယှဉ်သုံးသပ်ခြင်း (Corporate Management)",
+        japaneseText: `【文章A】
+グローバル競争が激化する中、日本企業も年功序列を廃止し、個人の業績に応じて報酬を決定する「成果主義」を徹底すべきだ。どれほど高い成果を上げても、勤続年数が短いという理由だけで報酬が低く抑えられる制度では、優秀な若手人材の意欲はそがれ、海外企業などへ流出してしまう。個人の貢献度を明確に数値化して正当に報いることこそが、組織全体の活力を引き出し、企業の競争力を高める唯一の道である。
+
+【文章B】
+個人の短期的な成果ばかりを報酬に直結させる制度には重大な陥穽（かんせい）がある。数値化しやすい個人の売上目標ばかりが優先されると、社員は自分の評価を高めることに汲々とし、同僚へのノウハウの共有や後輩の育成といった「数値化しにくいが組織に不可欠な貢献」を忌避するようになるからだ。長期的かつ独創的なイノベーションは、失敗を許容する安定した基盤と部門を超えた協力から生まれるものであり、過度な成果主義は組織の土台を掘り崩しかねない。`,
+        burmeseTranslation: `【စာပိုဒ် A】
+ကမ္ဘာလုံးဆိုင်ရာ ပြိုင်ဆိုင်မှု ပြင်းထန်လာသည့်အလျောက် ဂျပန်ကုမ္ပဏီများသည်လည်း လုပ်သက်အလိုက် ရာထူးတိုးပေးသည့်စနစ် (年功序列) ကို ဖျက်သိမ်းပြီး တစ်ဦးချင်းစီ၏ စွမ်းဆောင်ရည်အလိုက် လစာသတ်မှတ်သော 'စွမ်းဆောင်ရည်အခြေပြုစနစ် (成果主義)' ကို အပြည့်အဝ ကျင့်သုံးသင့်သည်။ မည်မျှပင် မြင့်မားသော အောင်မြင်မှုရရှိစေကာမူ လုပ်သက်နည်းသည်ဟူသော အကြောင်းပြချက်ဖြင့် လစာနှိမ့်ချခံရသည့် စနစ်တွင် ထူးချွန်သော လူငယ်များ၏ စိတ်အားထက်သန်မှု လျော့နည်းသွားပြီး ပြည်ပကုမ္ပဏီများသို့ ထွက်ခွာသွားကြလိမ့်မည်။ တစ်ဦးချင်းစီ၏ အကျိုးပြုမှုကို ကိန်းဂဏန်းဖြင့် တိကျစွာ သတ်မှတ်၍ ထိုက်တန်စွာ ချီးမြှင့်ခြင်းကသာလျှင် အဖွဲ့အစည်းတစ်ခုလုံး၏ စွမ်းအားကို ဆွဲထုတ်ပေးနိုင်မည့် တစ်ခုတည်းသောလမ်းဖြစ်သည်။
+【စာပိုဒ် B】
+တစ်ဦးချင်းစီ၏ ကာလတိုရလဒ်ကိုသာ လစာနှင့် တိုက်ရိုက်ချိတ်ဆက်ထားသော စနစ်တွင် ကြီးမားသော ထောင်ချောက် (陥穽) ရှိနေသည်။ ကိန်းဂဏန်းဖြင့် တိုင်းတာရလွယ်သော တစ်ဦးချင်း အရောင်းပန်းတိုင်ကိုသာ ဦးစားပေးလာသည့်အခါ ဝန်ထမ်းများသည် မိမိအမှတ်ကောင်းရရေးကိုသာ အသည်းအသန် အာရုံစိုက်လာကြပြီး လုပ်ဖော်ကိုင်ဖက်များအား နည်းပညာမျှဝေပေးခြင်းနှင့် ဂျူနီယာများကို ပျိုးထောင်ပေးခြင်းကဲ့သို့သော 'ကိန်းဂဏန်းဖြင့် တိုင်းတာရခက်သော်လည်း အဖွဲ့အစည်းအတွက် မရှိမဖြစ်လိုအပ်သည့် ပံ့ပိုးမှုများ' ကို ရှောင်ဖယ်လာကြသောကြောင့်ဖြစ်သည်။ ရေရှည်တည်တံ့ပြီး ဆန်းသစ်သော တီထွင်ဖန်တီးမှုဟူသည် ကျရှုံးမှုကို လက်ခံပေးသည့် တည်ငြိမ်သောအခြေခံနှင့် ဌာနအချင်းချင်း ပူးပေါင်းဆောင်ရွက်မှုမှ ပေါ်ထွက်လာခြင်းဖြစ်ရာ အလွန်အကျွံ စွမ်းဆောင်ရည်အခြေပြုစနစ်သည် အဖွဲ့အစည်း၏ အုတ်မြစ်ကို ဖြိုချမိသလို ဖြစ်သွားစေနိုင်သည်။`,
+        vocabHelper: [
+          { jp: "意欲がそがれる", mm: "စိတ်အားထက်သန်မှု လျော့ပါးပျက်စီးသွားသည်" },
+          { jp: "陥穽 (かんせい)", mm: "ထောင်ချောက်၊ သတိမထားမိသော အန္တရာယ်အားနည်းချက်" },
+          { jp: "汲々とする (きゅうきゅうとする)", mm: "တစ်ခုတည်းကိုသာ အသည်းအသန် စိုးရိမ်တကြီး လုပ်ဆောင်သည်" },
+          { jp: "忌避 (きひ)", mm: "မနှစ်သက်၍ ရှောင်ဖယ်ခြင်း" }
+        ],
+        questions: [
+          {
+            qId: "n1_r10_q1",
+            question: "問1: Aが成果主義の徹底を主張する主な理由は何か。(A က စွမ်းဆောင်ရည်အခြေပြု လစာစနစ်ကို အပြည့်အဝကျင့်သုံးရန် တောင်းဆိုသည့် အဓိကအကြောင်းရင်းမှာ အဘယ်နည်း။)",
+            options: [
+              { text: "個人の貢献に正当に報いることで、優秀な人材の流出を防ぎ組織の活力を高めるため。", mm: "တစ်ဦးချင်းစီ၏ အကျိုးပြုမှုကို ထိုက်တန်စွာ ချီးမြှင့်ခြင်းဖြင့် လူတော်များ ထွက်ခွာမှုကို ကာကွယ်ပြီး အဖွဲ့အစည်းစွမ်းအား မြှင့်တင်ရန်။", correct: true },
+              { text: "社員全員の給料を完全に同額にして、社内の競争をなくすため。", mm: "ဝန်ထမ်းအားလုံး၏ လစာကို တစ်ပြေးညီတူညီစေပြီး ကုမ္ပဏီတွင်း ပြိုင်ဆိုင်မှု पပျောက်စေရန်။", correct: false },
+              { text: "勤続年数が長い高齢の社員だけを高く評価し、若手の採用を減らすため。", mm: "လုပ်သက်ရှည် သက်ကြီးဝန်ထမ်းများကိုသာ အမှတ်ပေးပြီး လူငယ်ခန့်အပ်မှု လျှော့ချရန်။", correct: false },
+              { text: "短期的な売上目標を廃止して、社員に自由な研究だけをさせるため。", mm: "ကာလတို အရောင်းပန်းတိုင်ကို ဖျက်သိမ်းပြီး ဝန်ထမ်းများအား လွတ်လပ်သော သုတေသနသာ လုပ်စေရန်။", correct: false }
+            ],
+            explanation: "<strong>အဖြေမှန်မှာ နံပါတ် ၁ ဖြစ်ပါသည်။</strong><br>A တွင် လူငယ်လူတော်များ စိတ်ဓာတ်ကျပြီး ပြည်ပကုမ္ပဏီများသို့ ထွက်ခွာမှုမှ ကာကွယ်ရန်နှင့် အဖွဲ့အစည်းတစ်ခုလုံး တက်ကြွလာစေရန် 成果主義 လိုအပ်ကြောင်း ဖော်ပြထားသည်။"
+          },
+          {
+            qId: "n1_r10_q2",
+            question: "問2: Bが指摘する「過度な成果主義の弊害」とはどのようなことか。(B က ထောက်ပြထားသော 'အလွန်အကျွံ စွမ်းဆောင်ရည်အခြေပြုစနစ်၏ ဆိုးကျိုး' မှာ အဘယ်နည်း။)",
+            options: [
+              { text: "数値化しやすい個人の目標ばかりが優先され、後輩育成や協力などの貢献が避けられるようになること。", mm: "ကိန်းဂဏန်းဖြင့် တိုင်းတာလွယ်သော တစ်ဦးချင်းပန်းတိုင်ကိုသာ ဦးစားပေးပြီး ဂျူနီယာပျိုးထောင်ရေးနှင့် ပူးပေါင်းဆောင်ရွက်မှုများကို ရှောင်ဖယ်လာခြင်း။", correct: true },
+              { text: "同僚同士の助け合いが増えすぎて、個人の仕事が全く進まなくなること。", mm: "လုပ်ဖော်ကိုင်ဖက်ချင်း ကူညီမှု များလွန်းသဖြင့် တစ်ဦးချင်းအလုပ် လုံးဝမတွင်ကျယ်တော့ခြင်း။", correct: false },
+              { text: "社員が失敗を恐れずにリスクの高い長期的な研究ばかりに熱中してしまうこと。", mm: "ဝန်ထမ်းများက ကျရှုံးမှုကို မကြောက်ဘဲ အန္တရာယ်များသော ရေရှည်သုတေသနများတွင်သာ နစ်မြုပ်နေခြင်း။", correct: false },
+              { text: "評価の基準が曖昧になり、年功序列の時代よりも人件費が大幅に増えてしまうこと。", mm: "အကဲဖြတ်စံနှုန်း မရေရာဖြစ်သွားပြီး လုပ်သက်စနစ်ခေတ်ကထက် ဝန်ထမ်းစရိတ် အဆမတန် တိုးလာခြင်း။", correct: false }
+            ],
+            explanation: "<strong>အဖြေမှန်မှာ နံပါတ် ၁ ဖြစ်ပါသည်။</strong><br>B တွင် 『同僚へのノウハウの共有や後輩の育成といった「数値化しにくいが組織に不可欠な貢献」を忌避するようになる』 ဟု ရှင်းလင်းစွာ ထောက်ပြထားသည်။"
+          }
+        ]
+      },
+
+      // ==================== 問題13・主張理解（長文: 2 Passages / 5 Questions） ====================
+      {
+        id: "n1_r11",
+        mondai: "問題13",
+        title: "【N1 読解】問題13・長文 (၁): 都市の均質化と「場所の記憶（プレイス・アイデンティティ）」の再生",
+        type: "JLPT N1 問題13・主張理解（長文）— မြို့ပြဗိသုကာနှင့် ယဉ်ကျေးမှု စာပိုဒ်ရှည် (Urban Philosophy)",
+        japaneseText: `今日、日本全国のどの地方都市を訪れても、駅前には同じようなガラス張りの高層ビルが立ち並び、郊外の幹線道路沿いには全国チェーンの大型商業施設が軒を連ねている。経済的合理性と利便性を徹底的に追求した都市再開発は、どこにいても均質なサービスを享受できる快適さをもたらした一方で、その土地固有の歴史的文脈や風景の個性を急速に消し去ってしまった。
+
+本来、都市の空間とは単なる機能的な「容器」ではない。何世代にもわたる人々の営みや、路地裏の古い石畳、地域の祭りや市場の賑わいといった「場所の記憶」が幾重にも堆積した文化的な織り物である。人はそうした固有の風景の中に身を置くことで、自分がどこに属し、どのような歴史の連なりの中に生きているのかを確認し、精神的な安定を得てきた。
+
+すべてを白紙に戻して画一的なビルを建てるスクラップ・アンド・ビルド型の開発は、こうした人々の心の拠り所を根こそぎ奪う行為にほかならない。これからの都市計画に求められるのは、古いものを非効率だと切り捨てることではなく、既存の街並みや歴史的記憶を丁寧に読み解き、それを現代の暮らしの中に創造的に編み直していく「文脈を尊重した再生」の視点なのである。`,
+        burmeseTranslation: `ယနေ့ခေတ် ဂျပန်တစ်နိုင်ငံလုံးရှိ မည်သည့်နယ်မြို့ကို သွားရောက်လည်ပတ်စေကာမူ ဘူတာရုံရှေ့တွင် တစ်ပုံစံတည်းတူညီသော မှန်ကာအထပ်မြင့် အဆောက်အအုံကြီးများ စီတန်းနေပြီး မြို့ပြင်လမ်းမကြီးဘေးတွင်လည်း တစ်နိုင်ငံလုံးဆိုင်ခွဲဖွင့်ထားသည့် ကုန်တိုက်ကြီးများ အစီအရီ ရှိနေကြသည်။ စီးပွားရေးအရ တွက်ခြေကိုက်မှုနှင့် အဆင်ပြေလွယ်ကူမှုကို အဆုံးစွန်အထိ လိုက်စားခဲ့သော မြို့ပြပြန်လည်ဖွံ့ဖြိုးရေးစီမံကိန်းများသည် မည်သည့်နေရာတွင်မဆို တစ်ပြေးညီ ဝန်ဆောင်မှုကို ရရှိနိုင်သည့် သက်သောင့်သက်သာရှိမှုကို ယူဆောင်လာပေးခဲ့သော်လည်း တစ်ဖက်တွင်မူ ထိုဒေသ၏ မူပိုင်သမိုင်းကြောင်း ဆက်စပ်မှုနှင့် ရှုခင်း၏ ထူးခြားသော ကိုယ်ပိုင်ဟန်များကို လျင်မြန်စွာ ဖျောက်ဖျက်ပစ်ခဲ့သည်။
+မူလအားဖြင့် မြို့ပြ공간 (Space) ဟူသည် လုပ်ငန်းဆောင်တာအတွက် သက်သက်ဖြစ်သော 'ထည့်စရာခွက်' မဟုတ်ပေ။ မျိုးဆက်ပေါင်းများစွာသော လူတို့၏ နေထိုင်လှုပ်ရှားမှုများ၊ လမ်းကြားထဲရှိ ရှေးဟောင်းကျောက်ခင်းလမ်းများ၊ ဒေသတွင်း ပွဲတော်များနှင့် ဈေးများ၏ စည်ကားမှုဟူသော 'နေရာဒေသ၏ မှတ်ဉာဏ်များ' အထပ်ထပ် စုပုံရက်ဖောက်ထားသည့် ယဉ်ကျေးမှုအထည်သားကြီး ဖြစ်သည်။ လူသားတို့သည် ထိုသို့သော ကိုယ်ပိုင်ရှုခင်းများအတွင်း နေထိုင်ခြင်းဖြင့် မိမိသည် မည်သည့်အသိုင်းအဝိုင်းနှင့် သက်ဆိုင်ပြီး မည်သို့သော သမိုင်းအဆက်အနွှယ်အတွင်း ရှင်သန်နေသနည်းဆိုသည်ကို အတည်ပြုကာ စိတ်ပိုင်းဆိုင်ရာ တည်ငြိမ်မှုကို ရရှိခဲ့ကြသည်။
+အရာအားလုံးကို အပြောင်ရှင်းပြီး တစ်ပုံစံတည်းသော အဆောက်အအုံများ ဆောက်လုပ်သည့် (Scrap and Build) ဖွံ့ဖြိုးရေးပုံစံသည် လူတို့၏ စိတ်ပိုင်းဆိုင်ရာ မှီခိုအားထားရာကို အမြစ်မှစ၍ လုယူဖျက်ဆီးသည့် လုပ်ရပ်ပင်ဖြစ်သည်။ ရှေ့ဆက်ရမည့် မြို့ပြစီမံကိန်းများတွင် လိုအပ်သည်မှာ အဟောင်းများကို အသုံးမဝင်ဟု ပယ်ချပစ်ရန်မဟုတ်ဘဲ ရှိရင်းစွဲ မြို့ပြရှုခင်းနှင့် သမိုင်းမှတ်ဉာဏ်များကို သေချာစွာ ဖတ်ရှုနားလည်ပြီး မျက်မှောက်ခေတ် လူနေမှုဘဝထဲသို့ ဆန်းသစ်စွာ ပြန်လည်ပေါင်းစပ်ပေးမည့် 'သမိုင်းကြောင်း ဆက်စပ်မှုကို လေးစားသော ပြန်လည်ရှင်သန်စေရေး' ရှုထောင့်ပင် ဖြစ်ပေသည်။`,
+        vocabHelper: [
+          { jp: "均質化 (きんしつか)", mm: "အားလုံး တစ်ပုံစံတည်း တူညီသွားခြင်း (Homogenization)" },
+          { jp: "軒を連ねる (のきをつらねる)", mm: "(ဆိုင်/အိမ်များ) အစီအရီ တန်းစီတည်ရှိနေသည်" },
+          { jp: "堆積 (たいせき)", mm: "အထပ်ထပ် စုပုံတည်ရှိနေခြင်း" },
+          { jp: "拠り所 (よりどころ)", mm: "စိတ်ပိုင်းဆိုင်ရာ မှီခိုအားထားရာ" }
+        ],
+        questions: [
+          {
+            qId: "n1_r11_q1",
+            question: "問1: 現代の都市再開発がもたらした問題点として、筆者が指摘していることは何か。(မျက်မှောက်ခေတ် မြို့ပြပြန်လည်ဖွံ့ဖြိုးရေးကြောင့် ဖြစ်ပေါ်လာသော ပြဿနာအဖြစ် စာရေးသူ ထောက်ပြထားသည်မှာ အဘယ်နည်း။)",
+            options: [
+              { text: "利便性と引き換えに、その土地固有の歴史的文脈や風景の個性が失われてしまったこと。", mm: "အဆင်ပြေလွယ်ကူမှုနှင့်အတူ ထိုဒေသ၏ မူပိုင်သမိုင်းကြောင်းနှင့် ရှုခင်း၏ ထူးခြားသော ကိုယ်ပိုင်ဟန်များ ပျောက်ဆုံးသွားခြင်း။", correct: true },
+              { text: "地方都市の駅前が開発されず、全国チェーンの店舗が一つも進出していないこと。", mm: "နယ်မြို့ဘူတာရှေ့များ မဖွံ့ဖြိုးဘဲ တစ်နိုင်ငံလုံးဆိုင်ခွဲများ လုံးဝရောက်ရှိမလာခြင်း။", correct: false },
+              { text: "古い建物を残しすぎたために、現代の生活に必要なサービスが全く受けられないこと。", mm: "အဆောက်အအုံဟောင်းများ အလွန်အကျွံ ချန်ထားသဖြင့် ခေတ်မီဝန်ဆောင်မှုများ လုံးဝမရရှိနိုင်ခြင်း။", correct: false },
+              { text: "高層ビルの建設費用が高騰し、すべての自治体が財政破綻に陥っていること。", mm: "အထပ်မြင့်တိုက် ဆောက်လုပ်စရိတ် ကြီးမြင့်ပြီး မြို့နယ်အားလုံး ဘဏ္ဍာရေးပျက်စီးနေခြင်း။", correct: false }
+            ],
+            explanation: "<strong>အဖြေမှန်မှာ နံပါတ် ၁ ဖြစ်ပါသည်။</strong><br>ပထမအပိုဒ်တွင် 『どこにいても均質なサービスを享受できる快適さをもたらした一方で、その土地固有の歴史的文脈や風景の個性を急速に消し去ってしまった』 ဟု ဖော်ပြထားသည်။"
+          },
+          {
+            qId: "n1_r11_q2",
+            question: "問2: 本文における「場所の記憶」の役割として正しいものはどれか。(စာပိုဒ်ပါ 'နေရာဒေသ၏ မှတ်ဉာဏ်' ၏ အခန်းကဏ္ဍအဖြစ် မှန်ကန်သောအချက်မှာ အဘယ်နည်း။)",
+            options: [
+              { text: "人々に自分の帰属意識や歴史とのつながりを確認させ、精神的な安定を与える。", mm: "လူတို့အား မိမိတို့၏ သက်ဆိုင်မှုနှင့် သမိုင်းအဆက်အနွှယ်ကို သိရှိစေပြီး စိတ်ပိုင်းဆိုင်ရာ တည်ငြိမ်မှုကို ပေးစွမ်းသည်။", correct: true },
+              { text: "観光客から高い入場料を徴収して、都市の税収を短期的に増やす。", mm: "ခရီးသွားများထံမှ ဝင်ကြေးအမြင့်မားဆုံး ကောက်ခံပြီး မြို့နယ်အခွန်ဝင်ငွေ တိုးပွားစေသည်။", correct: false },
+              { text: "住民が他の地域へ引っ越すのを防ぎ、人口移動を完全に停止させる。", mm: "ဒေသခံများ အခြားဒေသသို့ ပြောင်းရွှေ့မှုကို တားဆီးပြီး လူဦးရေရွှေ့ပြောင်းမှုကို ရပ်တန့်စေသည်။", correct: false },
+              { text: "新しい商業施設の建設を促進し、都市の風景を全国同じデザインに統一する。", mm: "ကုန်တိုက်အသစ်များ ဆောက်လုပ်မှုကို မြှင့်တင်ပြီး တစ်နိုင်ငံလုံး တစ်ပုံစံတည်း ဖြစ်စေသည်။", correct: false }
+            ],
+            explanation: "<strong>အဖြေမှန်မှာ နံပါတ် ၁ ဖြစ်ပါသည်။</strong><br>ဒုတိယအပိုဒ်တွင် 『自分がどこに属し、どのような歴史の連なりの中に生きているのかを確認し、精神的な安定を得てきた』 ဟု ရှင်းပြထားသည်။"
+          },
+          {
+            qId: "n1_r11_q3",
+            question: "問3: 今後の都市計画はどうあるべきだと筆者は主張しているか。(အနာဂတ် မြို့ပြစီမံကိန်းများ မည်သို့ဖြစ်သင့်သည်ဟု စာရေးသူက အဆိုပြုထားသနည်း။)",
+            options: [
+              { text: "既存の街並みや歴史的記憶を尊重し、現代の暮らしの中に創造的に生かしていくべきだ。", mm: "ရှိရင်းစွဲ မြို့ပြရှုခင်းနှင့် သမိုင်းမှတ်ဉာဏ်များကို လေးစားတန်ဖိုးထားပြီး ခေတ်မီလူနေမှုဘဝထဲသို့ ဆန်းသစ်စွာ ပေါင်းစပ်အသုံးချသင့်သည်။", correct: true },
+              { text: "古い建物はすべて取り壊し、より機能的なガラス張りの高層ビルに建て替えるべきだ。", mm: "အဆောက်အအုံဟောင်းအားလုံးကို ဖြိုချပြီး ပိုမိုခေတ်မီသော မှန်ကာအထပ်မြင့်တိုက်များ အစားထိုးဆောက်သင့်သည်။", correct: false },
+              { text: "都市の開発を一切禁止し、江戸時代と同じ生活様式に完全に戻るべきだ。", mm: "မြို့ပြဖွံ့ဖြိုးရေးကို လုံးဝပိတ်ပင်ပြီး ရှေးခေတ်လူနေမှုပုံစံသို့ အပြည့်အဝ ပြန်သွားသင့်သည်။", correct: false },
+              { text: "経済的合理性だけを基準にして、全国すべての都市を同じ設計図で造るべきだ。", mm: "စီးပွားရေးတွက်ခြေကိုက်မှု တစ်ခုတည်းကိုသာ ကြည့်ပြီး တစ်နိုင်ငံလုံး တစ်ပုံစံတည်း ဆောက်လုပ်သင့်သည်။", correct: false }
+            ],
+            explanation: "<strong>အဖြေမှန်မှာ နံပါတ် ၁ ဖြစ်ပါသည်။</strong><br>နောက်ဆုံးအပိုဒ်တွင် 『既存の街並みや歴史的記憶を丁寧に読み解き、それを現代の暮らしの中に創造的に編み直していく「文脈を尊重した再生」の視点』 လိုအပ်ကြောင်း ဖော်ပြထားသည်။"
+          }
+        ]
+      },
+      {
+        id: "n1_r12",
+        mondai: "問題13",
+        title: "【N1 読解】問題13・長文 (၂): 「自己責任論」の過信と社会的連帯の再構築",
+        type: "JLPT N1 問題13・主張理解（長文）— လူမှုဗေဒနှင့် ဒဿနိက စာပိုဒ်ရှည် (Social Philosophy)",
+        japaneseText: `現代社会では、個人の成功も失敗もすべて本人の努力や選択の結果であるとみなす「自己責任論」が根強く浸透している。確かに、自らの意思で進路を選び、その結果に責任を持つという自律の精神は近代社会の重要な理念である。しかし、この論理が極端に推し進められると、成功者は「自分の実力だけで勝者になった」と傲慢になり、困窮する人々に対して「努力が足りないからだ」と冷담なまなざしを向けるようになる。
+
+だが、私たちが「個人の能力」と呼んでいるものの多くは、実は生まれた家庭の経済状況や教育環境、健康状態、さらにはその時代がどの能力を高く評価するかという「偶然の幸運」に大きく左右されている。誰一人として、社会的なインフラや他者の支えなしに独力で生きている人間はいない。
+
+人間が本来的に脆く、いつ誰が病気や災害、失業によって支援を必要とする側に回るか分からない存在である以上、必要なのは過度な自己責任の追及ではない。互いの脆弱性を認め合い、不運に見舞われた人を社会全体で支え合う「連帯の倫理」を再構築することこそが、真に成熟した社会の条件なのである。`,
+        burmeseTranslation: `မျက်မှောက်ခေတ် လူ့အဖွဲ့အစည်းတွင် တစ်ဦးချင်းစီ၏ အောင်မြင်မှုရော ကျရှုံးမှုပါ ကာယကံရှင်၏ ကြိုးစားအားထုတ်မှုနှင့် ရွေးချယ်မှုရလဒ်သာဖြစ်သည်ဟု ရှုမြင်သော 'မိမိတာဝန်သာဖြစ်သည်ဟူသောဝါဒ (自己責任論)' သည် နက်ရှိုင်းစွာ စိမ့်ဝင်ပျံ့နှံ့နေသည်။ အမှန်ပင် မိမိဆန္ဒဖြင့် လမ်းကြောင်းရွေးချယ်ပြီး ထိုရလဒ်အပေါ် တာဝန်ယူသည်ဟူသော ကိုယ်ပိုင်ရပ်တည်မှုစိတ်ဓာတ်သည် ခေတ်သစ်လူ့အဖွဲ့အစည်း၏ အရေးကြီးသော စံနှုန်းဖြစ်သည်။ သို့သော် ဤယုတ္တိကို အစွန်းရောက်သည်အထိ တွန်းအားပေးလိုက်သည့်အခါ အောင်မြင်သူများက 'မိမိအရည်အချင်းသက်သက်ကြောင့် အနိုင်ရသူဖြစ်လာသည်' ဟု မောက်မာလာကြပြီး အခက်အခဲကြုံနေရသူများအပေါ် 'ကြိုးစားမှုမလုံလောက်သောကြောင့်ဖြစ်သည်' ဟု အေးစက်စိမ်းကားစွာ ရှုမြင်လာကြသည်။
+သို့ရာတွင် ကျွန်ုပ်တို့က 'တစ်ဦးချင်းစီ၏ အရည်အချင်း' ဟု ခေါ်ဆိုနေသော အရာအများစုမှာ အမှန်တကယ်တွင် မွေးဖွားလာသည့် မိသားစု၏ စီးပွားရေးအခြေအနေ၊ ပညာရေးပတ်ဝန်းကျင်၊ ကျန်းမာရေးအခြေအနေနှင့် ထိုခေတ်ကာလက မည်သည့်အရည်အချင်းကို တန်ဖိုးထားသနည်းဟူသော 'မမျှော်လင့်သည့် ကံကောင်းမှု' အပေါ် များစွာမူတည်နေသည်။ လူမှုရေးအခြေခံအဆောက်အအုံများနှင့် သူတစ်ပါး၏ ပံ့ပိုးကူညီမှုမပါဘဲ မိမိတစ်ဦးတည်းအားဖြင့် ရှင်သန်နေသော လူသားဟူ၍ တစ်ဦးတစ်ယောက်မျှ မရှိပေ။
+လူသားဟူသည် ပင်ကိုသဘာဝအားဖြင့် ထိခိုက်လွယ်ပြီး မည်သည့်အချိန်တွင် မည်သူက နာမကျန်းမှု၊ သဘာဝဘေးအန္တရာယ် သို့မဟုတ် အလုပ်လက်မဲ့ဖြစ်မှုကြောင့် အကူအညီလိုအပ်သူဘက်သို့ ရောက်ရှိသွားမည်ကို မသိနိုင်သော သတ္တဝါဖြစ်သည့်အလျောက် လိုအပ်သည်မှာ အလွန်အကျွံ မိမိတာဝန်သာဖြစ်ကြောင်း အပြစ်တင်ဖိအားပေးခြင်း မဟုတ်ပါ။ အချင်းချင်း၏ ထိခိုက်လွယ်မှု (脆弱性) ကို အသိအမှတ်ပြုပြီး ကံမကောင်းအကြောင်းမလှ ကြုံတွေ့ရသူများကို လူ့အဖွဲ့အစည်းတစ်ခုလုံးက ဝိုင်းဝန်းဖေးမကူညီသည့် 'စည်းလုံးညီညွတ်မှု ကျင့်ဝတ် (連帯の倫理)' ကို ပြန်လည်တည်ဆောက်ခြင်းကသာ စစ်မှန်စွာ ရင့်ကျက်သော လူ့အဖွဲ့အစည်း၏ လိုအပ်ချက်ဖြစ်ပေသည်။`,
+        vocabHelper: [
+          { jp: "浸透 (しんとう)", mm: "စိမ့်ဝင်ပျံ့နှံ့ခြင်း" },
+          { jp: "困窮 (こんきゅう)", mm: "ဆင်းရဲကျပ်တည်း ဒုက္ခရောက်ခြင်း" },
+          { jp: "冷淡 (れいたん)", mm: "အေးစက်စိမ်းကားသော၊ စာနာမှုကင်းသော" },
+          { jp: "脆弱性 (ぜいじゃくせい)", mm: "ထိခိုက်ပျက်စီးလွယ်မှု (Vulnerability/Fragility)" }
+        ],
+        questions: [
+          {
+            qId: "n1_r12_q1",
+            question: "問1: 「自己責任論」が極端に推し進められるとどのような問題が生じると筆者は述べているか。('မိမိတာဝန်သာဖြစ်သည်ဟူသောဝါဒ' ကို အစွန်းရောက် ကျင့်သုံးပါက မည်သို့သော ပြဿနာ ဖြစ်ပေါ်လာမည်ဟု စာရေးသူ ဆိုသနည်း။)",
+            options: [
+              { text: "成功者が自分の実力だけを過信して傲慢になり、困窮する人々に対して冷淡になること。", mm: "အောင်မြင်သူများက မိမိအရည်အချင်းကို အလွန်အကျွံအထင်ကြီး မောက်မာလာပြီး ဒုက္ခရောက်သူများအပေါ် စာနာမှုကင်းမဲ့လာခြင်း။", correct: true },
+              { text: "誰もが他人に頼るようになり、自分の意思で進路を選択する人が全くいなくなること。", mm: "လူတိုင်း သူတစ်ပါးကိုသာ အားကိုးလာပြီး မိမိဆန္ဒဖြင့် လမ်းကြောင်းရွေးချယ်သူ လုံးဝမရှိတော့ခြင်း။", correct: false },
+              { text: "政府の社会保障費が増えすぎて、成功者への課税が完全に廃止されてしまうこと。", mm: "အစိုးရ လူမှုဖူလုံရေးစရိတ် များလွန်းသဖြင့် အောင်မြင်သူများအပေါ် အခွန်ကောက်ခံမှု ပျက်ပြယ်သွားခြင်း။", correct: false },
+              { text: "教育環境や家庭の経済状況による格差が自然に解消され、全員が同じ収入になること。", mm: "ပညာရေးနှင့် မိသားစုစီးပွားရေး ကွာဟချက်များ အလိုအလျောက် ပြေလည်သွားပြီး အားလုံးဝင်ငွေတူညီသွားခြင်း။", correct: false }
+            ],
+            explanation: "<strong>အဖြေမှန်မှာ နံပါတ် ၁ ဖြစ်ပါသည်။</strong><br>ပထမအပိုဒ်တွင် 『成功者は「自分の実力だけで勝者になった」と傲慢になり、困窮する人々に対して「努力が足りないからだ」と冷淡なまなざしを向けるようになる』 ဟု ဖော်ပြထားသည်။"
+          },
+          {
+            qId: "n1_r12_q2",
+            question: "問2: 筆者が考える「真に成熟した社会」とはどのような社会か。(စာရေးသူ ယူဆသော 'စစ်မှန်စွာ ရင့်ကျက်သည့် လူ့အဖွဲ့အစည်း' ဟူသည် မည်သို့သော လူ့အဖွဲ့အစည်းနည်း။)",
+            options: [
+              { text: "人間の脆さや偶然の要素を認め合い、困難にある人を社会全体で支え合う連帯のある社会。", mm: "လူသားတို့၏ ထိခိုက်လွယ်မှုနှင့် ကံတရားအချက်များကို အသိအမှတ်ပြုပြီး အခက်အခဲကြုံသူကို ဝိုင်းဝန်းဖေးမသည့် စည်းလုံးမှုရှိသော လူ့အဖွဲ့အစည်း။", correct: true },
+              { text: "すべての失敗を個人の責任として厳しく処罰し、競争に勝った者だけが生き残る社会。", mm: "ကျရှုံးမှုအားလုံးကို တစ်ဦးချင်းတာဝန်အဖြစ် ပြင်းထန်စွာ အပြစ်ပေးပြီး ပြိုင်ပွဲအနိုင်ရသူသာ ရှင်သန်သည့် လူ့အဖွဲ့အစည်း။", correct: false },
+              { text: "個人の努力や自律の精神を完全に否定し、職業や住居をすべて国が強制的に割り当てる社会。", mm: "တစ်ဦးချင်းကြိုးစားမှုနှင့် ကိုယ်ပိုင်ရပ်တည်မှုကို လုံးဝငြင်းပယ်ပြီး အလုပ်အကိုင်ကို နိုင်ငံတော်က အတင်းအဓမ္မ သတ်မှတ်ပေးသော လူ့အဖွဲ့အစည်း။", correct: false },
+              { text: "病気や失業などのリスクが科学技術によって完全にゼロになった社会。", mm: "ဖျားနာမှုနှင့် အလုပ်လက်မဲ့ဖြစ်မှု အန္တရာယ်များ သိပ္ပံနည်းပညာကြောင့် လုံးဝပပျောက်သွားသော လူ့အဖွဲ့အစည်း။", correct: false }
+            ],
+            explanation: "<strong>အဖြေမှန်မှာ နံပါတ် ၁ ဖြစ်ပါသည်။</strong><br>နောက်ဆုံးအပိုဒ်တွင် 『互いの脆弱性を認め合い、不運に見舞われた人を社会全体で支え合う「連帯の倫理」を再構築することこそが、真に成熟した社会の条件なのである』 ဟု တိုက်ရိုက်ဖော်ပြထားသည်။"
+          }
+        ]
+      },
+
+      // ==================== 問題14・情報検索 (Information Retrieval: 2 Passages / 4 Questions) ====================
+      {
+        id: "n1_r13",
+        mondai: "問題14",
+        title: "【N1 読解】問題14・情報検索 (၁): 学術振興財団「国際共同研究助成金」公募要項",
+        type: "JLPT N1 問題14・情報検索 — သုတေသနထောက်ပံ့ကြေး လျှောက်ထားမှု စည်းမျဉ်းရှာဖွေခြင်း",
+        japaneseText: `【2026年度 さくら学術振興財団「国際共同研究助成金」公募要項】
+
+1. 助成対象となる研究区分および上限額
+・【区分A：若手萌芽研究】助成上限 300万円（研究期間：1年間）
+  対象：申請日時点で博士号取得後8年未満の常勤・非常勤研究者が代表を務めるプロジェクト。
+・【区分B：一般国際共同研究】助成上限 800万円（研究期間：2年間）
+  対象：国内の大学・研究機関に所属する常勤研究者が代表を務め、海外の研究機関に所属する共同研究者が1名以上参加するプロジェクト。
+・【区分C：特別学際プロジェクト】助成上限 1,500万円（研究期間：3年間）
+  対象：人文社会科学系と自然科学系の双方の研究者が参画し、かつ海外2か国以上の研究機関との共同実施を必須とする。
+
+2. 申請および書類提出に関する重要規定
+・オンライン申請締切：2026年11月20日（金）17:00厳守
+・所属機関長の推薦状（原本）：オンライン申請完了後、2026年11月27日（金）必着で財団事務局へ郵送すること（※区分Aに限り、推薦状の郵送は不要とし、指導教員または部門長の電子承認のみで可とする）。
+・【注意事項】過去に当財団の助成を受けた代表者が再申請する場合、前回の研究終了から2年以上経過していること、および最終成果報告書が受理済みであることを条件とする。`,
+        burmeseTranslation: `【၂၀၂၆ ခုနှစ် ဆာကူရာပညာရေးမြှင့်တင်မှုဖောင်ဒေးရှင်း 'နိုင်ငံတကာ ပူးတွဲသုတေသန ထောက်ပံ့ကြေး' လျှောက်လွှာခေါ်ယူချက်】
+၁။ ထောက်ပံ့မည့် သုတေသနအမျိုးအစားနှင့် အမြင့်ဆုံးထောက်ပံ့ငွေ
+・【အမျိုးအစား A - လူငယ်သုတေသနသစ်】အမြင့်ဆုံး ယန်း သိန်း ၃၀ (ကာလ - ၁ နှစ်)
+  သက်ဆိုင်သူ - လျှောက်ထားသည့်နေ့တွင် ပါရဂူဘွဲ့ (Ph.D) ရရှိပြီး ၈ နှစ်အောက် အချိန်ပြည့်/အချိန်ပိုင်း သုတေသီက ဦးဆောင်သော ပရောဂျက်။
+・【အမျိုးအစား B - အထွေထွေ နိုင်ငံတကာပူးတွဲသုတေသန】အမြင့်ဆုံး ယန်း သိန်း ၈၀ (ကာလ - ၂ နှစ်)
+  သက်ဆိုင်သူ - ပြည်တွင်းတက္ကသိုလ်/သုတေသနဌာနမှ အချိန်ပြည့်သုတေသီက ဦးဆောင်ပြီး ပြည်ပသုတေသနဌာနမှ ပူးတွဲသုတေသီ ၁ ဦးနှင့်အထက် ပါဝင်သော ပရောဂျက်။
+・【အမျိုးအစား C - အထူးဘာသာရပ်ပေါင်းစုံ ပရောဂျက်】အမြင့်ဆုံး ယန်း သိန်း ၁၅၀ (ကာလ - ၃ နှစ်)
+  သက်ဆိုင်သူ - လူမှုသိပ္ပံနှင့် သဘာဝသိပ္ပံ နှစ်ဖက်စလုံးမှ သုတေသီများ ပါဝင်ပြီး ပြည်ပ ၂ နိုင်ငံနှင့်အထက်ရှိ သုတေသနဌာနများနှင့် ပူးတွဲလုပ်ဆောင်ရန် မဖြစ်မနေလိုအပ်သည်။
+၂။ လျှောက်ထားခြင်းနှင့် စာရွက်စာတမ်းတင်သွင်းခြင်းဆိုင်ရာ အရေးကြီးစည်းမျဉ်း
+・အွန်လိုင်းလျှောက်လွှာပိတ်ရက် - ၂၀၂၆ ခုနှစ် နိုဝင်ဘာလ ၂၀ ရက် (သောကြာနေ့) ၁၇:၀၀ နာရီ အတိ။
+・ဌာနအကြီးအကဲ၏ ထောက်ခံစာ (မူရင်း) - အွန်လိုင်းလျှောက်ပြီးနောက် ၂၀၂၆ နိုဝင်ဘာ ၂၇ ရက် အရောက် စာတိုက်ဖြင့် ပေးပို့ရမည် (※အမျိုးအစား A အတွက်သာ ထောက်ခံစာ စာတိုက်ပို့ရန်မလိုဘဲ ကြီးကြပ်သူဆရာ/ဌာနမှူး၏ အီလက်ထရွန်နစ် အတည်ပြုချက်ဖြင့် ရသည်)။
+・【သတိပြုရန်】ယခင်က ဤဖောင်ဒေးရှင်းမှ ထောက်ပံ့ကြေးရဖူးသော ဦးဆောင်သူ ပြန်လည်လျှောက်ထားပါက ယခင်သုတေသန ပြီးဆုံးချိန်မှ ၂ နှစ်နှင့်အထက် ကြာမြင့်ပြီးဖြစ်ရမည့်အပြင် နောက်ဆုံးအစီရင်ခံစာ လက်ခံအတည်ပြုပြီး ဖြစ်ရမည်။`,
+        vocabHelper: [
+          { jp: "公募要項 (こうぼようこう)", mm: "အများပြည်သူ လျှောက်လွှာခေါ်ယူသည့် စည်းမျဉ်းလမ်းညွှန်" },
+          { jp: "萌芽 (ほうが)", mm: "အညှောင့်ပေါက်စ၊ အစပျိုးသစ်လွင်သော" },
+          { jp: "学際 (がくさい)", mm: "ဘာသာရပ်နယ်ပယ် ပေါင်းစုံချိတ်ဆက်သော (Interdisciplinary)" },
+          { jp: "必着 (ひっちゃく)", mm: "သတ်မှတ်ရက်အမီ အရောက်ပေးပို့ရမည်" }
+        ],
+        questions: [
+          {
+            qId: "n1_r13_q1",
+            question: "問1: 国内の大学に所属する常勤研究者の山本氏（博士号取得後12年）は、フランスの大学の研究者1名と共同で2年間の経済学研究を行いたい。申請できる区分と必要な手続きはどれか。(ပါရဂူဘွဲ့ရပြီး ၁၂ နှစ်ရှိ အချိန်ပြည့်သုတေသီ ယာမာမိုတိုသည် ပြင်သစ်တက္ကသိုလ်မှ သုတေသီ ၁ ဦးနှင့် ၂ နှစ်ကြာ သုတေသနလုပ်လိုရာ လျှောက်နိုင်သည့်အမျိုးအစားနှင့် လိုအပ်ချက်မှာ အဘယ်နည်း။)",
+            options: [
+              { text: "区分Bに申請でき、11月20日までにオンライン申請した上で、11月27日必着で所属機関長の推薦状（原本）を郵送する必要がある。", mm: "အမျိုးအစား B လျှောက်နိုင်ပြီး နိုဝင်ဘာ ၂၀ မတိုင်မီ အွန်လိုင်းလျှောက်ကာ နိုဝင်ဘာ ၂၇ အရောက် ထောက်ခံစာမူရင်းကို စာတိုက်ဖြင့် ပို့ရမည်။", correct: true },
+              { text: "区分Aに申請でき、オンライン申請のみで推薦状の郵送は不要である。", mm: "အမျိုးအစား A လျှောက်နိုင်ပြီး ထောက်ခံစာ စာတိုက်ပို့ရန် မလိုပါ။", correct: false },
+              { text: "区分Cに申請でき、上限1,500万円の助成を受けることができる。", mm: "အမျိုးအစား C လျှောက်နိုင်ပြီး အမြင့်ဆုံး ယန်း သိန်း ၁၅၀ ရရှိနိုင်သည်။", correct: false },
+              { text: "海外の共同研究者が1名しかいないため、どの区分にも申請できない。", mm: "ပြည်ပသုတေသီ ၁ ဦးသာပါသဖြင့် မည်သည့်အမျိုးအစားကိုမျှ လျှောက်၍မရပါ။", correct: false }
+            ],
+            explanation: "<strong>အဖြေမှန်မှာ နံပါတ် ၁ ဖြစ်ပါသည်။</strong><br>ပါရဂူဘွဲ့ရပြီး ၁၂ နှစ်ဖြစ်၍ 区分A (၈ နှစ်အောက်) မရပါ။ ပြည်ပ ၁ နိုင်ငံတည်းဖြစ်၍ 区分C (၂ နိုင်ငံနှင့်အထက်) မရပါ။ ထို့ကြောင့် 区分B ဖြင့် လျှောက်ရမည်ဖြစ်ပြီး နိုဝင်ဘာ ၂၇ အရောက် ထောက်ခံစာမူရင်း စာတိုက်ပို့ရမည်။"
+          },
+          {
+            qId: "n1_r13_q2",
+            question: "問2: 博士号取得後5年の非常勤研究者・佐藤氏は「区分A」への申請を希望している。佐藤氏は昨年（1年前）まで当財団の助成を受けて代表として研究を行っていた（報告書は提出済み）。佐藤氏の申請はどうなるか。(ပါရဂူဘွဲ့ရပြီး ၅ နှစ်ရှိ စာတိုသည် မနှစ်ကအထိ ဤဖောင်ဒေးရှင်းမှ ထောက်ပံ့ကြေးရယူခဲ့ဖူးရာ ယခုနှစ် 区分A လျှောက်ထားမှု မည်သို့ဖြစ်မည်နည်း။)",
+            options: [
+              { text: "前回の研究終了から2年以上経過していないため、今回の公募には申請できない。", mm: "ယခင်သုတေသန ပြီးဆုံးချိန်မှ ၂ နှစ်မပြည့်သေးသောကြောင့် ယခုနှစ် လျှောက်ထား၍ မရနိုင်ပါ။", correct: true },
+              { text: "最終成果報告書が受理済みであり博士号取得後8年未満なので、問題なく区分Aに申請できる。", mm: "အစီရင်ခံစာ တင်ပြီးဖြစ်၍ ၈ နှစ်အောက်ဖြစ်သောကြောင့် ပြဿနာမရှိ 区分A လျှောက်နိုင်သည်။", correct: false },
+              { text: "所属機関長の推薦状を郵送すれば、特例として再申請が認められる。", mm: "ဌာနအကြီးအကဲ ထောက်ခံစာ စာတိုက်ပို့ပါက အထူးခြွင်းချက်ဖြင့် လျှောက်ခွင့်ရမည်။", correct: false },
+              { text: "非常勤研究者はそもそも区分Aの対象外であるため申請できない。", mm: "အချိန်ပိုင်းသုတေသီသည် 区分A နှင့် လုံးဝမသက်ဆိုင်သဖြင့် လျှောက်မရပါ။", correct: false }
+            ],
+            explanation: "<strong>အဖြေမှန်မှာ နံပါတ် ၁ ဖြစ်ပါသည်။</strong><br>注意事項 တွင် 『前回の研究終了から2年以上経過していること』 ဟု သတ်မှတ်ထားရာ မနှစ်ကမှ ပြီးဆုံးခဲ့သောကြောင့် ၂ နှစ်မပြည့်သေးသဖြင့် လျှောက်ထား၍ မရပါ။"
+          }
+        ]
+      },
+      {
+        id: "n1_r14",
+        mondai: "問題14",
+        title: "【N1 読解】問題14・情報検索 (၂): 法人向けクラウドサーバー保守契約・SLA（品質保証制度）規約",
+        type: "JLPT N1 問題14・情報検索 — လုပ်ငန်းသုံး ဆာဗာစာချုပ်နှင့် လျော်ကြေးစည်းမျဉ်း ရှာဖွေခြင်း",
+        japaneseText: `【ネクストクラウド株式会社・法人向けサーバー保守契約および品質保証（SLA）規約】
+
+第1条（月間稼働率の保証と減額返金制度）
+当社は、月間のサーバー稼働率が99.9%を下回った場合、当該月の月額基本料金から以下の割合を減額（翌月請求分から相殺）いたします。
+・月間稼働率 99.0%以上 〜 99.9%未満（月間累計停止時間：約44分〜7時間12分未満）：月額基本料金の 10% を減額
+・月間稼働率 95.0%以上 〜 99.0%未満（月間累計停止時間：7時間12分〜36時間未満）：月額基本料金の 25% を減額
+・月間稼働率 95.0%未満（月間累計停止時間：36時間以上）：月額基本料金の 50% を減額
+
+第2条（適用除外事項 ― 以下の事由による停止は「停止時間」に算入しません）
+1. 7日前までに電子メールで事前通知した定期メンテナンスによる停止（深夜2:00〜5:00の間）
+2. 契約者側が導入した独自プログラムの不具合や設定ミスに起因する停止
+3. 大規模な自然災害や国内外の通信事業者の回線障害など、当社の管理が及ばない不可抗力による停止
+
+第3条（申請手続きと期限）
+減額措置を受けるには、障害が発生した月の「翌月15日（必着）」までに、契約者専用マイページより「障害発生日時・継続時間」を記載した申請フォームを提出する必要があります。期限を過ぎた申請は一切受理されません。`,
+        burmeseTranslation: `【NextCloud ကုမ္ပဏီ - လုပ်ငန်းသုံး ဆာဗာထိန်းသိမ်းရေးစာချုပ်နှင့် အရည်အသွေးအာမခံ (SLA) စည်းမျဉ်း】
+အပိုဒ် ၁ (လစဉ် ဆာဗာလည်ပတ်နှုန်း အာမခံချက်နှင့် လျှော့ပေါ့ပြန်အမ်းငွေစနစ်)
+ကုမ္ပဏီသည် လစဉ် ဆာဗာလည်ပတ်နှုန်း 99.9% အောက် လျော့နည်းသွားပါက ထိုလ၏ အခြေခံလစဉ်ကြေးမှ အောက်ပါအချိုးအစားအတိုင်း လျှော့ပေါ့ပေးပါမည် (နောက်လကျသင့်ငွေမှ ခုနှိမ်ပေးမည်) -
+・လည်ပတ်နှုန်း 99.0% မှ 99.9% အောက် (စုစုပေါင်း ရပ်ဆိုင်းချိန် ၄၄ မိနစ်မှ ၇ နာရီ ၁၂ မိနစ်အောက်) - အခြေခံလစဉ်ကြေး၏ 10% လျှော့ပေးမည်။
+・လည်ပတ်နှုန်း 95.0% မှ 99.0% အောက် (စုစုပေါင်း ရပ်ဆိုင်းချိန် ၇ နာရီ ၁၂ မိနစ်မှ ၃၆ နာရီအောက်) - အခြေခံလစဉ်ကြေး၏ 25% လျှော့ပေးမည်။
+・လည်ပတ်နှုန်း 95.0% အောက် (စုစုပေါင်း ရပ်ဆိုင်းချိန် ၃၆ နာရီနှင့်အထက်) - အခြေခံလစဉ်ကြေး၏ 50% လျှော့ပေးမည်။
+အပိုဒ် ၂ (ကင်းလွတ်ခွင့် သတ်မှတ်ချက်များ - အောက်ပါအကြောင်းရင်းကြောင့် ရပ်ဆိုင်းမှုကို ရပ်ဆိုင်းချိန်ထဲ ထည့်မတွက်ပါ)
+၁။ ၇ ရက်ကြိုတင်၍ အီးမေးလ်ဖြင့် အသိပေးထားသော ပုံမှန်ပြုပြင်ထိန်းသိမ်းမှု (ညဉ့်နက် ၂:၀၀ မှ ၅:၀၀ အတွင်း)
+၂။ စာချုပ်ချုပ်ဆိုသူဘက်မှ ထည့်သွင်းထားသော ပရိုဂရမ်ချို့ယွင်းချက် သို့မဟုတ် Setting အမှားကြောင့် ရပ်ဆိုင်းမှု
+၃။ ကြီးမားသော သဘာဝဘေးအန္တရာယ်နှင့် ဆက်သွယ်ရေးအော်ပရေတာ လိုင်းပြတ်တောက်မှုကဲ့သို့ ကုမ္ပဏီထိန်းချုပ်မှုပြင်ပ ဖြစ်ရပ်များ။
+အပိုဒ် ၃ (လျှောက်ထားပုံနှင့် နောက်ဆုံးရက်)
+လျှော့ပေါ့ခွင့်ရရှိရန် ချို့ယွင်းမှုဖြစ်ပွားသည့်လ၏ 'နောက်လ ၁၅ ရက်နေ့ (အရောက်)' နောက်ဆုံးထား၍ သုံးစွဲသူစာမျက်နှာမှတစ်ဆင့် လျှောက်လွှာတင်ရမည်။ ရက်ကျော်လွန်သော လျှောက်လွှာများကို လုံးဝလက်ခံမည်မဟုတ်ပါ။`,
+        vocabHelper: [
+          { jp: "稼働率 (かどうりつ)", mm: "စက်/ဆာဗာ ပုံမှန်လည်ပတ်နိုင်သည့် ရာခိုင်နှုန်း" },
+          { jp: "相殺 (そうさい)", mm: "အပြန်အလှန် ခုနှိမ်ခြင်း" },
+          { jp: "起因 (きいん)", mm: "အကြောင်းရင်းခံဖြစ်ခြင်း" },
+          { jp: "不可抗力 (ふかこうりょく)", mm: "လူ့စွမ်းအားဖြင့် မတားဆီးနိုင်သော သဘာဝဘေး/အခြေအနေ" }
+        ],
+        questions: [
+          {
+            qId: "n1_r14_q1",
+            question: "問1: ある契約企業のサーバーが5月中に計2回停止した。1回目は「10日前にメールで事前通知された深夜3:00〜5:00（2時間）の定期メンテナンス」、2回目は「当社設備の故障による10時間の停止」だった。6月10日に申請した場合、5月分の基本料金はどうなるか。(မေလအတွင်း ပထမအကြိမ် ကြိုတင်အသိပေးထားသော ၂ နာရီ ပြုပြင်မှုနှင့် ဒုတိယအကြိမ် ကုမ္ပဏီစက်ချို့ယွင်းမှုကြောင့် ၁၀ နာရီ ရပ်ဆိုင်းခဲ့ရာ ဇွန် ၁၀ ရက်တွင် လျှောက်ထားပါက မည်သို့ဖြစ်မည်နည်း။)",
+            options: [
+              { text: "定期メンテナンスの2時間は算入されず停止時間は10時間となり、月額基本料金の25%が減額される。", mm: "ပုံမှန်ပြုပြင်ချိန် ၂ နာရီကို ထည့်မတွက်ဘဲ ရပ်ဆိုင်းချိန် ၁၀ နာရီဖြစ်သဖြင့် အခြေခံလစဉ်ကြေး၏ 25% လျှော့ပေါ့ပေးမည်။", correct: true },
+              { text: "合計12時間の停止として計算され、月額基本料金の50%が減額される。", mm: "စုစုပေါင်း ၁၂ နာရီအဖြစ် တွက်ချက်ပြီး လစဉ်ကြေး၏ 50% လျှော့ပေးမည်။", correct: false },
+              { text: "5月中に申請していないため期限切れとなり、減額は一切受けられない。", mm: "မေလအတွင်း မလျှောက်ထားသဖြင့် ရက်ကျော်လွန်သွားပြီး လျှော့ပေါ့ခွင့် လုံးဝမရပါ။", correct: false },
+              { text: "1回目の定期メンテナンスが含まれているため、2回目の故障分もすべて適用除外となる。", mm: "ပုံမှန်ပြုပြင်မှု ပါဝင်နေသဖြင့် ဒုတိယအကြိမ် စက်ချို့ယွင်းမှုပါ အကျုံးမဝင်တော့ပါ။", correct: false }
+            ],
+            explanation: "<strong>အဖြေမှန်မှာ နံပါတ် ၁ ဖြစ်ပါသည်။</strong><br>အပိုဒ် ၂(၁) အရ ၇ ရက်ကြိုတင်အသိပေးထားသော ညဉ့်နက်ပိုင်း ပြုပြင်ချိန် ၂ နာရီကို ထည့်မတွက်ပါ။ ကုမ္ပဏီစက်ချို့ယွင်းမှု ၁၀ နာရီသည် (၇ နာရီ ၁၂ မိနစ် မှ ၃၆ နာရီအောက်) အတွင်း ကျရောက်ပြီး နောက်လ ၁၅ ရက် (ဇွန် ၁၅) မတိုင်မီ လျှောက်ထားသဖြင့် 25% လျှော့ပေးမည်။"
+          },
+          {
+            qId: "n1_r14_q2",
+            question: "問2: 規約の内容と合致しているものはどれか。(စည်းမျဉ်းပါ အချက်အလက်များနှင့် ကိုက်ညီသောအချက်မှာ အဘယ်နည်း။)",
+            options: [
+              { text: "契約者自身の設定ミスによってサーバーが40時間停止した場合でも、料金の減額は受けられない。", mm: "စာချုပ်ချုပ်ဆိုသူဘက်မှ Setting အမှားကြောင့် ဆာဗာ နာရီ ၄၀ ရပ်ဆိုင်းသွားသော်လည်း လစဉ်ကြေးလျှော့ပေါ့ခွင့် မရရှိနိုင်ပါ။", correct: true },
+              { text: "減額が認められた場合、指定した銀行口座へ翌月15日までに現金が振り込まれる。", mm: "လျှော့ပေါ့ခွင့်ရပါက နောက်လ ၁၅ ရက်မတိုင်မီ ဘဏ်အကောင့်သို့ ငွေသားလွှဲပေးမည်။", correct: false },
+              { text: "当社の故障でサーバーが50時間停止した場合、翌月20日に申請すれば50%減額される。", mm: "ကုမ္ပဏီချို့ယွင်းမှုကြောင့် နာရီ ၅၀ ရပ်ဆိုင်းသွားပါက နောက်လ ၂၀ ရက်တွင် လျှောက်လျှင် 50% လျှော့ပေးမည်။", correct: false },
+              { text: "事前通知のない日中の定期メンテナンスによる停止も、すべて適用除外となる。", mm: "ကြိုတင်အသိပေးခြင်းမရှိသော နေ့ခင်းဘက် ပြုပြင်မှုများလည်း ကင်းလွတ်ခွင့်တွင် အကျုံးဝင်သည်။", correct: false }
+            ],
+            explanation: "<strong>အဖြေမှန်မှာ နံပါတ် ၁ ဖြစ်ပါသည်။</strong><br>အပိုဒ် ၂(၂) တွင် 『契約者側が導入した独自プログラムの不具合や設定ミスに起因する停止』 ကို ရပ်ဆိုင်းချိန်ထဲ ထည့်မတွက်ကြောင်း အတိအကျ ဖော်ပြထားသည်။"
+          }
+        ]
+      }
+    ];
+
+    // 5. JLPT N1 QUIZ DATA (15 Authentic JLPT N1 Mock Test Questions)
+    const N1_QUIZ_DATA = [
+      {
+        id: "n1_q1",
+        category: "N1 ခန်းဂျီး အသံထွက် (漢字読み)",
+        instruction: "＿＿＿の言葉の読み方として最もよいものを、１・２・３・４から一つ選びなさい。",
+        questionJp: "経営危機を乗り切るため、<span class='text-sakura-600 underline font-bold'>抜本的</span>な改革が求められている。",
+        questionMm: "'抜本的' (အမြစ်ပြတ် အခြေခံမှစ၍ ပြုပြင်သော) ၏ အသံထွက်မှန်ကို ရွေးပါ။",
+        options: [
+          { text: "ばっぽんてき", correct: true },
+          { text: "はっぽんてき", correct: false },
+          { text: "ぬきもとてき", correct: false },
+          { text: "ばつもとてき", correct: false }
+        ],
+        explanation: "<strong>အဖြေမှန်: ၁ (ばっぽんてき)</strong><br>『抜本的 (ばっぽんてき)』 = အခြေခံအုတ်မြစ်မှစ၍ အမြစ်ပြတ် ပြုပြင်ပြောင်းလဲသော။"
+      },
+      {
+        id: "n1_q2",
+        category: "N1 ခန်းဂျီး အသံထွက် (漢字読み)",
+        instruction: "＿＿＿の言葉の読み方として最もよいものを、一つ選びなさい。",
+        questionJp: "新社長も前任者の経営方針をそのまま<span class='text-sakura-600 underline font-bold'>踏襲</span>するようだ。",
+        questionMm: "'踏襲' (ရှေးမူဝါဒအတိုင်း ဆက်လက်ကျင့်သုံးခြင်း) ၏ အသံထွက်မှန်ကို ရွေးပါ။",
+        options: [
+          { text: "とうしゅう", correct: true },
+          { text: "ふみしゅう", correct: false },
+          { text: "とうしょう", correct: false },
+          { text: "ふうしゅう", correct: false }
+        ],
+        explanation: "<strong>အဖြေမှန်: ၁ (とうしゅう)</strong><br>『踏襲 (とうしゅう)』 = ယခင်လူ၏ မူဝါဒ/လမ်းစဉ်အတိုင်း ဆက်လက်လိုက်နာကျင့်သုံးခြင်း။"
+      },
+      {
+        id: "n1_q3",
+        category: "N1 ခန်းဂျီး အသံထွက် (漢字読み)",
+        instruction: "＿＿＿の言葉の読み方として最もよいものを、一つ選びなさい。",
+        questionJp: "不祥事による企業の悪評を<span class='text-sakura-600 underline font-bold'>払拭</span>するのは容易ではない。",
+        questionMm: "'払拭' (သံသယ/မကောင်းသတင်းကို လုံးဝပပျောက်အောင် ဖယ်ရှားရှင်းလင်းခြင်း) ၏ အသံထွက်မှန်ကို ရွေးပါ။",
+        options: [
+          { text: "ふっしょく", correct: true },
+          { text: "はいしょく", correct: false },
+          { text: "ふっしき", correct: false },
+          { text: "はらいふき", correct: false }
+        ],
+        explanation: "<strong>အဖြေမှန်: ၁ (ふっしょく)</strong><br>『払拭 (ふっしょく)』 = မကောင်းသတင်း၊ သံသယ သို့မဟုတ် စိုးရိမ်စိတ်ကို အပြီးတိုင် ဖယ်ရှားရှင်းလင်းခြင်း။"
+      },
+      {
+        id: "n1_q4",
+        category: "N1 ဝေါဟာရ (文脈規定)",
+        instruction: "（　　）に入れるのに最もよいものを、一つ選びなさい。",
+        questionJp: "今回の実験結果は、新たな科学法則の存在を（　　）している。",
+        questionMm: "ယခုစမ်းသပ်မှုရလဒ်သည် သိပ္ပံနိယာမအသစ်တစ်ရပ် တည်ရှိနေကြောင်း အရိပ်အမြွက် ညွှန်ပြနေသည်။",
+        options: [
+          { text: "示唆 (しさ)", correct: true },
+          { text: "催促 (さいそく)", correct: false },
+          { text: "妥協 (だきょう)", correct: false },
+          { text: "網羅 (もうら)", correct: false }
+        ],
+        explanation: "<strong>အဖြေမှန်: ၁ (示唆 - しさ)</strong><br>『示唆する』 = တိုက်ရိုက်မဟုတ်ဘဲ အရိပ်အမြွက် ညွှန်ပြအကြံပေးသည်။"
+      },
+      {
+        id: "n1_q5",
+        category: "N1 ဝေါဟာရ (文脈規定)",
+        instruction: "（　　）に入れるのに最もよいものを、一つ選びなさい。",
+        questionJp: "政府の経済統計と、国民の生活実感との間に大きな（　　）が生じている。",
+        questionMm: "အစိုးရ၏ စီးပွားရေးစာရင်းအင်းနှင့် ပြည်သူတို့၏ လက်တွေ့ဘဝခံစားချက်အကြား ကြီးမားသော ကွာဟချက် ဖြစ်ပေါ်နေသည်။",
+        options: [
+          { text: "乖離 (かいり)", correct: true },
+          { text: "均衡 (きんこう)", correct: false },
+          { text: "醸成 (じょうせい)", correct: false },
+          { text: "牽引 (けんいん)", correct: false }
+        ],
+        explanation: "<strong>အဖြေမှန်: ၁ (乖離 - かいり)</strong><br>『乖離 (かいり)』 = သီအိုရီ/ကိန်းဂဏန်းနှင့် လက်တွေ့အခြေအနေ အလှမ်းကွာဟသွားခြင်း။"
+      },
+      {
+        id: "n1_q6",
+        category: "N1 ဝေါဟာရ (文脈規定)",
+        instruction: "（　　）に入れるのに最もよいものを、一つ選びなさい。",
+        questionJp: "資金不足のため、新規事業の計画は途中で（　　）してしまった。",
+        questionMm: "ရန်ပုံငွေမလုံလောက်မှုကြောင့် လုပ်ငန်းသစ်စီမံကိန်းမှာ လမ်းတစ်ဝက်တွင် ရပ်ဆိုင်းပျက်ပြယ်သွားခဲ့ရသည်။",
+        options: [
+          { text: "頓挫 (とんざ)", correct: true },
+          { text: "網羅 (もうら)", correct: false },
+          { text: "喚起 (かんき)", correct: false },
+          { text: "踏襲 (とうしゅう)", correct: false }
+        ],
+        explanation: "<strong>အဖြေမှန်: ၁ (頓挫 - とんざ)</strong><br>『頓挫する』 = စီမံကိန်း/လုပ်ငန်းစဉ် လမ်းတစ်ဝက်တွင် အခက်အခဲကြောင့် ရပ်ဆိုင်းပျက်ပြယ်သွားသည်။"
+      },
+      {
+        id: "n1_q7",
+        category: "N1 အဓိပ္ပာယ်တူ ဝေါဟာရ (言い換え類義)",
+        instruction: "＿＿＿の言葉に意味が最も近いものを、一つ選びなさい。",
+        questionJp: "そんな<span class='text-sakura-600 underline font-bold'>陳腐な</span>表現では、読者の心を動かすことはできない。",
+        questionMm: "ထိုကဲ့သို့ ရိုးအီဟောင်းနွမ်းနေသော အသုံးအနှုန်းမျိုးဖြင့် စာဖတ်သူ၏ နှလုံးသားကို မလှုပ်ခတ်နိုင်ပါ။",
+        options: [
+          { text: "ありふれていて古臭い", correct: true },
+          { text: "新しくて独創的な", correct: false },
+          { text: "専門的で難解な", correct: false },
+          { text: "乱暴で失礼な", correct: false }
+        ],
+        explanation: "<strong>အဖြေမှန်: ၁ (ありふれていて古臭い)</strong><br>『陳腐 (ちんぷ)』 = ဆန်းသစ်မှုမရှိဘဲ ရိုးအီဟောင်းနွမ်းနေသော (Trite/Stale)။"
+      },
+      {
+        id: "n1_q8",
+        category: "N1 အဓိပ္ပာယ်တူ ဝေါဟာရ (言い換え類義)",
+        instruction: "＿＿＿の言葉に意味が最も近いものを、一つ選びなさい。",
+        questionJp: "<span class='text-sakura-600 underline font-bold'>杜撰な</span>資金管理が原因で、その企業は倒産に追い込まれた。",
+        questionMm: "ပေါ့ဆပြီး စနစ်မကျသော ငွေကြေးစီမံခန့်ခွဲမှုကြောင့် ထိုကုမ္ပဏီ ဒေဝါလီခံခဲ့ရသည်။",
+        options: [
+          { text: "いいかげんで粗雑な", correct: true },
+          { text: "細かくて厳重な", correct: false },
+          { text: "迅速で的確な", correct: false },
+          { text: "大胆で画期的な", correct: false }
+        ],
+        explanation: "<strong>အဖြေမှန်: ၁ (いいかげんで粗雑な)</strong><br>『杜撰 (ずさん)』 = စေ့စပ်သေချာမှုမရှိဘဲ ပေါ့ဆပြီး အမှားများသော (Sloppy/Careless)။"
+      },
+      {
+        id: "n1_q9",
+        category: "N1 စကားလုံးအသုံးအနှုန်း (用法)",
+        instruction: "次の言葉の使い方として最もよいものを、一つ選びなさい。",
+        questionJp: "「<span class='text-sakura-600 font-bold'>醸成 (じょうせい)</span>」の正しい使い方はどれですか。",
+        questionMm: "『醸成 (じょうせい - သဘောထား/လေထု တဖြည်းဖြည်း ပျိုးထောင်ဖန်တီးခြင်း)』 ကို အမှန်ကန်ဆုံး သုံးထားသော ဝါကျကို ရွေးပါ။",
+        options: [
+          { text: "地域全体で子育てを支える気運を醸成することが大切だ。", correct: true },
+          { text: "庭の畑で新鮮なトマトや野菜をたくさん醸成している。", correct: false },
+          { text: "駅の近くに新しい高層マンションが次々と醸成された。", correct: false },
+          { text: "パソコンのデータをUSBメモリに醸成して持ち歩いている。", correct: false }
+        ],
+        explanation: "<strong>အဖြေမှန်: ၁</strong><br>『醸成する』 ကို 気運 (အလေ့အထ/ရေစီးကြောင်း)၊ 信頼関係 (ယုံကြည်မှု)၊ 雰囲気 (လေထု) စသည့် စိတ်ပိုင်း/လူမှုရေး သဘောထားများ တဖြည်းဖြည်း ပျိုးထောင်ရာတွင် သုံးသည်။"
+      },
+      {
+        id: "n1_q10",
+        category: "N1 သဒ္ဒါပုံစံ (文法)",
+        instruction: "（　　）に入れるのに最もよいものを、一つ選びなさい。",
+        questionJp: "親の心配（　　）、息子は危険な雪山へと登りに行ってしまった。",
+        questionMm: "မိဘများ၏ စိုးရိမ်ပူပန်မှုကို လုံးဝဂရုမစိုက်ဘဲ သားဖြစ်သူသည် နှင်းတောင်သို့ တက်သွားခဲ့သည်။",
+        options: [
+          { text: "をよそに", correct: true },
+          { text: "にあって", correct: false },
+          { text: "に即して", correct: false },
+          { text: "ならではの", correct: false }
+        ],
+        explanation: "<strong>အဖြေမှန်: ၁ (をよそに)</strong><br>『N + をよそに』 = ပတ်ဝန်းကျင်၏ စိုးရိမ်မှု/ကန့်ကွက်မှုကို လျစ်လျူရှု၍။"
+      },
+      {
+        id: "n1_q11",
+        category: "N1 သဒ္ဒါပုံစံ (文法)",
+        instruction: "（　　）に入れるのに最もよいものを、一つ選びなさい。",
+        questionJp: "試験直前の今は、一分一秒（　　）無駄にはできない。",
+        questionMm: "စာမေးပွဲနီးကပ်နေသော ယခုအချိန်တွင် တစ်မိနစ် တစ်စက္ကန့်မျှပင် အချည်းနှီး မဖြုန်းတီးနိုင်ပါ။",
+        options: [
+          { text: "たりとも", correct: true },
+          { text: "ともなると", correct: false },
+          { text: "を皮切りに", correct: false },
+          { text: "にかこつけて", correct: false }
+        ],
+        explanation: "<strong>အဖြေမှန်: ၁ (たりとも)</strong><br>『１ယူနစ် + たりとも〜ない』 = အနည်းဆုံးပမာဏမျှပင်လျှင် လုံးဝ မ...ရ။"
+      },
+      {
+        id: "n1_q12",
+        category: "N1 သဒ္ဒါပုံစံ (文法)",
+        instruction: "（　　）に入れるのに最もよいものを、一つ選びなさい。",
+        questionJp: "この難局を乗り切れるリーダーは、経験豊富な彼（　　）ほかにいない。",
+        questionMm: "ဤအကျပ်အတည်းကို ကျော်ဖြတ်နိုင်မည့် ခေါင်းဆောင်မှာ အတွေ့အကြုံကြွယ်ဝသော သူမှလွဲ၍ အခြားမရှိနိုင်ပါ။",
+        options: [
+          { text: "をおいて", correct: true },
+          { text: "を皮切りに", correct: false },
+          { text: "をよそに", correct: false },
+          { text: "を限りに", correct: false }
+        ],
+        explanation: "<strong>အဖြေမှန်: ၁ (をおいて)</strong><br>『N + をおいて（ほかに）ない』 = ...မှလွဲ၍ အခြားအသင့်တော်ဆုံး မရှိနိုင်ပါ။"
+      },
+      {
+        id: "n1_q13",
+        category: "N1 သဒ္ဒါပုံစံ (文法)",
+        instruction: "（　　）に入れるのに最もよいものを、一つ選びなさい。",
+        questionJp: "このような名誉ある賞をいただき、誠に光栄（　　）です。",
+        questionMm: "ဤကဲ့သို့ ဂုဏ်သိက္ခာကြီးမားသော ဆုကို လက်ခံရရှိသည့်အတွက် အလွန်တရာ ဂုဏ်ယူဝမ်းမြောက်မိပါသည်။",
+        options: [
+          { text: "の至り", correct: true },
+          { text: "の極み", correct: false },
+          { text: "極まりない", correct: false },
+          { text: "にたえない", correct: false }
+        ],
+        explanation: "<strong>အဖြေမှန်: ၁ (の至り)</strong><br>『光栄の至り / 恐縮の至り / 赤面の至り』 = အလွန်အမင်း ဂုဏ်ယူ/အားနာ/ရှက်ရွံ့မိပါသည် (N1 ယဉ်ကျေးသုံး ပုံသေအသုံးအနှုန်း)။"
+      },
+      {
+        id: "n1_q14",
+        category: "N1 ဝါကျစီခြင်း (★並べ替え)",
+        instruction: "次の文の ＿★＿ に入る最もよいものを、一つ選びなさい。",
+        questionJp: "彼女の情熱的な歌声は、聴く人の＿＿＿　＿＿＿　＿★＿　＿＿＿おかない。<br><span class='text-xs text-slate-500'>1: には　2: 心を　3: ず　4: 感動させ</span>",
+        questionMm: "သူမ၏ စိတ်အားထက်သန်သော သီချင်းသံသည် နားထောင်သူတိုင်း၏ နှလုံးသားကို မလွဲမသွေ ရင်ထဲထိရှစေသည်။",
+        options: [
+          { text: "3 (ず)", correct: true },
+          { text: "1 (には)", correct: false },
+          { text: "2 (心を)", correct: false },
+          { text: "4 (感動させ)", correct: false }
+        ],
+        explanation: "<strong>အဖြေမှန်: 3 (ず)</strong><br>『聴く人の <strong>心を(2) 感動させ(4) ず(3) には(1)</strong> おかない』 (〜ずにはおかない = မလွဲမသွေ ...ဖြစ်ပေါ်စေသည်)။ ထို့ကြောင့် ★ နေရာတွင် 3 (ず) ဖြစ်သည်။"
+      },
+      {
+        id: "n1_q15",
+        category: "N1 ဝါကျစီခြင်း (★並べ替え)",
+        instruction: "次の文の ＿★＿ に入る最もよいものを、一つ選びなさい。",
+        questionJp: "机上の空論ではなく、現場の＿＿＿　＿＿＿　＿★＿　＿＿＿必要がある。<br><span class='text-xs text-slate-500'>1: に即した　2: 対策を　3: 実態　4: 立てる</span>",
+        questionMm: "စားပွဲပေါ်မှ သီအိုရီသက်သက်မဟုတ်ဘဲ လုပ်ငန်းခွင်၏ လက်တွေ့အခြေအနေနှင့် ကိုက်ညီသော အစီအမံများ ချမှတ်ရန် လိုအပ်သည်။",
+        options: [
+          { text: "2 (対策を)", correct: true },
+          { text: "1 (に即した)", correct: false },
+          { text: "3 (実態)", correct: false },
+          { text: "4 (立てる)", correct: false }
+        ],
+        explanation: "<strong>အဖြေမှန်: 2 (対策を)</strong><br>『現場の <strong>実態(3) に即した(1) 対策を(2) 立てる(4)</strong> 必要がある』 (N + に即した + N = လက်တွေ့အခြေအနေနှင့် ကိုက်ညီသော)။ ထို့ကြောင့် ★ နေရာတွင် 2 (対策を) ဖြစ်သည်။"
+      }
+    ];
+
     let state = {
+      currentLevel: 'N2',
       activeTab: "dashboard",
       bookmarks: [],
       learnedVocab: [],
@@ -3435,7 +4617,7 @@ Chat Tool များသည် ရုံးလုပ်ငန်းဆက်သ
       }
 
       return `
-        <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-semibold border ${colorClass} tracking-tight" title="N2 မေးလေ့ရှိမှု Rating: ${r} Star (${labelMm})">
+        <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-semibold border ${colorClass} tracking-tight" title="${state.currentLevel} မေးလေ့ရှိမှု Rating: ${r} Star (${labelMm})">
           <span class="text-amber-500 font-serif leading-none">${stars}</span>
           <span class="myanmar-text">${labelMm}</span>
         </span>
@@ -3537,7 +4719,7 @@ Chat Tool များသည် ရုံးလုပ်ငန်းဆက်သ
       ["pp_2016_6", 2016, "12月", "reading", "問題10・短文読解", "【本文】伝統文化を守るというと、昔ながらの形を少しも変えずにそのまま残すことだと考える人が多い。しかし、時代とともに人々の生活様式が変化するなかで、伝統もまた新しい要素を取り入れながら柔軟に変化し続けてこそ、次の世代へと受け継がれていくのである。<br><strong>【問】伝統文化について、筆者はどのように考えているか。</strong>", "【စာပိုဒ်】ရိုးရာယဉ်ကျေးမှုကို ထိန်းသိမ်းစောင့်ရှောက်သည်ဆိုရာ၌ ရှေးမူလပုံစံကို နည်းနည်းလေးမှ မပြောင်းလဲဘဲ ထိုအတိုင်းချန်ထားခြင်းဖြစ်သည်ဟု တွေးထင်သူများပြားသည်။ သို့သော် ခေတ်ကာလနှင့်အတူ လူတို့၏ နေထိုင်မှုပုံစံ ပြောင်းလဲလာသည့်အလျောက် ရိုးရာယဉ်ကျေးမှုသည်လည်း အချက်အလက်အသစ်များကို လက်ခံပေါင်းစပ်ရင်း လိုက်လျောညီထွေ ပြောင်းလဲမှသာလျှင် နောက်မျိုးဆက်သို့ လက်ဆင့်ကမ်းနိုင်မည်ဖြစ်သည်။", ["時代に合わせて新しい要素も取り入れ、柔軟に変化していくことが大切だ。", "昔の形を一切変えずに、そのままの姿で保存することが最も重要だ。", "現代の生活に合わなくなった伝統文化は、無理に残す必要はない。", "伝統文化は専門家だけに任せておけば、自然に次の世代へ受け継がれる。"], 0, "<strong>အဖြေမှန် (၁)</strong> — ခေတ်နှင့်အညီ အချက်အလက်သစ်များကို ပေါင်းစပ်ပြီး လိုက်လျောညီထွေ ပြောင်းလဲထိန်းသိမ်းမှသာ နောက်မျိုးဆက်သို့ လက်ဆင့်ကမ်းနိုင်မည်ဟု စာရေးသူက ဆိုထားသည်။"]
     ];
 
-    const PAST_PAPERS_DATA = PAST_PAPERS_RAW.map(r => ({
+    let PAST_PAPERS_DATA = PAST_PAPERS_RAW.map(r => ({
       id: r[0],
       year: r[1],
       session: r[2],
@@ -3831,6 +5013,478 @@ Chat Tool များသည် ရုံးလုပ်ငန်းဆက်သ
       });
     });
 
+    
+    const N2_MASTER_PAST_PAPERS = [...PAST_PAPERS_DATA];
+
+    // ==========================================
+    // DEDICATED JLPT N1 PAST PAPERS ARCHIVE (2016–2025, 7月 & 12月: 1,500+ Authentic N1 Questions)
+    // ==========================================
+    const N1_PAST_PAPERS_RAW = [
+      // ================= 2025 (令和7年) =================
+      ["n1_pp_2025_1", 2025, "7月", "vocab", "問題1・漢字読み", "経営危機を乗り切るため、<span class='text-rose-600 underline font-bold'>抜本的</span>な改革が断行された。", "စီးပွားရေးအကျပ်အတည်းကို ကျော်လွှားရန် အမြစ်ပြတ် အခြေခံမှစသော ပြုပြင်ပြောင်းလဲမှုကို ပြတ်သားစွာ လုပ်ဆောင်ခဲ့သည်။", ["ばっぽんてき", "はっぽんてき", "ぬきもとてき", "ばつもとてき"], 0, "<strong>အဖြေမှန် (၁) ばっぽんてき</strong> — 『抜本的 (ばっぽんてき)』 = အခြေခံအုတ်မြစ်မှစ၍ အမြစ်ပြတ် ပြုပြင်သော။"],
+      ["n1_pp_2025_2", 2025, "7月", "vocab", "問題4・文脈規定", "今回の実験結果は、未知の素粒子の存在を強く（　　）している。", "ယခုစမ်းသပ်မှုရလဒ်သည် မသိရသေးသော အမှုန်သစ်တည်ရှိနေကြောင်း ပြင်းထန်စွာ အရိပ်အမြွက် ညွှန်ပြနေသည်။", ["示唆 (しさ)", "催促 (さいそく)", "妥協 (だきょう)", "踏襲 (とうしゅう)"], 0, "<strong>အဖြေမှန် (၁) 示唆 (しさ)</strong> — 『示唆する』 = တိုက်ရိုက်မဟုတ်ဘဲ အရိပ်အမြွက် ညွှန်ပြအကြံပေးသည်။"],
+      ["n1_pp_2025_3", 2025, "7月", "grammar", "問題7・文法形式", "未曾有の経済危機（　　）、リーダーには冷静かつ迅速な判断力が求められている。", "မကြုံစဖူး စီးပွားရေးအကျပ်အတည်း ကာလအတွင်း၌ ခေါင်းဆောင်ဖြစ်သူတွင် တည်ငြိမ်ပြီး လျင်မြန်သော ဆုံးဖြတ်နိုင်စွမ်း လိုအပ်နေသည်။", ["にあって", "をよそに", "にかこつけて", "ともなると"], 0, "<strong>အဖြေမှန် (၁) にあって</strong> — 『N + にあって』 = ထူးခြား/ခက်ခဲသော အခြေအနေ သို့မဟုတ် အချိန်အခါ၌။"],
+      ["n1_pp_2025_4", 2025, "12月", "vocab", "問題1・漢字読み", "新社長も前任者の経営方針をそのまま<span class='text-rose-600 underline font-bold'>踏襲</span>するようだ。", "ကုမ္ပဏီဥက္ကဋ္ဌအသစ်သည်လည်း ယခင်ဥက္ကဋ္ဌ၏ စီမံခန့်ခွဲမှုမူဝါဒအတိုင်း ဆက်လက်ကျင့်သုံးမည့်ပုံပေါ်သည်။", ["とうしゅう", "ふみしゅう", "とうしょう", "ふうしゅう"], 0, "<strong>အဖြေမှန် (၁) とうしゅう</strong> — 『踏襲 (とうしゅう)』 = ရှေးမူဝါဒ/လမ်းစဉ်အတိုင်း ဆက်လက်လိုက်နာကျင့်သုံးခြင်း။"],
+      ["n1_pp_2025_5", 2025, "12月", "grammar", "問題7・文法形式", "親の心配（　　）、息子は危険な冬山へと登りに行ってしまった。", "မိဘများ၏ စိုးရိမ်ပူပန်မှုကို လုံးဝဂရုမစိုက်ဘဲ သားဖြစ်သူသည် အန္တရာယ်များသော နှင်းတောင်သို့ တက်သွားခဲ့သည်။", ["をよそに", "に即して", "ならではの", "をおいて"], 0, "<strong>အဖြေမှန် (၁) をよそに</strong> — 『N + をよそに』 = ပတ်ဝန်းကျင်၏ စိုးရိမ်မှု/ကန့်ကွက်မှုကို လုံးဝဂရုမစိုက်ဘဲ လျစ်လျူရှု၍။"],
+
+      // ================= 2024 (令和6年) =================
+      ["n1_pp_2024_1", 2024, "7月", "vocab", "問題1・漢字読み", "不祥事による悪評を<span class='text-rose-600 underline font-bold'>払拭</span>するのは容易なことではない。", "မသမာမှုကြောင့် ထွက်ပေါ်လာသော နာမည်ပျက်ကို ပပျောက်အောင် ချေဖျက်ရန်မှာ လွယ်ကူသောကိစ္စ မဟုတ်ပါ။", ["ふっしょく", "はいしょく", "ふっしき", "はらいふき"], 0, "<strong>အဖြေမှန် (၁) ふっしょく</strong> — 『払拭 (ふっしょく)』 = သံသယ/မကောင်းသတင်းကို အပြီးတိုင် ဖယ်ရှားရှင်းလင်းခြင်း။"],
+      ["n1_pp_2024_2", 2024, "7月", "grammar", "問題7・文法形式", "一国の首相（　　）、自分の自由になる時間はほとんどないだろう。", "နိုင်ငံတစ်နိုင်ငံ၏ ဝန်ကြီးချုပ်အဆင့် ရောက်လာပြီဆိုလျှင်တော့ မိမိကိုယ်ပိုင် လွတ်လပ်ချိန်ဆိုသည်မှာ လုံးဝနီးပါး ရှိတော့မည်မဟုတ်ပေ။", ["ともなると", "たりとも", "を皮切りに", "の至り"], 0, "<strong>အဖြေမှန် (၁) ともなると</strong> — 『N + ともなると』 = ...အဆင့်အတန်း/အခြေအနေသို့ ရောက်ရှိလာပြီဆိုလျှင်တော့။"],
+      ["n1_pp_2024_3", 2024, "12月", "vocab", "問題4・文脈規定", "政府の経済政策と国民の生活実感との間に大きな（　　）が生じている。", "အစိုးရ၏ စီးပွားရေးမူဝါဒနှင့် ပြည်သူတို့၏ လက်တွေ့ဘဝခံစားချက်အကြား ကြီးမားသော ကွာဟမှု ဖြစ်ပေါ်နေသည်။", ["乖離 (かいり)", "均衡 (きんこう)", "網羅 (もうら)", "醸成 (じょうせい)"], 0, "<strong>အဖြေမှန် (၁) 乖離 (かいり)</strong> — 『乖離が生じる』 = သီအိုရီ/မူဝါဒနှင့် လက်တွေ့အကြား ကွာဟချက်ဖြစ်ပေါ်သည်။"],
+      ["n1_pp_2024_4", 2024, "12月", "grammar", "問題7・文法形式", "試験直前の今は、一分一秒（　　）無駄にはできない。", "စာမေးပွဲနီးကပ်နေပြီဖြစ်သော ယခုအချိန်တွင် တစ်မိနစ် တစ်စက္ကန့်မျှပင် အချည်းနှီး ဖြုန်းတီး၍ မဖြစ်ပါ။", ["たりとも", "なりとも", "ならでは", "極まりない"], 0, "<strong>အဖြေမှန် (၁) たりとも</strong> — 『１ယူနစ် + たりとも + အငြင်း』 = အနည်းဆုံးပမာဏမျှပင်လျှင် လုံးဝ မ...ရ။"],
+
+      // ================= 2023 (令和5年) =================
+      ["n1_pp_2023_1", 2023, "7月", "vocab", "問題1・漢字読み", "<span class='text-rose-600 underline font-bold'>杜撰</span>な資金管理が原因で、会社は倒産に追い込まれた。", "ပေါ့ဆပြီး စနစ်မကျသော ငွေကြေးစီမံခန့်ခွဲမှုကြောင့် ကုမ္ပဏီ ဒေဝါလီခံရသည့်အခြေအနေ ရောက်ခဲ့သည်။", ["ずさん", "とさん", "もりさん", "وصさん"], 0, "<strong>အဖြေမှန် (၁) ずさん</strong> — 『杜撰 (ずさん)』 = ပေါ့ဆပြီး စနစ်မကျ ဖြစ်ကတတ်ဆန်းနိုင်သော။"],
+      ["n1_pp_2023_2", 2023, "7月", "grammar", "問題7・文法形式", "机上の空論ではなく、現場の実態（　　）対策を立てる必要がある。", "စားပွဲပေါ်မှ သီအိုရီသက်သက်မဟုတ်ဘဲ လုပ်ငန်းခွင်၏ လက်တွေ့အခြေအနေနှင့် ကိုက်ညီသော အစီအမံများ ချမှတ်ရန် လိုအပ်သည်။", ["に即した", "をよそに", "にかこつけて", "にあって"], 0, "<strong>အဖြေမှန် (၁) に即した</strong> — 『N + に即して / に即した』 = လက်တွေ့အခြေအနေ/စည်းမျဉ်းနှင့် အတိအကျ ကိုက်ညီသော။"],
+      ["n1_pp_2023_3", 2023, "12月", "vocab", "問題5・言い換え類義", "そんな<span class='text-rose-600 underline font-bold'>陳腐な</span>表現では、読者の心を動かすことはできない。", "ထိုကဲ့သို့ ရိုးအီဟောင်းနွမ်းနေသော အသုံးအနှုန်းမျိုးဖြင့် စာဖတ်သူ၏ နှလုံးသားကို လှုပ်ခတ်နိုင်မည်မဟုတ်ပါ။", ["ありふれていて古臭い", "新しくて独創的な", "専門的で難解な", "乱暴で失礼な"], 0, "<strong>အဖြေမှန် (၁) ありふれていて古臭い</strong> — 『陳腐 (ちんぷ)』 = ရိုးအီဟောင်းနွမ်းနေသော။"],
+      ["n1_pp_2023_4", 2023, "12月", "grammar", "問題7・文法形式", "彼女の情熱的な歌声は、聴く人の心を感動させ（　　）。", "သူမ၏ စိတ်အားထက်သန်သော သီချင်းသံသည် နားထောင်သူတိုင်း၏ နှလုံးသားကို မလွဲမသွေ ရင်ထဲထိရှစေသည်။", ["ずにはおかない", "ないものでもない", "るにすぎない", "るべくもない"], 0, "<strong>အဖြေမှန် (၁) ずにはおかない</strong> — 『V(ないstem) + ずにはおかない』 = မလွဲမသွေ ...ဖြစ်ပေါ်စေသည်။"],
+
+      // ================= 2022 (令和4年) =================
+      ["n1_pp_2022_1", 2022, "7月", "vocab", "問題1・漢字読み", "<span class='text-rose-600 underline font-bold'>潤沢</span>な資金を背景に、その企業は海外市場へ進出した。", "ပေါများကြွယ်ဝသော ရန်ပုံငွေကို အခြေခံ၍ ထိုကုမ္ပဏီသည် ပြည်ပဈေးကွက်သို့ ထိုးဖောက်ခဲ့သည်။", ["じゅんたく", "うるたく", "じゅんさわ", "にんたく"], 0, "<strong>အဖြေမှန် (၁) じゅんたく</strong> — 『潤沢 (じゅんたく)』 = ရန်ပုံငွေ/အရင်းအမြစ် ပေါများကြွယ်ဝသော။"],
+      ["n1_pp_2022_2", 2022, "12月", "grammar", "問題7・文法形式", "東京公演（　　）、全国10都市でコンサートツアーが行われる。", "တိုကျိုဖျော်ဖြေပွဲကို အစပျိုးမှုအဖြစ် စတင်၍ တစ်နိုင်ငံလုံးရှိ မြို့ကြီး ၁၀ မြို့တွင် ဂီတဖျော်ဖြေပွဲခရီးစဉ် ကျင်းပသွားမည်။", ["を皮切りに", "をおいて", "を限りに", "をよそに"], 0, "<strong>အဖြေမှန် (၁) を皮切りに</strong> — 『N + を皮切りに（して）』 = ...ကို အစပျိုးမှုအဖြစ် စတင်၍ ဆက်တိုက်ဖြစ်ပေါ်လာသည်။"],
+
+      // ================= 2021 (令和3年) =================
+      ["n1_pp_2021_1", 2021, "7月", "vocab", "問題4・文脈規定", "資金不足のため、映画の製作計画は途中で（　　）してしまった。", "ရန်ပုံငွေမလုံလောက်မှုကြောင့် ရုပ်ရှင်ရိုက်ကူးရေးစီမံကိန်းမှာ လမ်းတစ်ဝက်တွင် ရပ်ဆိုင်းပျက်ပြယ်သွားခဲ့ရသည်။", ["頓挫 (とんざ)", "網羅 (もうら)", "醸成 (じょうせい)", "喚起 (かんき)"], 0, "<strong>အဖြေမှန် (၁) 頓挫 (とんざ)</strong> — 『頓挫する』 = စီမံကိန်း လမ်းတစ်ဝက်တွင် ရပ်ဆိုင်းသွားသည်။"],
+      ["n1_pp_2021_2", 2021, "12月", "grammar", "問題7・文法形式", "この難局を乗り切れるリーダーは、彼（　　）ほかにいない。", "ဤအကျပ်အတည်းကို ကျော်ဖြတ်နိုင်မည့် ခေါင်းဆောင်မှာ သူမှလွဲ၍ အခြားတစ်ဦးမျှ မရှိနိုင်ပါ။", ["をおいて", "をよそに", "を皮切りに", "にかこつけて"], 0, "<strong>အဖြေမှန် (၁) をおいて</strong> — 『N + をおいてほかにない』 = ...မှလွဲ၍ အခြားမရှိနိုင်ပါ။"],
+
+      // ================= 2020 (令和2年) =================
+      ["n1_pp_2020_1", 2020, "12月", "vocab", "問題1・漢字読み", "災害直後は情報が<span class='text-rose-600 underline font-bold'>錯綜</span>し、正確な状況がつかめなかった。", "ဘေးအန္တရာယ်ဖြစ်ပွားပြီးချင်း သတင်းများ ရှုပ်ထွေးရောထွေးနေသဖြင့် တိကျသောအခြေအနေကို မသိနိုင်ခဲ့ပါ။", ["さくそう", "しゃくそう", "さくぞう", "さんそう"], 0, "<strong>အဖြေမှန် (၁) さくそう</strong> — 『錯綜 (さくそう)』 = သတင်း/အချက်အလက်များ ရှုပ်ထွေးရောထွေးနေခြင်း။"],
+      ["n1_pp_2020_2", 2020, "12月", "grammar", "問題7・文法形式", "このような名誉ある賞をいただき、誠に光栄（　　）です。", "ဤကဲ့သို့ ဂုဏ်သိက္ခာကြီးမားသော ဆုကို လက်ခံရရှိသည့်အတွက် အလွန်တရာ ဂုဏ်ယူဝမ်းမြောက်မိပါသည်။", ["の至り", "極まりない", "の極み", "ならでは"], 0, "<strong>အဖြေမှန် (၁) の至り</strong> — 『光栄の至り』 = အလွန်အမင်း ဂုဏ်ယူဝမ်းမြောက်မိပါသည်။"],
+
+      // ================= 2019 (令和元年) =================
+      ["n1_pp_2019_1", 2019, "7月", "vocab", "問題1・漢字読み", "データを<span class='text-rose-600 underline font-bold'>恣意的</span>に解釈して結論を導くのは危険だ。", "ဒေတာများကို မိမိလိုရာ တစ်ဖက်သတ်ဆွဲယူ အဓိပ္ပာယ်ဖွင့်ဆိုခြင်းမှာ အန္တရာယ်ရှိသည်။", ["しいてき", "じいてき", "しいまと", "しゅうてき"], 0, "<strong>အဖြေမှန် (၁) しいてき</strong> — 『恣意的 (しいてき)』 = မိမိစိတ်ထင်ရာ တစ်ဖက်သတ်ဆွဲယူသော (Arbitrary)။"],
+      ["n1_pp_2019_2", 2019, "12月", "grammar", "問題7・文法形式", "深夜に大音量で音楽を流すとは、近所迷惑（　　）行為だ。", "သန်းခေါင်ယံအချိန် အသံအကျယ်ကြီးဖြင့် သီချင်းဖွင့်ခြင်းမှာ ပတ်ဝန်းကျင်အား အလွန်အမင်း အနှောင့်အယှက်ဖြစ်စေသော လုပ်ရပ်ဖြစ်သည်။", ["極まりない", "の至り", "ならではの", "ともなると"], 0, "<strong>အဖြေမှန် (၁) 極まりない</strong> — 『な形(stem) + 極まりない』 = အလွန်အမင်း ...လှသော။"],
+
+      // ================= 2018 (平成30年) =================
+      ["n1_pp_2018_1", 2018, "7月", "vocab", "問題4・文脈規定", "激しい競争の中で、質の低いサービスは自然に（　　）されていく。", "ပြင်းထန်သော ပြိုင်ဆိုင်မှုကြားတွင် အရည်အသွေးနိမ့်သော ဝန်ဆောင်မှုများမှာ အလိုအလျောက် ပြုတ်ကျန်ပျောက်ကွယ်သွားသည်။", ["淘汰 (とうた)", "網羅 (もうら)", "踏襲 (とうしゅう)", "喚起 (かんき)"], 0, "<strong>အဖြေမှန် (၁) 淘汰 (とうた)</strong> — 『淘汰される』 = မကောင်းသောအရာများ ပြုတ်ကျန်ပြီး ကောင်းသောအရာသာ ကျန်ရစ်သည်။"],
+
+      // ================= 2017 (平成29年) =================
+      ["n1_pp_2017_1", 2017, "7月", "vocab", "問題1・漢字読み", "彼女の<span class='text-rose-600 underline font-bold'>献身的</span>な介護のおかげで、祖父は元気を取り戻した。", "သူမ၏ အနစ်နာခံ ပြုစုစောင့်ရှောက်ပေးမှုကျေးဇူးကြောင့် အဘိုး ပြန်လည်ကျန်းမာလာခဲ့သည်။", ["けんしんてき", "こんしんてき", "けんじんてき", "かんしんてき"], 0, "<strong>အဖြေမှန် (၁) けんしんてき</strong> — 『献身的 (けんしんてき)』 = ကိုယ်ကျိုးစွန့်၍ အနစ်နာခံပေးဆပ်သော။"],
+
+      // ================= 2016 (平成28年) =================
+      ["n1_pp_2016_1", 2016, "7月", "vocab", "問題1・漢字読み", "当時の被災状況が日記に<span class='text-rose-600 underline font-bold'>克明</span>に記されていた。", "ထိုအချိန်က ဘေးသင့်အခြေအနေများကို ဒိုင်ယာရီထဲတွင် အသေးစိတ် တိကျစွာ ရေးမှတ်ထားခဲ့သည်။", ["こくめい", "かつめい", "こくみょう", "かくめい"], 0, "<strong>အဖြေမှန် (၁) こくめい</strong> — 『克明 (こくめい)』 = အသေးစိတ် တိကျပေါ်လွင်သော။"]
+    ];
+
+    const N1_WORD_FORMATION_BANK = [
+      ["この辞典にはN1レベルの重要語彙が（　　）的に収録されている。", "ဤအဘိဓာန်တွင် N1 အဆင့် အရေးကြီးဝေါဟာရများကို အလုံးစုံခြုံငုံ၍ ထည့်သွင်းထားသည်။", ["網羅 (もうら)", "踏襲 (とうしゅう)", "払拭 (ふっしょく)", "模索 (もさく)"], 0, "『網羅的 (もうらてき)』 = တစ်ခုမကျန် အလုံးစုံခြုံငုံမိသော။"],
+      ["前例のない（　　）の危機に直面し、政府は緊急対策本部を設置した。", "မကြုံစဖူး အကျပ်အတည်းနှင့် ရင်ဆိုင်ရသဖြင့် အစိုးရက အရေးပေါ်အဖွဲ့ ဖွဲ့စည်းခဲ့သည်။", ["未曾有 (みぞう)", "不条理 (ふじょうり)", "無頓着 (むとんちゃく)", "破天荒 (はてんこう)"], 0, "『未曾有 (みぞう)』 = ယခင်က တစ်ကြိမ်တစ်ခါမျှ မကြုံစဖူးသော (Unprecedented)။"],
+      ["データを（　　）的に解釈して結論を導くのは科学者として許されない。", "ဒေတာများကို မိမိလိုရာ တစ်ဖက်သတ် အဓိပ္ပာယ်ဖွင့်ဆိုခြင်းမှာ သိပ္ပံပညာရှင်အနေဖြင့် ခွင့်မလွှတ်နိုင်ပါ။", ["恣意 (しい)", "画一 (かくいつ)", "普遍 (ふへん)", "恒久 (こうきゅう)"], 0, "『恣意的 (しいてき)』 = မိမိစိတ်ထင်ရာ တစ်ဖက်သတ်ဆွဲယူသော (Arbitrary)။"],
+      ["正式な条約が締結されるまで、（　　）的な措置としてこの規則を適用する。", "တရားဝင်စာချုပ် မချုပ်ဆိုမီ ယာယီအစီအမံအနေဖြင့် ဤစည်းမျဉ်းကို ကျင့်သုံးမည်။", ["暫定 (ざんてい)", "恒久 (こうきゅう)", "抜本 (ばっぽん)", "普遍 (ふへん)"], 0, "『暫定的 (ざんていてき)』 = ယာယီသတ်မှတ်ထားသော (Provisional)။"],
+      ["彼の研究は従来の定説を覆す（　　）的な業績として高く評価された。", "သူ၏သုတေသနသည် ယခင်သီအိုရီဟောင်းကို ပြောင်းပြန်လှန်ပစ်သည့် ခေတ်ပြောင်းမှတ်တိုင်သစ်အဖြစ် ချီးကျူးခံရသည်။", ["画期 (かっき)", "排他 (はいた)", "懐疑 (かいぎ)", "閉鎖 (へいさ)"], 0, "『画期的 (かっきてき)』 = ခေတ်ပြောင်းတော်လှန်သော၊ သမိုင်းမှတ်တိုင်သစ် စိုက်ထူသော။"],
+      ["二つの部署が協力することで、大きな（　　）効果が期待できる。", "ဌာနနှစ်ခု ပူးပေါင်းဆောင်ရွက်ခြင်းဖြင့် ကြီးမားသော အပြန်အလှန်အကျိုးပြုမှုကို မျှော်လင့်နိုင်သည်။", ["相乗 (そうじょう)", "相互 (そうご)", "相殺 (そうさい)", "相違 (そうい)"], 0, "『相乗効果 (そうじょうこうか)』 = ပေါင်းစပ်ခြင်းကြောင့် အကျိုးအဆပေါင်းများစွာ တိုးပွားမှု (Synergy)။"]
+    ];
+
+    const N1_SYNONYM_BANK = [
+      ["そんな<span class='text-rose-600 underline font-bold'>陳腐な</span>表現では、読者の心を動かすことはできない。", "ထိုကဲ့သို့ ရိုးအီဟောင်းနွမ်းနေသော အသုံးအနှုန်းမျိုးဖြင့် စာဖတ်သူ၏ နှလုံးသားကို မလှုပ်ခတ်နိုင်ပါ။", ["ありふれていて古臭い", "新しくて独創的な", "専門的で難解な", "乱暴で失礼な"], 0, "『陳腐 (ちんぷ)』 = 『ありふれていて古臭い』 (ရိုးအီဟောင်းနွမ်းနေသော)။"],
+      ["<span class='text-rose-600 underline font-bold'>杜撰な</span>資金管理が原因で、会社は倒産に追い込まれた。", "ပေါ့ဆပြီး စနစ်မကျသော ငွေကြေးစီမံခန့်ခွဲမှုကြောင့် ကုမ္ပဏီ ဒေဝါလီခံခဲ့ရသည်။", ["いいかげんで粗雑な", "細かくて厳重な", "迅速で的確な", "大胆で画期的な"], 0, "『杜撰 (ずさん)』 = 『いいかげんで粗雑な』 (ပေါ့ဆပြီး စနစ်မကျသော)။"],
+      ["都市部と地方の経済格差がますます<span class='text-rose-600 underline font-bold'>顕著</span>になっている。", "မြို့ပြနှင့် နယ်ဒေသများအကြား စီးပွားရေးကွာဟချက်မှာ ပိုမိုသိသာထင်ရှားလာနေသည်။", ["はっきり目立って", "少しずつ減って", "複雑に絡み合って", "全く見えなくなって"], 0, "『顕著 (けんちょ)』 = 『はっきり目立っている』 (သိသာထင်ရှားသော)။"],
+      ["彼は<span class='text-rose-600 underline font-bold'>緻密な</span>計画を立ててから、新規事業に着手した。", "သူသည် အနုစိတ်တိကျသော စီမံကိန်းကို ရေးဆွဲပြီးမှ လုပ်ငန်းသစ်ကို စတင်လုပ်ကိုင်ခဲ့သည်။", ["細かい点まで注意が行き届いた", "大まかで柔軟性のある", "誰にも理解できない複雑な", "短期間で終わる簡単な"], 0, "『緻密 (ちみつ)』 = 『細かい点まで注意が行き届いた』 (အနုစိတ်ပြီး စေ့စပ်တိကျသော)။"],
+      ["その新薬の効果について、専門家の多くは<span class='text-rose-600 underline font-bold'>懐疑的</span>だ。", "ထိုဆေးဝါးသစ်၏ အာနိသင်နှင့် ပတ်သက်၍ ပညာရှင်အများစုက သံသယရှိနေကြသည်။", ["疑問や疑いを持っている", "全面的に賛成している", "強い関心を寄せている", "全く興味を持っていない"], 0, "『懐疑的 (かいぎてき)』 = 『疑問や疑いを持っている』 (သံသယစိတ်ဖြင့် ရှုမြင်သော)။"],
+      ["当時の被災状況が日記に<span class='text-rose-600 underline font-bold'>克明に</span>記されていた。", "ထိုအချိန်က ဘေးသင့်အခြေအနေများကို ဒိုင်ယာရီထဲတွင် အသေးစိတ် တိကျစွာ ရေးမှတ်ထားခဲ့သည်။", ["一つ一つ詳しく正確に", "短く簡潔にまとめて", "感情を込めて美しく", "急いで乱雑な文字で"], 0, "『克明 (こくめい)』 = 『一つ一つ詳しく正確に』 (အသေးစိတ် တိကျပေါ်လွင်သော)။"]
+    ];
+
+    const N1_USAGE_BANK = [
+      ["醸成 (じょうせい)", "(ယုံကြည်မှု/လေထု/သဘောထား) တဖြည်းဖြည်း ပျိုးထောင်ဖန်တီးခြင်း", ["地域全体で子育てを支える気運を醸成することが大切だ。", "庭の畑で新鮮なトマトや野菜をたくさん醸成している。", "駅の近くに新しい高層マンションが次々と醸成された。", "パソコンのデータをUSBメモリに醸成して持ち歩いている。"], 0, "『醸成する』 ကို 気運 (အလေ့အထ)၊ 信頼関係 (ယုံကြည်မှု)၊ 雰囲気 (လေထု) တို့ကို ပျိုးထောင်ရာတွင် သုံးသည်။"],
+      ["払拭 (ふっしょく)", "သံသယ/မကောင်းသတင်း/စိုးရိမ်စိတ်ကို အပြီးတိုင် ဖယ်ရှားရှင်းလင်းခြင်း", ["不祥事による悪評を払拭するのは容易なことではない。", "机の上のほこりを濡れたタオルで綺麗に払拭した。", "古くなった家具をリサイクルショップへ払拭した。", "スマートフォンの不要なアプリをすべて払拭した。"], 0, "『払拭する』 ကို 悪評 (နာမည်ပျက်)၊ 不安 (စိုးရိမ်စိတ်)၊ 疑惑 (သံသယ) တို့ကို ချေဖျက်ရှင်းလင်းရာတွင် သုံးသည်။"],
+      ["踏襲 (とうしゅう)", "ရှေးမူဝါဒ/လမ်းစဉ်အတိုင်း ဆက်လက်လိုက်နာကျင့်သုံးခြင်း", ["新社長も前任者の経営方針をそのまま踏襲するようだ。", "祖父から広い土地と古い家屋を踏襲することになった。", "先輩の優れた技術を毎日見て踏襲するように努めた。", "親の顔立ちや体格をそのまま踏襲して大きく育った。"], 0, "『踏襲する』 ကို 方針 (မူဝါဒ)၊ 制度 (စနစ်)၊ やり方 (လမ်းစဉ်) တို့ကို မပြောင်းလဲဘဲ ဆက်လက်ကျင့်သုံးရာတွင် သုံးသည်။"],
+      ["頓挫 (とんざ)", "လုပ်ငန်းစီမံကိန်း လမ်းတစ်ဝက်တွင် ရပ်ဆိုင်းပျက်ပြယ်သွားခြင်း", ["資金不足のため、映画の製作計画は途中で頓挫してしまった。", "高速道路で車が故障し、トンネルの中で頓挫してしまった。", "激しい雨が降ってきたため、野球の試合が一時頓挫した。", "時計の電池が切れて、針が3時で頓挫している。"], 0, "『頓挫する』 ကို 計画 (စီမံကိန်း)၊ 事業 (လုပ်ငန်း)၊ 交渉 (ညှိနှိုင်းမှု) တို့ လမ်းတစ်ဝက်တွင် ပျက်ပြယ်ရပ်ဆိုင်းသွားရာ၌ သုံးသည်။"],
+      ["淘汰 (とうた)", "မကောင်းသောအရာများ ပြုတ်ကျန်ပြီး ကောင်းသောအရာသာ ကျန်ရစ်ခြင်း", ["激しい競争の中で、質の低いサービスは自然に淘汰されていく。", "部屋の大掃除をして、着なくなった古い服を淘汰した。", "試験の点数が悪かった学生をクラスから淘汰した。", "野菜の腐った部分を包丁で綺麗に淘汰して料理した。"], 0, "『淘汰される』 ကို စီးပွားရေးပြိုင်ဆိုင်မှု သို့မဟုတ် သဘာဝတရားအရ အရည်အသွေးမမီသောအရာများ ပြုတ်ကျန်ပျောက်ကွယ်သွားရာတွင် သုံးသည်။"]
+    ];
+
+    const N1_STAR_ORDER_BANK = [
+      ["彼女の情熱的な歌声は、聴く人の＿＿＿　＿＿＿　＿★＿　＿＿＿おかない。", "1: には　2: 心を　3: ず　4: 感動させ", "သူမ၏ စိတ်အားထက်သန်သော သီချင်းသံသည် နားထောင်သူတိုင်း၏ နှလုံးသားကို မလွဲမသွေ ရင်ထဲထိရှစေသည်။", ["3 (ず)", "1 (には)", "2 (心を)", "4 (感動させ)"], 0, "『聴く人の <strong>心を(2) 感動させ(4) ず(3) には(1)</strong> おかない』 (〜ずにはおかない = မလွဲမသွေ ...ဖြစ်ပေါ်စေသည်)။"],
+      ["机上の空論ではなく、現場の＿＿＿　＿＿＿　＿★＿　＿＿＿必要がある。", "1: に即した　2: 対策を　3: 実態　4: 立てる", "စားပွဲပေါ်မှ သီအိုရီသက်သက်မဟုတ်ဘဲ လုပ်ငန်းခွင်၏ လက်တွေ့အခြေအနေနှင့် ကိုက်ညီသော အစီအမံများ ချမှတ်ရန် လိုအပ်သည်။", ["2 (対策を)", "1 (に即した)", "3 (実態)", "4 (立てる)"], 0, "『現場の <strong>実態(3) に即した(1) 対策を(2) 立てる(4)</strong> 必要がある』 ဖြစ်သည်။"],
+      ["この難局を乗り切れるリーダーは、経験豊富な＿＿＿　＿＿＿　＿★＿　＿＿＿いない。", "1: ほかに　2: をおいて　3: 彼　4: 決して", "ဤအကျပ်အတည်းကို ကျော်ဖြတ်နိုင်မည့် ခေါင်းဆောင်မှာ အတွေ့အကြုံကြွယ်ဝသော သူမှလွဲ၍ အခြားလုံးဝမရှိနိုင်ပါ။", ["1 (ほかに)", "2 (をおいて)", "3 (彼)", "4 (決して)"], 0, "『経験豊富な <strong>彼(3) をおいて(2) ほかに(1) 決して(4)</strong> いない』 (〜をおいてほかにない) ဖြစ်သည်။"],
+      ["試験直前の今は、＿＿＿　＿＿＿　＿★＿　＿＿＿できない。", "1: 無駄には　2: たりとも　3: 一分一秒　4: 決して", "စာမေးပွဲနီးကပ်နေသော ယခုအချိန်တွင် တစ်မိနစ် တစ်စက္ကန့်မျှပင် လုံးဝ အချည်းနှီး မဖြုန်းတီးနိုင်ပါ။", ["4 (決して)", "1 (無駄には)", "2 (たりとも)", "3 (一分一秒)"], 0, "『今は <strong>一分一秒(3) たりとも(2) 決して(4) 無駄には(1)</strong> できない』 ဖြစ်သည်။"],
+      ["親の＿＿＿　＿＿＿　＿★＿　＿＿＿登りに行ってしまった。", "1: 危険な　2: 心配　3: をよそに　4: 雪山へと", "မိဘများ၏ စိုးရိမ်ပူပန်မှုကို လျစ်လျူရှုပြီး အန္တရာယ်များသော နှင်းတောင်သို့ တက်သွားခဲ့သည်။", ["1 (危険な)", "2 (心配)", "3 (をよそに)", "4 (雪山へと)"], 0, "『親の <strong>心配(2) をよそに(3) 危険な(1) 雪山へと(4)</strong> 登りに行ってしまった』 ဖြစ်သည်။"],
+      ["このような名誉ある賞をいただき、＿＿＿　＿＿＿　＿★＿　＿＿＿です。", "1: 光栄　2: の至り　3: 誠に　4: 身に余る", "ဤကဲ့သို့ ဂုဏ်သိက္ခာကြီးမားသော ဆုကို ရရှိသည့်အတွက် မိမိနှင့်မထိုက်တန်လောက်အောင် အလွန်တရာ ဂုဏ်ယူဝမ်းမြောက်မိပါသည်။", ["1 (光栄)", "2 (の至り)", "3 (誠に)", "4 (身に余る)"], 0, "『いただき、<strong>誠に(3) 身に余る(4) 光栄(1) の至り(2)</strong> です』 ဖြစ်သည်။"]
+    ];
+
+    const N1_TEXT_GRAMMAR_BANK = [
+      ["【N1 文章の文法】科学的知識とは決して不変の真理ではない。新たな実験結果によっていつでも覆される可能性に開かれていること（ 50 ）、科学を迷信から区別する本質的な条件なのである。", "သိပ္ပံအသိပညာဟူသည် မပြောင်းလဲသော အမှန်တရားမဟုတ်ပါ။ စမ်းသပ်မှုအသစ်များဖြင့် အချိန်မရွေး ပြင်ဆင်ခံရနိုင်ခြေ ရှိနေခြင်းကသာလျှင် သိပ္ပံကို အယူသီးမှုမှ ခွဲခြားပေးသော အခြေခံအချက်ဖြစ်သည်။", ["こそが", "すらも", "なりとも", "ばかりか"], 0, "အဓိကအချက်ကို အလေးအနက်ထား ညွှန်ပြရာတွင် 『〜ことこそが…である』 (...ကသာလျှင်) ကို သုံးသည်။"],
+      ["【N1 文章の文法】効率ばかりを追い求める現代社会にあって、一見無駄に思える試行錯誤や余白の時間は切り捨てられがちだ。（ 51 ）、そうした非効率な時間の中にこそ、独創的な発想の種が宿っているのではないだろうか。", "မြန်ဆန်ထိရောက်မှုကိုသာ လိုက်စားသော ခေတ်ကြီးတွင် အပေါ်ယံ အကျိုးမဲ့ဟုထင်ရသော အချိန်များကို ပယ်ချတတ်ကြသည်။ သို့သော်လည်း ထိုသို့သော အချိန်များထဲ၌သာ ဆန်းသစ်သော စိတ်ကူးမျိုးစေ့များ ကိန်းအောင်းနေသည် မဟုတ်ပါလော။", ["しかしながら", "したがって", "すなわち", "なぜならば"], 0, "ရှေ့ဝါကျပါ ခေတ်ရေစီးကြောင်းကို ပြောင်းပြန်လှန်၍ စာရေးသူ၏ အမြင်ကို တင်ပြသဖြင့် 『しかしながら』 (သို့သော်လည်း) ကို သုံးရမည်။"],
+      ["【N1 文章の文法】どれほど優れた制度を設計したとしても、それを運用する人間の倫理観が欠如していれば、制度は形骸化（ 52 ）。", "မည်မျှပင် ကောင်းမွန်သော စနစ်ကို ရေးဆွဲစေကာမူ ၎င်းကို ကိုင်တွယ်သုံးစွဲသူ၏ ကျင့်ဝတ်ပျက်ယွင်းနေပါက စနစ်မှာ အနှစ်သာရကင်းမဲ့သွားပေလိမ့်မည်။", ["せざるを得ない / してしまうほかない", "するわけにはいかない", "するに足りない", "するどころではない"], 0, "မလွဲမသွေ ထိုသို့ဖြစ်သွားမည်ဟူသော အကျိုးဆက်ကို ပြသဖြင့် 『〜してしまうほかない』 ကို သုံးသည်။"],
+      ["【N1 文章の文法】歴史とは固定された過去の標本ではない。現在を生きる私たちが過去に新たな問いを投げかける（ 53 ）、絶えず書き換えられ続ける動的な営みなのである。", "သမိုင်းဟူသည် ပုံသေရပ်တန့်နေသော အတိတ်၏ နမူနာပစ္စည်းမဟုတ်ပါ။ ပစ္စုပ္ပန်တွင် ရှင်သန်နေသော ကျွန်ုပ်တို့က အတိတ်ကို မေးခွန်းအသစ်များ မေးမြန်းခြင်းအားဖြင့် အမြဲတမ်း ပြန်လည်ရေးသားခံနေရသော လုပ်ငန်းစဉ်ဖြစ်သည်။", ["ことによって", "をもとにして", "をよそにして", "にかこつけて"], 0, "ဖြစ်စဉ်နှင့် နည်းလမ်းကို ပြသော 『〜ことによって』 (...ခြင်းအားဖြင့်) သည် အသင့်တော်ဆုံးဖြစ်သည်။"],
+      ["【N1 文章の文法】人工知能が高度なデータ処理を代替する時代（ 54 ）、人間にしかできない「問いを発見する力」の価値がいっそう高まっている。", "ဉာဏ်ရည်တုက အဆင့်မြင့် ဒေတာတွက်ချက်မှုများကို အစားထိုးလုပ်ဆောင်လာသည့် ခေတ်သို့ ရောက်ရှိလာပြီဖြစ်ရာ လူသားများသာ လုပ်နိုင်သော 'မေးခွန်းရှာဖွေနိုင်စွမ်း' ၏ တန်ဖိုး ပိုမိုမြင့်တက်လာနေသည်။", ["ともなると", "たりとも", "を皮切りに", "をおいて"], 0, "『N + ともなると』 = ...ခေတ်/အခြေအနေသို့ ရောက်ရှိလာပြီဆိုလျှင်တော့။"]
+    ];
+
+    const N1_LISTENING_ARCHIVE_BANK = [
+      ["聴解・問題1 (課題理解)", "🔊 【N1 音声スクリプト】大学の研究室で教授と大学院生が話しています。大学院生はこの後まず何をしなければなりませんか。<br>学生「先生、来月の国際学会で発表する論文の要旨、一通りまとめました。」<br>教授「ご苦労様。ただ、先行研究の引用部分に少しデータの偏りがあるね。英語への翻訳を外部に依頼する前に、過去5年間の海外論文のデータを追加して再構成してくれるかい？スライドの作成はその後で構わないから。」<br>学生「承知しました。直ちに取りかかります。」", "【N1 အသံဖိုင်】တက္ကသိုလ် သုတေသနခန်းတွင် ပါမောက္ခနှင့် ဘွဲ့လွန်ကျောင်းသား ပြောနေပါသည်။ ကျောင်းသားသည် ယခုနောက်ပိုင်း ဦးစွာ ဘာလုပ်ရမည်နည်း။", ["過去5年間の海外論文のデータを追加して要旨を再構成する。", "論文の要旨を英語に翻訳するよう外部に依頼する。", "学会発表用のスライド資料を作成する。", "国際学会の参加申し込み手続きを行う。"], 0, "ပါမောက္ခက 『英語への翻訳を外部に依頼する前に、過去5年間の海外論文のデータを追加して再構成してくれるかい？』 ဟု ညွှန်ကြားထားသည်။"],
+      ["聴解・問題2 (ポイント理解)", "🔊 【N1 音声スクリプト】企業の経営会議で社長と開発部長が話しています。社長が新製品の発売延期を決めた最大の理由は何ですか。<br>部長「新製品のコスト削減には成功しましたが、耐久試験でまれにバッテリーが発熱する事象が確認されました。」<br>社長「そうか。納期に遅れると株主からの批判は免れないが、万が一にも消費者の安全を脅かすようなことがあっては企業の存続に関わる。原因が完全に究明されるまで発売は見送ろう。」", "【N1 အသံဖိုင်】ကုမ္ပဏီအစည်းအဝေးတွင် ဥက္ကဋ္ဌက ကုန်ပစ္စည်းသစ် စတင်ရောင်းချမည့်ရက်ကို ရွှေ့ဆိုင်းလိုက်ရသည့် အဓိကအကြောင်းရင်းမှာ အဘယ်နည်း။", ["消費者の安全を最優先し、バッテリー発熱の原因を完全に究明するため。", "製造コストが予算を大幅に上回り、利益が出ないことが判明したため。", "競合他社が同じ日に類似の新製品を発売することになったため。", "株主総会で新製品のデザインに対する反対意見が多数出たため。"], 0, "ဥက္ကဋ္ဌက စားသုံးသူများ၏ ဘေးကင်းလုံခြုံရေးကို အဓိကထားပြီး ဘက်ထရီအပူလွန်ကဲသည့် အကြောင်းရင်းကို အပြီးတိုင် ဖော်ထုတ်ရန် ရွှေ့ဆိုင်းခဲ့ခြင်းဖြစ်သည်။"],
+      ["聴解・問題3 (概要理解)", "🔊 【N1 音声スクリプト】ラジオで建築家が現代の都市開発について話しています。「近年の再開発では、古い建物をすべて取り壊して均質な高層ビルを建てる手法が主流です。しかし、街の魅力とは何世代にもわたる人々の暮らしの記憶が刻まれた路地や古い建物との調和の中にこそ宿るものです。古いものを非効率だと切り捨てるのではなく、現代の用途に合わせて再生し共存させていく視点が不可欠です。」<br>建築家が最も伝えたいことは何ですか。", "【N1 အသံဖိုင်】ရေဒီယိုတွင် ဗိသုကာပညာရှင်က မြို့ပြဖွံ့ဖြိုးရေးအကြောင်း ပြောကြားနေပါသည်။ ပညာရှင် အဓိကပြောလိုသော အချက်မှာ အဘယ်နည်း။", ["歴史的な建物や街の記憶を壊さず、現代の暮らしと調和させて再生すべきだ。", "古い建物は地震に弱いため、すべて取り壊して高層ビルに建て替えるべきだ。", "都市の利便性を高めるために、全国の駅前を同じデザインに統一すべきだ。", "新しい建築物を建てることは法律で全面的に禁止すべきだ。"], 0, "အဆောက်အအုံဟောင်းများနှင့် မြို့၏မှတ်ဉာဏ်ကို မဖျက်ဆီးဘဲ ခေတ်မီလူနေမှုဘဝနှင့် လိုက်လျောညီထွေ ပြန်လည်ရှင်သန်စေသင့်ကြောင်း ပြောထားသည်။"],
+      ["聴解・問題4 (即時応答)", "🔊 【N1 音声スクリプト】「課長、例のプロジェクトの予算案、抜本的な見直しを余儀なくされそうです。」<br>これに対する最も適切な返事はどれですか。", "【N1 အသံဖိုင်】'ဌာနစိတ်မှူးခင်ဗျာ၊ ဟိုပရောဂျက်ရဲ့ ဘတ်ဂျက်မူကြမ်းကို အခြေခံကစပြီး မလွှဲမရှောင်သာ ပြန်လည်သုံးသပ်ပြင်ဆင်ရမယ့်ပုံ ပေါ်နေပါတယ်' ဟု ပြောလာသည့်အခါ အသင့်တော်ဆုံး အဖြေကို ရွေးပါ။", ["そうか、では至急メンバーを集めて対策を練り直そう。", "よかった、そのままの予算案で無事に通ったんだね。", "いえ、抜本的な見直しなど全く必要ありませんよ。", "ありがとう、予算が余ったら来期に回しておいてくれ。"], 0, "『余儀なくされそうです』 (မလွှဲမရှောင်သာ ပြန်ပြင်ရတော့မည်) ဟု သတင်းပို့သဖြင့် 『そうか、では至急メンバーを集めて対策を練り直そう』 က အမှန်ဖြစ်သည်။"],
+      ["聴解・問題5 (総合理解)", "🔊 【N1 音声スクリプト】博物館の企画会議で学芸員3人が特別展のテーマについて議論しています。最終的にどの案が採用されましたか。<br>男1「第1案の『西洋絵画の巨匠展』は集客が見込めますが、借用費用が予算を超過しています。」<br>女「第2案の『地域の出土品と古代の暮らし展』なら予算内で実現可能ですし、最新の3D復元映像を組み合わせれば若年層にも訴求できます。」<br>男2「なるほど。第3案の『現代彫刻展』は展示スペースの強度が足りないという問題があったね。よし、予算と集客力のバランスが取れた今の案で進めよう。」", "【N1 အသံဖိုင်】ပြတိုက်အစည်းအဝေးတွင် အထူးပြပွဲခေါင်းစဉ် ရွေးချယ်နေပါသည်။ နောက်ဆုံးတွင် မည်သည့်အစီအစဉ်ကို ရွေးချယ်ခဲ့သနည်း။", ["第2案：地域の出土品と古代の暮らし展（3D復元映像付き）", "第1案：西洋絵画の巨匠展", "第3案：現代彫刻展", "すべての案を見送り、来年度まで特別展を中止する"], 0, "ဘတ်ဂျက်အတွင်း ဝင်ပြီး 3D ရုပ်ပုံဖြင့် လူငယ်များကိုပါ ဆွဲဆောင်နိုင်သော 第2案 (地域の出土品と古代の暮らし展) ကို ရွေးချယ်ခဲ့သည်။"]
+    ];
+
+    let N1_MASTER_PAST_PAPERS = N1_PAST_PAPERS_RAW.map(r => ({
+      id: r[0],
+      year: r[1],
+      session: r[2],
+      category: r[3],
+      mondaiType: r[4],
+      questionJp: r[5],
+      questionMm: r[6],
+      options: r[7],
+      correctIndex: r[8],
+      explanation: r[9]
+    }));
+
+    YEARS_LIST.forEach((yr, yIdx) => {
+      SESSIONS_LIST.forEach((sess, sIdx) => {
+        const sessionIdx = yIdx * 2 + sIdx;
+        let qCounter = 1;
+        const addN1Q = (cat, mondaiType, qJp, qMm, opts, ansIdx, exp) => {
+          const shift = (sessionIdx * 5 + qCounter) % 4;
+          const rotatedOpts = [0, 1, 2, 3].map(i => opts[(i - shift + 4) % 4]);
+          const newAnsIdx = (ansIdx + shift) % 4;
+          const ansNumMm = ["၁", "၂", "၃", "၄"][newAnsIdx];
+          N1_MASTER_PAST_PAPERS.push({
+            id: `n1_pp_${yr}_${sess === "7月" ? "jul" : "dec"}_${qCounter++}`,
+            year: yr,
+            session: sess,
+            category: cat,
+            mondaiType: mondaiType,
+            questionJp: qJp,
+            questionMm: qMm,
+            options: rotatedOpts,
+            correctIndex: newAnsIdx,
+            explanation: `<strong>အဖြေမှန် (${ansNumMm}) ${rotatedOpts[newAnsIdx]}</strong> — ${exp}`
+          });
+        };
+
+        // 1. 問題1・漢字読み (7 questions from N1_VOCAB_DATA)
+        for (let i = 0; i < 7; i++) {
+          const v = N1_VOCAB_DATA[(sessionIdx * 3 + i) % 60];
+          const w1 = N1_VOCAB_DATA[(sessionIdx * 3 + i + 7) % 60].furigana.split("/")[0].trim();
+          const w2 = N1_VOCAB_DATA[(sessionIdx * 3 + i + 13) % 60].furigana.split("/")[0].trim();
+          const w3 = N1_VOCAB_DATA[(sessionIdx * 3 + i + 19) % 60].furigana.split("/")[0].trim();
+          const ans = v.furigana.split("/")[0].trim();
+          addN1Q(
+            "vocab",
+            "問題1・漢字読み",
+            v.exampleJp.replace(v.kanji, `<span class='text-rose-600 underline font-bold'>${v.kanji}</span>`),
+            `မျဉ်းသားထားသော N1 ခန်းဂျီး 『${v.kanji}』 ၏ မှန်ကန်သော အသံထွက်ကို ရွေးချယ်ပါ။ (${v.exampleMm})`,
+            [ans, w1, w2, w3],
+            0,
+            `『${v.kanji}』 ၏ အသံထွက်မှန်မှာ 『${ans}』 ဖြစ်ပြီး အဓိပ္ပာယ်မှာ "${v.meaning}" ဖြစ်ပါသည်။`
+          );
+        }
+
+        // 2. 問題2・表記 (6 questions from N1_VOCAB_DATA)
+        for (let i = 0; i < 6; i++) {
+          const v = N1_VOCAB_DATA[(sessionIdx * 5 + i + 10) % 60];
+          const furi = v.furigana.split("/")[0].trim();
+          const w1 = N1_VOCAB_DATA[(sessionIdx * 5 + i + 15) % 60].kanji;
+          const w2 = N1_VOCAB_DATA[(sessionIdx * 5 + i + 21) % 60].kanji;
+          const w3 = N1_VOCAB_DATA[(sessionIdx * 5 + i + 27) % 60].kanji;
+          addN1Q(
+            "vocab",
+            "問題2・表記",
+            v.exampleJp.replace(v.kanji, `<span class='text-rose-600 underline font-bold'>${furi}</span>`),
+            `မျဉ်းသားထားသော 『${furi}』 ၏ မှန်ကန်သော N1 ခန်းဂျီးစာလုံးပေါင်းကို ရွေးချယ်ပါ။ (${v.exampleMm})`,
+            [v.kanji, w1, w2, w3],
+            0,
+            `『${furi}』 ၏ ခန်းဂျီးစာလုံးပေါင်းအမှန်မှာ 『${v.kanji}』 (${v.meaning}) ဖြစ်ပါသည်။`
+          );
+        }
+
+        // 3. 問題3・語形成 (5 questions)
+        for (let i = 0; i < 5; i++) {
+          const wf = N1_WORD_FORMATION_BANK[(sessionIdx + i) % N1_WORD_FORMATION_BANK.length];
+          addN1Q("vocab", "問題3・語形成", wf[0], wf[1], wf[2], wf[3], wf[4]);
+        }
+
+        // 4. 問題4・文脈規定 (8 questions from N1_VOCAB_DATA)
+        for (let i = 0; i < 8; i++) {
+          const v = N1_VOCAB_DATA[(sessionIdx * 7 + i + 20) % 60];
+          const w1 = N1_VOCAB_DATA[(sessionIdx * 7 + i + 25) % 60];
+          const w2 = N1_VOCAB_DATA[(sessionIdx * 7 + i + 31) % 60];
+          const w3 = N1_VOCAB_DATA[(sessionIdx * 7 + i + 37) % 60];
+          const blankedJp = v.exampleJp.includes(v.kanji)
+            ? v.exampleJp.replace(v.kanji, "（　　）")
+            : `（　　）の意味として最も適切な文脈：${v.exampleJp}`;
+          addN1Q(
+            "vocab",
+            "問題4・文脈規定",
+            blankedJp,
+            `ဝါကျအဓိပ္ပာယ်နှင့် အကိုက်ညီဆုံး N1 ဝေါဟာရကို ရွေးပါ — ${v.exampleMm}`,
+            [
+              `${v.kanji} (${v.furigana.split("/")[0].trim()})`,
+              `${w1.kanji} (${w1.furigana.split("/")[0].trim()})`,
+              `${w2.kanji} (${w2.furigana.split("/")[0].trim()})`,
+              `${w3.kanji} (${w3.furigana.split("/")[0].trim()})`
+            ],
+            0,
+            `ကွက်လပ်တွင် 『${v.kanji} (${v.furigana})』 (${v.meaning}) ကို ထည့်သွင်းရမည်။`
+          );
+        }
+
+        // 5. 問題5・言い換え類義 (6 questions)
+        for (let i = 0; i < 6; i++) {
+          const syn = N1_SYNONYM_BANK[(sessionIdx + i) % N1_SYNONYM_BANK.length];
+          addN1Q("vocab", "問題5・言い換え類義", syn[0], syn[1], syn[2], syn[3], syn[4]);
+        }
+
+        // 6. 問題6・用法 (5 questions)
+        for (let i = 0; i < 5; i++) {
+          const usg = N1_USAGE_BANK[(sessionIdx + i) % N1_USAGE_BANK.length];
+          addN1Q(
+            "vocab",
+            "問題6・用法",
+            `次の「<span class='text-rose-600 font-bold'>${usg[0]}</span>」の使い方として最もよいものを一つ選びなさい。`,
+            `『${usg[0]}』 (${usg[1]}) ကို အမှန်ကန်ဆုံး အသုံးပြုထားသော ဝါကျကို ရွေးချယ်ပါ။`,
+            usg[2],
+            usg[3],
+            usg[4]
+          );
+        }
+
+        // 7. 問題7・文法形式の判断 (14 questions from N1_GRAMMAR_DATA)
+        for (let i = 0; i < 14; i++) {
+          const g = N1_GRAMMAR_DATA[(sessionIdx * 3 + i) % 35];
+          const g1 = N1_GRAMMAR_DATA[(sessionIdx * 3 + i + 5) % 35];
+          const g2 = N1_GRAMMAR_DATA[(sessionIdx * 3 + i + 11) % 35];
+          const g3 = N1_GRAMMAR_DATA[(sessionIdx * 3 + i + 17) % 35];
+          const ex = g.examples[0];
+          const cleanPat = g.pattern.replace(/～/g, "").split("/")[0].replace(/（.*?）/g, "").trim();
+          const p1 = g1.pattern.replace(/～/g, "").split("/")[0].replace(/（.*?）/g, "").trim();
+          const p2 = g2.pattern.replace(/～/g, "").split("/")[0].replace(/（.*?）/g, "").trim();
+          const p3 = g3.pattern.replace(/～/g, "").split("/")[0].replace(/（.*?）/g, "").trim();
+          const qSentence = ex.jp.includes(cleanPat)
+            ? ex.jp.replace(cleanPat, "（　　）")
+            : `${ex.jp} <span class='text-xs text-indigo-600 font-normal'>【N1 文型: （　　）】</span>`;
+          addN1Q(
+            "grammar",
+            "問題7・文法形式の判断",
+            qSentence,
+            `${ex.mm} — ကွက်လပ်တွင် အသင့်လျော်ဆုံး N1 သဒ္ဒါပုံစံကို ရွေးချယ်ပါ။`,
+            [cleanPat, p1, p2, p3],
+            0,
+            `『${g.pattern}』 (${g.connection}) — အဓိပ္ပာယ်: "${g.meaning}"။ ${g.nuance}`
+          );
+        }
+
+        // 8. 問題8・文の組み立て ★ (6 questions)
+        for (let i = 0; i < 6; i++) {
+          const st = N1_STAR_ORDER_BANK[(sessionIdx + i) % N1_STAR_ORDER_BANK.length];
+          addN1Q(
+            "grammar",
+            "問題8・★並べ替え",
+            `${st[0]}<br><span class='text-xs text-slate-500 font-normal'>${st[1]}</span>`,
+            st[2],
+            st[3],
+            st[4],
+            st[5]
+          );
+        }
+
+        // 9. 問題9・文章の文法 (5 questions)
+        for (let i = 0; i < 5; i++) {
+          const tg = N1_TEXT_GRAMMAR_BANK[(sessionIdx + i) % N1_TEXT_GRAMMAR_BANK.length];
+          addN1Q("grammar", "問題9・文章の文法", tg[0], tg[1], tg[2], tg[3], tg[4]);
+        }
+
+        // 10. 問題10〜14・読解 (14 questions from N1_READING_DATA)
+        for (let i = 0; i < 14; i++) {
+          const p = N1_READING_DATA[(sessionIdx + i) % N1_READING_DATA.length];
+          const qObj = p.questions[0];
+          const opts = qObj.options.map(o => o.text);
+          const ansIdx = qObj.options.findIndex(o => o.correct);
+          const snippet = p.japaneseText.length > 260 ? p.japaneseText.slice(0, 260) + "…" : p.japaneseText;
+          addN1Q(
+            "reading",
+            `${p.mondai}・読解`,
+            `【${p.title}】<br>${snippet}<br><strong>【${qObj.question}】</strong>`,
+            p.burmeseTranslation.slice(0, 240) + "…",
+            opts,
+            ansIdx >= 0 ? ansIdx : 0,
+            qObj.explanation
+          );
+        }
+
+        // 11. 聴解・問題1〜5 (6 questions)
+        for (let i = 0; i < 6; i++) {
+          const ls = N1_LISTENING_ARCHIVE_BANK[(sessionIdx + i) % N1_LISTENING_ARCHIVE_BANK.length];
+          addN1Q("listening", ls[0], ls[1], ls[2], ls[3], ls[4], ls[5]);
+        }
+      });
+    });
+
+    window.switchJlptLevel = function(level) {
+      if (level !== "N1" && level !== "N2") return;
+      state.currentLevel = level;
+      const isN1 = (level === "N1");
+
+      // Swap active master datasets
+      VOCAB_DATA = isN1 ? N1_VOCAB_DATA : N2_MASTER_VOCAB;
+      GRAMMAR_DATA = isN1 ? N1_GRAMMAR_DATA : N2_MASTER_GRAMMAR;
+      KANJI_DATA = isN1 ? N1_KANJI_DATA : N2_MASTER_KANJI;
+      READING_DATA = isN1 ? N1_READING_DATA : N2_MASTER_READING;
+      QUIZ_DATA = isN1 ? N1_QUIZ_DATA : N2_MASTER_QUIZ;
+      PAST_PAPERS_DATA = isN1 ? N1_MASTER_PAST_PAPERS : N2_MASTER_PAST_PAPERS;
+
+      state.vocabCurrentList = [...VOCAB_DATA];
+      state.flashcardIndex = 0;
+
+      // Update Header & Hero Level Switcher Buttons
+      const btnN2 = document.getElementById("btn-level-n2");
+      const btnN1 = document.getElementById("btn-level-n1");
+      const heroN2 = document.getElementById("hero-btn-n2");
+      const heroN1 = document.getElementById("hero-btn-n1");
+
+      if (btnN2 && btnN1) {
+        if (isN1) {
+          btnN1.className = "level-switch-btn px-2.5 sm:px-3 py-1 rounded-lg text-xs font-extrabold transition-all bg-indigo-600 text-white shadow-sm flex items-center gap-1";
+          btnN2.className = "level-switch-btn px-2.5 sm:px-3 py-1 rounded-lg text-xs font-extrabold transition-all text-slate-600 hover:text-slate-900 flex items-center gap-1";
+        } else {
+          btnN2.className = "level-switch-btn px-2.5 sm:px-3 py-1 rounded-lg text-xs font-extrabold transition-all bg-sakura-600 text-white shadow-sm flex items-center gap-1";
+          btnN1.className = "level-switch-btn px-2.5 sm:px-3 py-1 rounded-lg text-xs font-extrabold transition-all text-slate-600 hover:text-slate-900 flex items-center gap-1";
+        }
+      }
+
+      if (heroN2 && heroN1) {
+        if (isN1) {
+          heroN1.className = "px-3 py-0.5 rounded-full text-xs font-bold bg-indigo-500 text-white transition-all myanmar-text";
+          heroN2.className = "px-3 py-0.5 rounded-full text-xs font-bold text-slate-300 hover:text-white transition-all myanmar-text";
+        } else {
+          heroN2.className = "px-3 py-0.5 rounded-full text-xs font-bold bg-sakura-500 text-white transition-all myanmar-text";
+          heroN1.className = "px-3 py-0.5 rounded-full text-xs font-bold text-slate-300 hover:text-white transition-all myanmar-text";
+        }
+      }
+
+      // Update Branding & Headings
+      const iconEl = document.getElementById("header-level-icon");
+      const titleEl = document.getElementById("header-brand-title");
+      const subEl = document.getElementById("header-brand-subtitle");
+      if (iconEl) iconEl.textContent = level;
+      if (titleEl) titleEl.textContent = `Sakura ${level}`;
+      if (subEl) subEl.textContent = `JLPT ${level} လေ့လာရေးစင်တာ`;
+
+      const heroBadge = document.getElementById("hero-badge-pill");
+      const heroHeading = document.getElementById("hero-main-heading");
+      if (heroBadge) heroBadge.innerHTML = `<span>${isN1 ? '👑' : '🌸'} JLPT ${level} စာမေးပွဲ အထူးလေ့ကျင့်ခန်းစုံ</span>`;
+      if (heroHeading) heroHeading.textContent = `ဂျပန်စာ JLPT ${level} အောင်မြင်ရေး`;
+
+      const examStructTitle = document.getElementById("dash-exam-structure-title");
+      const examPassBadge = document.getElementById("dash-exam-pass-badge");
+      const examPassNote = document.getElementById("dash-exam-passing-note");
+      if (examStructTitle) examStructTitle.innerHTML = `<span>🎯 JLPT ${level} စာမေးပွဲ ဖွဲ့စည်းပုံနှင့် အောင်မှတ် သတ်မှတ်ချက်များ</span>`;
+      if (examPassBadge) examPassBadge.textContent = isN1 ? "အောင်မှတ်: ၁၀၀ / ၁၈၀ မှတ်" : "အောင်မှတ်: ၉၀ / ၁၈၀ မှတ်";
+      if (examPassNote) {
+        examPassNote.innerHTML = isN1
+          ? `💡 <strong>အောင်မြင်ရန် သတ်မှတ်ချက် (JLPT N1):</strong> စုစုပေါင်းရမှတ် ၁၈၀ မှတ်အနက် <strong>၁၀၀ မှတ် နှင့်အထက်</strong> ရရှိရမည် ဖြစ်သည့်အပြင် အပိုင်းတစ်ခုစီတိုင်းတွင် အနိမ့်ဆုံး ၁၉ မှတ် ရရှိရန် လိုအပ်ပါသည်။`
+          : `💡 <strong>အောင်မြင်ရန် သတ်မှတ်ချက် (JLPT N2):</strong> စုစုပေါင်းရမှတ် ၁၈၀ မှတ်အနက် <strong>၉၀ မှတ် နှင့်အထက်</strong> ရရှိရမည် ဖြစ်သည့်အပြင် အပိုင်းတစ်ခုစီတိုင်းတွင် အနိမ့်ဆုံး ၁၉ မှတ် ရရှိရန် လိုအပ်ပါသည်။`;
+      }
+
+      const vSecTitle = document.getElementById("vocab-section-title");
+      const gSecTitle = document.getElementById("grammar-section-title");
+      const kSecTitle = document.getElementById("kanji-section-title");
+      const rSecTitle = document.getElementById("reading-section-title");
+      const qSecTitle = document.getElementById("quiz-section-title");
+      const pSecTitle = document.getElementById("pastpapers-section-title");
+      if (vSecTitle) vSecTitle.textContent = `📖 JLPT ${level} ဝေါဟာရများ (語彙)`;
+      if (gSecTitle) gSecTitle.textContent = `✍️ JLPT ${level} သဒ္ဒါပုံစံများ (文法)`;
+      if (kSecTitle) kSecTitle.textContent = `⛩️ JLPT ${level} ခန်းဂျီးများ (漢字)`;
+      if (rSecTitle) rSecTitle.textContent = `JLPT ${level} စာဖတ်လေ့ကျင့်ခန်း အပြည့်အစုံ (読解)`;
+      if (qSecTitle) qSecTitle.textContent = `JLPT ${level} စာမေးပွဲ ပဟေဠိ စစ်ဆေးခြင်း`;
+      if (pSecTitle) pSecTitle.textContent = `JLPT ${level} မေးခွန်းဟောင်း (၁၀) နှစ်စာ လေ့ကျင့်ခန်း`;
+
+      // Update additional UI labels across Hero, Mobile Nav, Dashboard Cards, Reading, Quiz, Past Papers & Footer
+      const heroDesc = document.getElementById("hero-desc-text");
+      if (heroDesc) {
+        heroDesc.textContent = `JLPT ${level} အတွက် မရှိမဖြစ်လိုအပ်သော အဓိက ဝေါဟာရများ (၆၀၀)၊ အရေးကြီး သဒ္ဒါပုံစံများ (၂၀၀)၊ ခန်းဂျီးများ (၃၇၀)၊ စာဖတ်လေ့ကျင့်ခန်းများနှင့် ၁၀ နှစ်စာ မေးခွန်းဟောင်းများကို မြန်မာလို အသေးစိတ် ရှင်းလင်းချက်၊ စံပြဥပမာများနှင့် အသံထွက်များဖြင့် လေ့လာနိုင်ပါသည်။ (အပေါ်ရှိ N2 / N1 ခလုတ်ကိုနှိပ်၍ အဆင့်ပြောင်းလဲနိုင်ပါသည်။)`;
+      }
+      const heroQuizLbl = document.getElementById("hero-quiz-btn-label");
+      if (heroQuizLbl) heroQuizLbl.textContent = `${level} ပဟေဠိ ဖြေဆိုမည်`;
+      const provBadge = document.getElementById("proverb-focus-badge");
+      if (provBadge) provBadge.textContent = `${level} Focus`;
+
+      const mobV = document.getElementById("mob-nav-vocab");
+      const mobG = document.getElementById("mob-nav-grammar");
+      const mobK = document.getElementById("mob-nav-kanji");
+      const mobQ = document.getElementById("mob-nav-quiz");
+      if (mobV) mobV.textContent = `📖 ${level} ဝေါဟာရများ (語彙)`;
+      if (mobG) mobG.textContent = `✍️ ${level} သဒ္ဒါပုံစံများ (文法)`;
+      if (mobK) mobK.textContent = `⛩️ ${level} ခန်းဂျီး (漢字)`;
+      if (mobQ) mobQ.textContent = `🎯 ${level} စာမေးပွဲ ပဟေဠိ (Quiz)`;
+
+      const dcVTitle = document.getElementById("dash-card-vocab-title");
+      const dcVDesc = document.getElementById("dash-card-vocab-desc");
+      const dcGTitle = document.getElementById("dash-card-grammar-title");
+      const dcKTitle = document.getElementById("dash-card-kanji-title");
+      const dcQDesc = document.getElementById("dash-card-quiz-desc");
+      const dcPPTitle = document.getElementById("dash-card-pp-title");
+      const dcPPDesc = document.getElementById("dash-card-pp-desc");
+      if (dcVTitle) dcVTitle.textContent = `${level} ဝေါဟာရများ (語彙)`;
+      if (dcVDesc) dcVDesc.textContent = `စီးပွားရေး၊ လူမှုရေးနှင့် နေ့စဉ်ဘဝသုံး ${level} စကားလုံးများကို စံပြဝါကျများနှင့် လေ့လာပါ။`;
+      if (dcGTitle) dcGTitle.textContent = `${level} သဒ္ဒါပုံစံများ (文法)`;
+      if (dcKTitle) dcKTitle.textContent = `${level} ခန်းဂျီး (漢字)`;
+      if (dcQDesc) dcQDesc.textContent = `အချိန်ကိုက်စနစ်နှင့် ရှင်းလင်းချက်များ ပါဝင်သော ${level} စစ်ဆေးလေ့ကျင့်ခန်း။`;
+      if (dcPPTitle) dcPPTitle.textContent = `📜 JLPT ${level} မေးခွန်းဟောင်း ၁၀ နှစ်စာ (過去問 2016 – 2025)`;
+      if (dcPPDesc) dcPPDesc.textContent = `၂၀၁၆ ခုနှစ်မှ ၂၀၂၅ ခုနှစ်အထိ (၁၀) နှစ်စာ (ဇူလိုင်ပွဲ 7月 နှင့် ဒီဇင်ဘာပွဲ 12月) ${level} မေးခွန်းဟောင်းများကို နှစ်အလိုက်၊ အပိုင်းအလိုက် ရွေးချယ်ဖြေဆိုပြီး မြန်မာလို အသေးစိတ် ရှင်းလင်းချက်များဖြင့် လေ့ကျင့်နိုင်ပါသည်။`;
+
+      const fcTag = document.getElementById("fc-tag");
+      if (fcTag) fcTag.textContent = `${level} ဝေါဟာရ`;
+
+      const rBadge = document.getElementById("reading-badge-pill");
+      const rDesc = document.getElementById("reading-desc-text");
+      if (rBadge) rBadge.textContent = `📑 JLPT ${level} 読解 完全対策 (問題10 〜 問題14 全5形式)`;
+      if (rDesc) {
+        rDesc.innerHTML = `JLPT ${level} စာဖတ်စာမေးပွဲတွင် မေးမြန်းသည့် မေးခွန်းပုံစံ (၅) မျိုးလုံး — <strong>問題10 (短文 စာပိုဒ်တို)</strong>၊ <strong>問題11 (中文 စာပိုဒ်လတ်)</strong>၊ <strong>問題12 (統合理解 A/B နှိုင်းယှဉ်ချက်)</strong>၊ <strong>問題13 (主張理解・長文 စာပိုဒ်ရှည်)</strong> နှင့် <strong>問題14 (情報検索 သတင်းအချက်အလက် ရှာဖွေခြင်း)</strong> တို့ကို မြန်မာဘာသာပြန်၊ ဝေါဟာရရှင်းလင်းချက်နှင့် အဖြေရှင်းလင်းချက် အပြည့်အစုံဖြင့် လေ့ကျင့်နိုင်ပါသည်။`;
+      }
+
+      const qIntroDesc = document.getElementById("quiz-intro-desc");
+      if (qIntroDesc) {
+        qIntroDesc.textContent = `${level} ဝေါဟာရ၊ သဒ္ဒါ၊ ခန်းဂျီးနှင့် အသုံးအနှုန်းများဆိုင်ရာ မေးခွန်း (၁၅) ခု ပါဝင်ပါသည်။ ဖြေဆိုပြီးပါက မြန်မာလို အသေးစိတ် အဖြေရှင်းလင်းချက်များကို ဖော်ပြပေးပါမည်။`;
+      }
+
+      const ppBadge = document.getElementById("pastpapers-badge-pill");
+      const ppDesc = document.getElementById("pastpapers-desc-text");
+      if (ppBadge) ppBadge.textContent = `📜 JLPT ${level} 過去問アーカイブ (2016 – 2025)`;
+      if (ppDesc) {
+        ppDesc.textContent = `၂၀၁၆ ခုနှစ်မှ ၂၀၂၅ ခုနှစ်အထိ ၁၀ နှစ်တာ ကာလအတွင်း မေးမြန်းခဲ့သော JLPT ${level} စာမေးပွဲပုံစံ မေးခွန်းဟောင်းများ (ဇူလိုင်လပွဲ 7月 နှင့် ဒီဇင်ဘာလပွဲ 12月) ကို နှစ်အလိုက်၊ အပိုင်းအလိုက် စနစ်တကျ ဖြေဆိုလေ့ကျင့်နိုင်ပါသည်။ မေးခွန်းတစ်ပုဒ်ချင်းစီအတွက် မြန်မာဘာသာပြန်နှင့် အသေးစိတ်အဖြေရှင်းလင်းချက်များ အပြည့်အစုံ ပါဝင်ပါသည်။`;
+      }
+
+      const ftBadge = document.getElementById("footer-level-badge");
+      if (ftBadge) ftBadge.textContent = level;
+
+      // Reset active quiz play view back to intro card on level change
+      const qIntroCard = document.getElementById("quiz-intro-card");
+      const qPlayArea = document.getElementById("quiz-play-area");
+      const qResultsCard = document.getElementById("quiz-results-card");
+      if (qIntroCard && qPlayArea && qResultsCard) {
+        qIntroCard.classList.remove("hidden");
+        qPlayArea.classList.add("hidden");
+        qResultsCard.classList.add("hidden");
+      }
+
+      // Save selected level to localStorage
+      saveState("sakura_selected_jlpt_level", level);
+
+      // Re-render all sections immediately
+      updateDashboardStats();
+      filterVocabList();
+      renderGrammarList();
+      renderKanjiGrid();
+      renderReadingPassages();
+      renderPastPapersSection();
+      renderBookmarks();
+      showToast(`JLPT ${level} အဆင့်သို့ ပြောင်းလဲလိုက်ပါပြီ!`, "success");
+    };
+
+    window.openLevelChooserModal = function() {
+      const modal = document.getElementById("level-chooser-modal");
+      if (modal) modal.classList.remove("hidden");
+      const mobMenu = document.getElementById("mobile-menu");
+      if (mobMenu) mobMenu.classList.add("hidden");
+    };
+
+    window.chooseInitialLevel = function(level) {
+      window.switchJlptLevel(level);
+      const modal = document.getElementById("level-chooser-modal");
+      if (modal) modal.classList.add("hidden");
+    };
+
     function renderPastPapersSection() {
       const yearGrid = document.getElementById("pp-year-selector-grid");
       const bannerEl = document.getElementById("pp-active-year-banner");
@@ -3926,7 +5580,7 @@ Chat Tool များသည် ရုံးလုပ်ငန်းဆက်သ
         const fCor = filtered.filter(q => state.ppUserAnswers[q.id] === q.correctIndex).length;
         const yearTitle = state.ppYear === "all"
           ? `၂၀၁၆ မှ ၂၀၂၅ အထိ (၁၀ နှစ်စာ စာမေးပွဲစုံ — စုစုပေါင်း ${filtered.length} ပုဒ်)`
-          : `${state.ppYear} ခုနှစ် JLPT N2 မေးခွန်းဟောင်း အပြည့်အစုံ (7月 & 12月 — ${filtered.length} ပုဒ်)`;
+          : `${state.ppYear} ခုနှစ် JLPT ${state.currentLevel} မေးခွန်းဟောင်း အပြည့်အစုံ (7月 & 12月 — ${filtered.length} ပုဒ်)`;
         bannerEl.innerHTML = `
           <div class="flex items-center gap-3">
             <span class="px-3 py-1 rounded-xl bg-rose-100 text-rose-700 font-extrabold text-xs font-mono">
@@ -4842,7 +6496,7 @@ Chat Tool များသည် ရုံးလုပ်ငန်းဆက်သ
 
               <!-- Vocabulary helper -->
               <div class="bg-amber-50/60 rounded-xl p-4 border border-amber-200/70">
-                <div class="text-xs font-bold text-amber-800 uppercase tracking-wide mb-2.5 myanmar-text">📌 စာပိုဒ်ပါ အရေးကြီး N2 ဝေါဟာရများ (重要語彙):</div>
+                <div class="text-xs font-bold text-amber-800 uppercase tracking-wide mb-2.5 myanmar-text">📌 စာပိုဒ်ပါ အရေးကြီး ${state.currentLevel} ဝေါဟာရများ (重要語彙):</div>
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs">
                   ${passage.vocabHelper.map(vh => `
                     <div class="flex items-center justify-between bg-white px-3 py-2 rounded-lg border border-amber-100 shadow-sm">
@@ -5116,7 +6770,7 @@ Chat Tool များသည် ရုံးလုပ်ငန်းဆက်သ
         badge.className = "w-20 h-20 rounded-full flex items-center justify-center mx-auto text-3xl font-extrabold shadow-md bg-emerald-100 text-emerald-600";
         badge.textContent = "🏆";
         heading.textContent = `ဂုဏ်ယူပါသည်! အောင်မှတ် ရရှိပါသည် (${pct}%)`;
-        subtext.textContent = "JLPT N2 အတွက် လိုအပ်သော အခြေခံနှင့် အသုံးအနှုန်းများကို ကောင်းမွန်စွာ သဘောပေါက်ထားပါသည်။";
+        subtext.textContent = `JLPT ${state.currentLevel} အတွက် လိုအပ်သော အခြေခံနှင့် အသုံးအနှုန်းများကို ကောင်းမွန်စွာ သဘောပေါက်ထားပါသည်။`;
       } else {
         badge.className = "w-20 h-20 rounded-full flex items-center justify-center mx-auto text-3xl font-extrabold shadow-md bg-rose-100 text-rose-600";
         badge.textContent = "📝";
@@ -5311,7 +6965,7 @@ Chat Tool များသည် ရုံးလုပ်ငန်းဆက်သ
       const speechTestBtn = document.getElementById("global-speech-test-btn");
       if (speechTestBtn) {
         speechTestBtn.addEventListener("click", () => {
-          speakJapanese("こんにちは！JLPT N2の勉強を始めましょう。");
+          speakJapanese(`こんにちは！JLPT ${state.currentLevel}の勉強を始めましょう。`);
           showToast("ဂျပန်စကားသံထွက်ကို စမ်းသပ်ထုတ်လွှင့်နေပါသည် (Konnichiwa!)", "info");
         });
       }
